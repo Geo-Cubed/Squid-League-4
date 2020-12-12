@@ -11,12 +11,12 @@ Accessable at : (Currently not published)
 
 Pages
 * Upcomming matches
-* Bracket
-* Matches
-* Teams
-* Players
-* Casters
-* Statistics
+* Bracket (not started)
+* Matches (not started)
+* Teams (final touches)
+* Players (final touches)
+* Casters (wip)
+* Statistics (not started)
 
 # Api
 Accessable at : (Currently not published)/_apis
