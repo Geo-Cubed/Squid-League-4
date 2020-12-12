@@ -9,7 +9,7 @@
 # Website
 Accessable at : (Currently not published)
 
-Contents
+Pages
 * Upcomming matches
 * Bracket
 * Matches
@@ -21,7 +21,7 @@ Contents
 # Api
 Accessable at : (Currently not published)/_apis
 
-Contents
+Commands
 * /welcome -> Default page, points to this git-hub
 * /player -> List of all active players and their teams
 * /player/{id} -> Single active player with the corresponding id
