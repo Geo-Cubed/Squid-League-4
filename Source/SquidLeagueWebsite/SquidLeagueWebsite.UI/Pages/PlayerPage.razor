@@ -16,7 +16,7 @@
 
         @foreach (var tPlayer in players)
         {
-            <option value=@string.Format("{0}", tPlayer.Id)>@string.Format("{0} - {1}", tPlayer.InGameName, tPlayer.TeamName)</option>
+            <option value=@string.Format("{0}", tPlayer.Id)>@string.Format("{0}{1}", tPlayer.InGameName, (tPlayer.TeamName == "No Team") ? string.Empty : " - " + tPlayer.TeamName)</option>
         }
     </select>
 </div>
