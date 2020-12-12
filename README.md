@@ -2,7 +2,7 @@
  Community tournament page for squid league 4
 
 # Components
-* Database
+* Database (MySql)
 * Api (ASP.Net Core)
 * Website (ASP.Net Core)
 
