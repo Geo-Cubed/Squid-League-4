@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CubedApi.Database\CubedApi.Database.csproj" />
+    <ProjectReference Include="..\CubedApi.Models\CubedApi.Models.csproj" />
+    <ProjectReference Include="..\CubedApi.RepositoryInterface\CubedApi.RepositoryInterface.csproj" />
+  </ItemGroup>
+
+</Project>

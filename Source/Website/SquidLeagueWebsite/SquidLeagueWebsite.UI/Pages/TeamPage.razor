@@ -1,0 +1,172 @@
+﻿@page "/teams"
+
+@using SquidLeagueWebsite.UI.Data
+
+@inject TeamService teamService
+
+<div id="title">Teams</div>
+
+<div class="teamSelectBox">
+    <select @onchange="OnTeamSelect">
+        @if (selectedTeam == null)
+        {
+            <option value="0">Select Team:</option>
+        }
+
+        @foreach (var tTeam in teams)
+        {
+            <option value="@tTeam.Id">@tTeam.TeamName</option>
+        }
+    </select>
+</div>
+
+@if (selectedTeam == null)
+{
+    <div class="player">
+        <div class="playerCard">
+            <h3>No Team Selected</h3>
+        </div>
+    </div>
+}
+else
+{
+    <div class="teamCardContainer">
+        <div class="teamCard">
+            <div class="teamContainer">
+                <img src="/Images/Droplets/topWave.svg" class="topImg">
+                <div class="teamHeadder">
+                    <h2>@selectedTeam.TeamName</h2>
+                    <h3>@string.Format("Current record: {0}W {1}L", selectedTeam.TeamWins, selectedTeam.TeamLosses)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="teamPlayers">
+        @if (selectedTeamPlayers == null)
+        {
+            <div class="textContent">
+                <h3>Loading...</h3>
+            </div>
+        }
+        else if (selectedTeamPlayers.Count() == 0)
+        {
+            <div class="textContent">
+                <h3>@string.Format("{0} has no players yet", selectedTeam.TeamName)</h3>
+            </div>
+        }
+        else
+        {
+            @foreach (var playerDuo in selectedTeamPlayers)
+            {
+                <div class="teamPlayerCardContainer">
+                    @foreach (var player in playerDuo)
+                    {
+                        <div class="teamPlayerCard">
+                            <div class="teamContainer">
+                                <img src="/Images/Droplets/playerWave.svg" class="teamCardImg">
+                                <div class="teamPlayerText">
+                                    <h3>@player.InGameName</h3>
+                                    <p>SZ: <b>@player.SzRank</b> RM: <b>@player.RmRank</b> TC: <b>@player.TcRank</b> CB: <b>@player.CbRank</b></p>
+                                    <h3>Role</h3>
+                                    <p>@player.Role</p>
+                                    <h3>Weapons</h3>
+                                    <p>
+                                        <img src="@player.Weapon1Path" height="50px" width="50px">
+                                        <img src="@player.Weapon2Path" height="50px" width="50px">
+                                        <img src="@player.Weapon3Path" heigth="50px" width="50px">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+
+    <div id="recent">
+        <h2>Recent Games</h2>
+    </div>
+
+    @if (matches == null)
+    {
+        <div class="textContent">
+            <h3>Loading...</h3>
+        </div>
+    }
+    else if (matches.Count() == 0)
+    {
+        <div class="textContent">
+            <h3>@string.Format("{0} has not played any matches yet", selectedTeam.TeamName)</h3>
+        </div>
+    }
+    else
+    {
+        <div id="teamMatches">
+            @foreach (var match in matches)
+            {
+                <div class="teamMatchCardContainer">
+                    <div class="teamMatchCard">
+                        <p><h3>NOT DONE YET</h3></p>
+                        <p><h3>@string.Format("{0} {1} - {2} {3}", 1, 2, 3, 4)</h3></p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+
+@code {
+    private int id;
+
+    private IEnumerable<TeamPlayers> teams;
+
+    public TeamPlayers selectedTeam
+    {
+        get
+        {
+            return this.teams.Where(t => t.Id == this.id).FirstOrDefault();
+        }
+    }
+
+    private IEnumerable<TeamMatches> matches;
+
+    private IEnumerable<IEnumerable<Player>> selectedTeamPlayers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.id = 0;
+        this.teams = teamService.GetAllTeams();
+        return;
+    }
+
+    protected void OnTeamSelect(ChangeEventArgs e)
+    {
+        this.matches = null;
+        this.id = int.Parse(e.Value.ToString());
+        this.SplitUpPlayers();
+        // Load the players matches.
+    }
+
+    protected void SplitUpPlayers()
+    {
+        var players = new List<List<Player>>();
+        var counter = 0;
+        foreach (var player in this.selectedTeam.Players)
+        {
+            if (counter % 2 == 0)
+            {
+                players.Add(new List<Player>() { player });
+            }
+            else
+            {
+                players.Last().Add(player);
+            }
+
+            ++counter;
+        }
+
+        this.selectedTeamPlayers = players;
+    }
+}

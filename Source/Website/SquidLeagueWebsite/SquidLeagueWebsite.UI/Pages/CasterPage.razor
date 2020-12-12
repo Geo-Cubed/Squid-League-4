@@ -1,0 +1,33 @@
+﻿@page "/casters"
+
+@using SquidLeagueWebsite.UI.Data
+@using SquidLeagueWebsite.Models
+@inject CasterService casterService
+
+<div id="title">Casters</div>
+
+@if (casters == null)
+{
+    <div class="textContent">
+        <h3>Loading...</h3>
+    </div>
+}
+else if (casters.Count() == 0)
+{
+
+}
+else
+{
+
+}
+
+@code {
+    private IEnumerable<Caster> casters;
+
+    private List<List<Caster>> castersSplit;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.casters = casterService.GetAllCasters();
+    }
+}

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <OutputPath>../../../Build</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CubedApi.CustomExceptions\CubedApi.CustomExceptions.csproj" />
+    <ProjectReference Include="..\CubedApi.DatabaseInterface\CubedApi.DatabaseInterface.csproj" />
+    <ProjectReference Include="..\CubedApi.Models\CubedApi.Models.csproj" />
+    <ProjectReference Include="..\CubedApi.RepositoryInterface\CubedApi.RepositoryInterface.csproj" />
+    <ProjectReference Include="..\CubedApi.Utilities\CubedApi.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
