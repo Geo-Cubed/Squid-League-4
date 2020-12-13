@@ -1,0 +1,110 @@
+:root{
+    --safety-orange-blaze-orange: #ff6700ff;
+    --platinum: #ebebebff;
+    --silver: #c0c0c0ff;
+    --queen-blue: #3a6ea5ff;
+    --yale-blue: #004e98ff;
+    --off-white: #f8f8ff;
+    --wave-blue: #0099ff;
+}
+
+.teamSelectBox {
+    position: relative;
+    font-family: Arial;
+    min-width: 20%;
+    width: 50%;
+    margin: auto;
+}
+
+.teamPlayerCardContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.teamCardContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.teamMatchCardContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.teamCard {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    width: 51%;
+    min-width: 100px;
+    text-align: center;
+    align-content: center;
+    margin: 10px;
+    background-color: var(--wave-blue);
+    height: calc(100vh / 5);
+}
+
+.teamPlayerCard {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    width: 25%;
+    min-width: 100px;
+    text-align: center;
+    align-content: center;
+    margin: 10px;
+    background-color: white;
+    min-height: 350px;
+}
+
+.teamMatchCard {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    width: 51%;
+    min-width: 100px;
+    text-align: center;
+    align-content: center;
+    margin: 10px;
+    background-color: white;
+}
+
+.teamPlayerCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.teamCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.teamMatchCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.teamContainer {
+    position: relative;
+    text-align: center;
+}
+
+.teamPlayerText {
+    position: relative;
+    bottom: -100px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.teamHeadder {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.topImg{
+    border-radius: 5px;
+    width: 100.08%;
+}
+
+.teamCardImg{
+    border-radius: 5px;
+}
