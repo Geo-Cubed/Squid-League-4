@@ -15,25 +15,49 @@
 }
 else if (casters.Count() == 0)
 {
-    
+    <div class="">
+        <h3>There are no casters to display</h3>
+    </div>
 }
 else
 {
-
+    foreach (var casterList in casterSplit)
+    {
+        <div class="cardContainer">
+            <div class="caster">
+                @foreach (var caster in casterList)
+                {
+                    <div class="casterCard">
+                        <img class="casterCardImg" src="@caster.ProfilePicturePath">
+                        <div class="casterContainer">
+                            <h5><b>@caster.CasterName</b></h5>
+                            @if (caster.Twitter != string.Empty)
+                            {
+                                <a href="@caster.Twitter" target="_blank">
+                                    <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" height=40px width=40px>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 }
 
 @code {
     private IEnumerable<Caster> casters;
 
-    private List<List<Caster>> castersSplit;
+    private List<List<Caster>> casterSplit;
 
     protected override async Task OnInitializedAsync()
     {
         this.casters = casterService.GetAllCasters();
+        this.SplitUpList();
     }
 
     protected void SplitUpList()
     {
-        this.castersSplit = this.casters.SplitList(3);
+        this.casterSplit = this.casters.SplitList(3);
     }
 }
