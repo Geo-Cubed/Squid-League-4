@@ -1,6 +1,7 @@
 ﻿@page "/teams"
 
 @using SquidLeagueWebsite.UI.Data
+@using SquidLeagueWebsite.Utilities
 
 @inject TeamService teamService
 
@@ -151,22 +152,6 @@ else
 
     protected void SplitUpPlayers()
     {
-        var players = new List<List<Player>>();
-        var counter = 0;
-        foreach (var player in this.selectedTeam.Players)
-        {
-            if (counter % 2 == 0)
-            {
-                players.Add(new List<Player>() { player });
-            }
-            else
-            {
-                players.Last().Add(player);
-            }
-
-            ++counter;
-        }
-
-        this.selectedTeamPlayers = players;
+        this.selectedTeamPlayers = this.selectedTeam.Players.SplitList(2);
     }
 }

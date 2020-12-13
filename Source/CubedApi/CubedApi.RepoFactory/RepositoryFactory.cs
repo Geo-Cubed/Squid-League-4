@@ -71,5 +71,21 @@ namespace CubedApi.RepoFactory
 
             return repository;
         }
+
+        public static IRepository<HelpfulPeople> GetHelpfulPeopleRepository(string type, string connectionStr = "")
+        {
+            IRepository<HelpfulPeople> repository = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repository = new HelpfulPeopleRepository(connectionStr);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid helpful people repository");
+            }
+
+            return repository;
+        }
     }
 }

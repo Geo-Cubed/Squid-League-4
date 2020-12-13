@@ -32,6 +32,7 @@ namespace SquidLeagueWebsite.UI
             services.AddSingleton<HomeService>();
             services.AddSingleton<TeamService>();
             services.AddSingleton<CasterService>();
+            services.AddSingleton<HelpfulPeopleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

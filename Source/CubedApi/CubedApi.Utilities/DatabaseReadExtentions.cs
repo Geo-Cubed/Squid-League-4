@@ -8,7 +8,7 @@ namespace CubedApi.Utilities
     public static class DatabaseReadExtentions
     {
         /// <summary>
-        /// Extentionm of the IDataReader interface to allow null checks and grabing value in one go.
+        /// Extention of the IDataReader interface to allow null checks and grabing value in one go.
         /// </summary>
         /// <param name="read">The IDataReader related to the query</param>
         /// <param name="name">The name of the column</param>
@@ -22,7 +22,16 @@ namespace CubedApi.Utilities
                 return false;
             }
 
-            var ordinal = read.GetOrdinal(name);
+            int ordinal;
+            try
+            {
+                ordinal = read.GetOrdinal(name);
+            }
+            catch
+            {
+                return false;
+            }
+
             if (read.IsDBNull(ordinal))
             {
                 return false;
@@ -47,7 +56,16 @@ namespace CubedApi.Utilities
                 return false;
             }
 
-            var ordinal = read.GetOrdinal(name);
+            int ordinal;
+            try
+            {
+                ordinal = read.GetOrdinal(name);
+            }
+            catch
+            {
+                return false;
+            }
+
             if (read.IsDBNull(ordinal))
             {
                 return false;
@@ -72,7 +90,16 @@ namespace CubedApi.Utilities
                 return false;
             }
 
-            var ordinal = read.GetOrdinal(name);
+            int ordinal;
+            try
+            {
+                ordinal = read.GetOrdinal(name);
+            }
+            catch
+            {
+                return false;
+            }
+
             if (read.IsDBNull(ordinal))
             {
                 return false;

@@ -70,5 +70,21 @@ namespace SquidLeagueWebsite.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<HelpfulPeople> GetHelpfulPeopleRepository(string type)
+        {
+            IRepository<HelpfulPeople> repo = null;
+
+            switch (type)
+            {
+                case "API":
+                    repo = new ApiHelpfulPeopleRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid helpful people repository type");
+            }
+
+            return repo;
+        }
     }
 }

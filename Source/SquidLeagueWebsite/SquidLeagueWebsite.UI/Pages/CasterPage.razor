@@ -2,6 +2,7 @@
 
 @using SquidLeagueWebsite.UI.Data
 @using SquidLeagueWebsite.Models
+@using SquidLeagueWebsite.Utilities
 @inject CasterService casterService
 
 <div id="title">Casters</div>
@@ -14,7 +15,7 @@
 }
 else if (casters.Count() == 0)
 {
-
+    
 }
 else
 {
@@ -29,5 +30,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         this.casters = casterService.GetAllCasters();
+    }
+
+    protected void SplitUpList()
+    {
+        this.castersSplit = this.casters.SplitList(3);
     }
 }

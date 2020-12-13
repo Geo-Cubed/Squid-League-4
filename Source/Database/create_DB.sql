@@ -19,6 +19,7 @@
  * game_setting
  * game
  * weapon_played
+ * helpful_people
  * ...
  * user <- might not need depending on log in method.
  * audit
@@ -165,6 +166,15 @@ create table `squid_league_4`.`weapon_played`(
    constraint `FK_weapon_played_weapon` foreign key(`weapon_id`) references `squid_league_4`.`weapon`(`id`),
    constraint `FK_wepaon_played_game` foreign key(`game_id`) references `squid_league_4`.`game`(`id`)
 ) comment 'Used to link a player to a weapon for a particular match';
+
+create table `squid_league_4`.`helpful_people`(
+	`id` int not null auto_increment comment 'Id of the helpful_people table',
+    `user_name` varchar(32) not null comment 'Name of the person',
+    `description` varchar(128) comment 'Short description of what the person did to help',
+    `profile_picture_link` varchar(2000) comment 'Link to the users selected profile picture',
+    `twitter_link` varchar(2000) comment 'Link to the users twitter account',
+    constraint `PK_helpful_people` primary key(`id`)
+) comment 'Used to store people who helped with the project so that I can add more people easily';
 
 /* -- insert more tables here -- */
 
