@@ -31,16 +31,36 @@ else
                         <img class="casterCardImg" src="@caster.ProfilePicturePath">
                         <div class="casterContainer">
                             <h5><b>@caster.CasterName</b></h5>
-                            @if (caster.Twitter != string.Empty)
+                            @if (!string.IsNullOrEmpty(caster.Discord))
                             {
-                                <a href="@caster.Twitter" target="_blank">
-                                    <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" height=40px width=40px>
-                                </a>
+                                <p>
+                                    <img src="Images/brandLogos/Discord/Discord-Logo-Color.svg" height=40px width=40px>
+                                    @caster.Discord
+                                </p>
                             }
-                            else
-                            {
-                                <img class="greyScale" src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" height=40px width=40px>
-                            }
+
+                            <p>
+                                @if (!string.IsNullOrEmpty(caster.Twitter))
+                                {
+                                    <a href="@caster.Twitter" target="_blank">
+                                        <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" height=40px width=40px>
+                                    </a>
+                                }
+
+                                @if (!string.IsNullOrEmpty(caster.Twitch))
+                                {
+                                    <a href="@caster.Twitch" target="_blank">
+                                        <img src="Images/brandLogos/twitch.svg" height=30px width=30px>
+                                    </a>
+                                }
+
+                                @if (!string.IsNullOrEmpty(caster.YouTube))
+                                {
+                                    <a href="@caster.YouTube" target="_blank">
+                                        <img src="Images/brandLogos/Youtube/social/1024px/red/youtube_social_icon_red.png" height=25px>
+                                    </a>
+                                }
+                            </p>
                         </div>
                     </div>
                 }
@@ -56,6 +76,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        this.casters = new List<Caster>()
+        {
+            new Caster() { Id = 1, CasterName = "Conro", Discord = "Conro#0001", Twitter = "https://twitter.com/Conro_UK", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1267438295941820418/OqS0LxB9_400x400.jpg"},
+            new Caster() { Id = 2, CasterName = "McFootie", Discord = "McFootie#0001", Twitter = "https://twitter.com/McF00tie", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1247618735021658112/D3w6W7Vd_400x400.jpg" },
+            new Caster() { Id = 3, CasterName = "Rachelski", Discord = "Rachelski#0001", Twitter = "https://twitter.com/Rachelskiiiiiii", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1312064057579638784/7ZOpnQZg_400x400.jpg" },
+            new Caster() { Id = 4, CasterName = "Geo-Cubed", Discord = "Geo Cubed#4853", Twitter = "https://twitter.com/Geo_Cubed", Twitch = "https://twitch.com/GeoCubed", YouTube = "https://youtube.com/Geosting", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1235141371952009217/u1XMfJsG_400x400.jpg"}
+        };
+
+        this.SplitUpList();
+        return;
+
         this.casters = casterService.GetAllCasters();
         this.SplitUpList();
     }
