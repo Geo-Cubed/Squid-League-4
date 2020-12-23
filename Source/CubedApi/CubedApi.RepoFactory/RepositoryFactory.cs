@@ -87,5 +87,37 @@ namespace CubedApi.RepoFactory
 
             return repository;
         }
+
+        public static IRepository<Match> GetSwissMatchRepository(string type, string connectionStr = "")
+        {
+            IRepository<Match> repository = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repository = new SwissMatchRepository(connectionStr);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid swiss match repository");
+            }
+
+            return repository;
+        }
+
+        public static IRepository<SingleMatchInformation> GetSingleMatchRepository(string type, string connectionStr = "")
+        {
+            IRepository<SingleMatchInformation> repository = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repository = new SingleMatchRepository(connectionStr);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid single match repository");
+            }
+
+            return repository;
+        }
     }
 }

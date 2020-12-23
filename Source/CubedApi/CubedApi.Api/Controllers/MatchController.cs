@@ -12,17 +12,24 @@ using System.Threading.Tasks;
 
 namespace CubedApi.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("_apis/[controller]")]
     [ApiController]
     public class MatchController : ControllerBase
     {
-        // GET: api/<MatchController>
+        // GET: _apis/<MatchController>
         [HttpGet]
-        public ActionResult<List<Match>> Get()
+        public ActionResult<List<Match>> GetAllMatches()
+        {
+            throw new NotImplementedException();
+        }
+
+        // GET: _apis/<MatchController>/swiss
+        [HttpGet("swiss")]
+        public ActionResult<List<Match>> GetSwissMatches()
         {
             try
             {
-                return (List<Match>)MatchCommands.GetAllMatches();
+                return (List<Match>)MatchCommands.GetAllSwissMatches();
             }
             catch (NoDataException)
             {

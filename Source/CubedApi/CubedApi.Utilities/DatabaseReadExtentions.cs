@@ -108,5 +108,39 @@ namespace CubedApi.Utilities
             value = read.GetDouble(ordinal);
             return true;
         }
+
+        /// <summary>
+        /// Extention of the IDataReader interface to allow null checks and grabbing a value
+        /// </summary>
+        /// <param name="read">The data reader containing the data</param>
+        /// <param name="name">The name of the column</param>
+        /// <param name="value">The datetime? that is to be expected</param>
+        /// <returns>True if the value was found false otherwise.</returns>
+        public static bool TryGetValue(this IDataReader read, string name, out DateTime? value)
+        {
+            value = null;
+            if (read.IsClosed)
+            {
+                return false;
+            }
+
+            int ordinal;
+            try
+            {
+                ordinal = read.GetOrdinal(name);
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (read.IsDBNull(ordinal))
+            {
+                return false;
+            }
+
+            value = read.GetDateTime(ordinal);
+            return true;
+        }
     }
 }

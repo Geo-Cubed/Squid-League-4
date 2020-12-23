@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <Content Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Images\Droplets\droplets1.png" />
     <Content Remove="wwwroot\Images\Droplets\droplets2.png" />
     <Content Remove="wwwroot\Images\Droplets\droplets3.png" />
@@ -248,10 +255,6 @@
     <ProjectReference Include="..\SquidLeagueWebsite.RepoFactory\SquidLeagueWebsite.RepoFactory.csproj" />
     <ProjectReference Include="..\SquidLeagueWebsite.RepositoryInterface\SquidLeagueWebsite.RepositoryInterface.csproj" />
     <ProjectReference Include="..\SquidLeagueWebsite.Utilities\SquidLeagueWebsite.Utilities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>

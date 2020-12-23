@@ -20,11 +20,11 @@ namespace CubedApi.BLL.Matches
         static MatchCommands()
         {
             connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            matchRepository = RepositoryFactory.GetMatchRepository("SQL", connectionStr);
+            matchRepository = RepositoryFactory.GetSwissMatchRepository("SQL", connectionStr);
             singleMatchRepository = RepositoryFactory.GetSingleMatchRepository("SQL", connectionStr);
         }
 
-        public static IEnumerable<Match> GetAllMatches()
+        public static IEnumerable<Match> GetAllSwissMatches()
         {
             var matches = matchRepository.GetItems();
             if (matches.Count() == 0)

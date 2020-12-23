@@ -28,6 +28,12 @@ namespace SquidLeagueWebsite.Models
 
         public string MatchVodType { get; set; }
 
-        public DateTime MatchDate { get; set; }
+        public DateTime? MatchDate { get; set; }
+
+        public bool IsSwiss { get; set; }
+
+        public int? Week { get; set; }
+
+        public string Stage { get; set; }
     }
 }
