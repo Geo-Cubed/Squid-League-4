@@ -107,4 +107,25 @@ begin
 		m.`id` = matchId;  
 end|
 
+drop procedure if exists get_upcomming_matches|
+create procedure get_upcomming_matches()
+begin
+	select
+		t1.`team_name` as 'homeTeamName',
+        t2.`team_name` as 'awayTeamName',
+        m.`match_date` as 'matchDate',
+        m.`match_vod_link` as 'streamLink'
+	from
+		`match` as m
+			inner join
+		`team` as t1 on m.`home_team_id` = t1.`id`
+			inner join
+		`team` as t2 on m.`away_team_id` = t2.`id`
+	where
+		m.`match_date` >= now()
+        and m.`match_date` <= date_add(now(), interval 1 week)
+    order by
+		m.`match_date` asc;
+end|
+
 delimiter ;
