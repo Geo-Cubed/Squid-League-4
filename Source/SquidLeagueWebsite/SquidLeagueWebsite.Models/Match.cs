@@ -28,7 +28,7 @@ namespace SquidLeagueWebsite.Models
 
         public string MatchVodType { get; set; }
 
-        public DateTime? MatchDate { get; set; }
+        public DateTime MatchDate { get; set; } // Can't make this null as then I can't convert to short date string
 
         public bool IsSwiss { get; set; }
 
