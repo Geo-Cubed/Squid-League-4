@@ -5,6 +5,7 @@
 * Database (MySql)
 * Api (ASP.Net Core)
 * Website (ASP.Net Core)
+* Admin App (WPF .Net Core)
 
 # Website
 Accessable at : (Currently not published)
