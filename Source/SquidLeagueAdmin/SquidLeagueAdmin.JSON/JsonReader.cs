@@ -6,6 +6,6 @@ namespace SquidLeagueAdmin.JSON
 {
     public class JsonReader
     {
-
+        
     }
 }

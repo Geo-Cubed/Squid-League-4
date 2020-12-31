@@ -7,6 +7,14 @@ namespace SquidLeagueAdmin.RepoFactory
 {
     public static class RepositoryFactory
     {
+        // Store the connection string for the database.
+        static readonly string connectionStr;
+
+        static RepositoryFactory()
+        {
+            // TODO: Get the connection string for the database.
+        }
+
         // Do repo stuff here.
         public static IRepository<Config> GetConfigRepository(string type)
         {
