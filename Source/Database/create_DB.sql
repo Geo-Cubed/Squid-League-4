@@ -25,7 +25,7 @@
  * audit
  */
 
-drop database if exists `squid_league_4`;
+-- this will cause an error if there is already a sl4 db (this is fine as we don't want to be just deleting any db we come across)	
 create database `squid_league_4`;
 
 create table `squid_league_4`.`team`(

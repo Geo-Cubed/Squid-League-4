@@ -7,8 +7,47 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+    <Page Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\bottomBar.png" />
+    <None Remove="Images\cog.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Matches\" />
+    <Folder Include="ViewModels\GameSettings\" />
+    <Folder Include="ViewModels\Casters\" />
+    <Folder Include="ViewModels\HelpfulPeople\" />
+    <Folder Include="ViewModels\Admins\" />
+    <Folder Include="ViewModels\Maps\" />
+    <Folder Include="ViewModels\Weapons\" />
+    <Folder Include="ViewModels\Results\" />
+    <Folder Include="ViewModels\Teams\" />
+    <Folder Include="ViewModels\Players\" />
+    <Folder Include="Views\Admins\" />
+    <Folder Include="Views\Casters\" />
+    <Folder Include="Views\GameSettings\" />
+    <Folder Include="Views\HelpfulPeople\" />
+    <Folder Include="Views\Maps\" />
+    <Folder Include="Views\Matches\" />
+    <Folder Include="Views\Weapons\" />
+    <Folder Include="Views\Teams\" />
+    <Folder Include="Views\Results\" />
+    <Folder Include="Views\Players\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\bottomBar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\cog.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
