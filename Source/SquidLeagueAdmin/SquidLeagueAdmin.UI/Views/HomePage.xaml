@@ -9,8 +9,9 @@
       Title="Home">
 
     <Grid>
-        <StackPanel>
+        <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Squid League 4 Admin Panel" FontSize="24" HorizontalAlignment="Center"/>
+            <TextBlock Text="Edit data in style 😎" FontSize="22" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>

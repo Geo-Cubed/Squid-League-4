@@ -25,6 +25,7 @@
     <Folder Include="ViewModels\HelpfulPeople\" />
     <Folder Include="ViewModels\Admins\" />
     <Folder Include="ViewModels\Maps\" />
+    <Folder Include="ViewModels\Settings\" />
     <Folder Include="ViewModels\Weapons\" />
     <Folder Include="ViewModels\Results\" />
     <Folder Include="ViewModels\Teams\" />
@@ -35,6 +36,7 @@
     <Folder Include="Views\HelpfulPeople\" />
     <Folder Include="Views\Maps\" />
     <Folder Include="Views\Matches\" />
+    <Folder Include="Views\Settings\" />
     <Folder Include="Views\Weapons\" />
     <Folder Include="Views\Teams\" />
     <Folder Include="Views\Results\" />
