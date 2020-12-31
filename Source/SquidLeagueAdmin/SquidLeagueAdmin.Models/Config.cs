@@ -2,7 +2,7 @@
 
 namespace SquidLeagueAdmin.Models
 {
-    public class Class1
+    public class Config
     {
     }
 }

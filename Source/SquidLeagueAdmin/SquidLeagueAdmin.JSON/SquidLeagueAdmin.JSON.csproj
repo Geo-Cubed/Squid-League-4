@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SquidLeagueAdmin.JSON\SquidLeagueAdmin.JSON.csproj" />
     <ProjectReference Include="..\SquidLeagueAdmin.Models\SquidLeagueAdmin.Models.csproj" />
     <ProjectReference Include="..\SquidLeagueAdmin.RepositoryInterface\SquidLeagueAdmin.RepositoryInterface.csproj" />
   </ItemGroup>
