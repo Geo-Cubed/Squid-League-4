@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>duckling.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
   <ItemGroup>
     <None Remove="Images\bottomBar.png" />
     <None Remove="Images\cog.png" />
+    <None Remove="Images\duckling.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,17 +32,6 @@
     <Folder Include="ViewModels\Results\" />
     <Folder Include="ViewModels\Teams\" />
     <Folder Include="ViewModels\Players\" />
-    <Folder Include="Views\Admins\" />
-    <Folder Include="Views\Casters\" />
-    <Folder Include="Views\GameSettings\" />
-    <Folder Include="Views\HelpfulPeople\" />
-    <Folder Include="Views\Maps\" />
-    <Folder Include="Views\Matches\" />
-    <Folder Include="Views\Settings\" />
-    <Folder Include="Views\Weapons\" />
-    <Folder Include="Views\Teams\" />
-    <Folder Include="Views\Results\" />
-    <Folder Include="Views\Players\" />
   </ItemGroup>
 
   <ItemGroup>
