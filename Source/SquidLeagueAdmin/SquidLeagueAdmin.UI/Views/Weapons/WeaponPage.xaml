@@ -34,8 +34,8 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ComboBox x:Name="cmbWeapons" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-            <TextBox x:Name="tcImgName" Text="Kensa Splatterscope" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,2"/>
-            <TextBox x:Name="tbImgPath" Text="/Images/Splatoon/Weapons/Charger/KensaSplatterscope.png" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tcImgName" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,2"/>
+            <TextBox x:Name="tbImgPath" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbSub" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbSpecial" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbRole" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
