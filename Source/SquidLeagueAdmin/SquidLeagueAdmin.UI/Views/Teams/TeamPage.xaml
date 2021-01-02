@@ -9,8 +9,39 @@
       Title="TeamPage">
 
     <Grid>
-        <StackPanel VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="2">
             <TextBlock Text="Teams Page" FontSize="24" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Text="Select Team:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Team Name:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Is Active:" FontSize="20" HorizontalAlignment="Right"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ComboBox x:Name="cmbTeams" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbTeamName" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <CheckBox x:Name="ckbIsActive" IsChecked="True" Margin="5,10,0,2"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label x:Name="lblSaved" Content="Team Saved" Foreground="Green"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
