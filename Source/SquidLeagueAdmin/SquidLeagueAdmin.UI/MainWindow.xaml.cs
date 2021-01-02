@@ -2,6 +2,7 @@
 using SquidLeagueAdmin.UI.Views.Admins;
 using SquidLeagueAdmin.UI.Views.Casters;
 using SquidLeagueAdmin.UI.Views.GameSettings;
+using SquidLeagueAdmin.UI.Views.HelpfulPeople;
 using SquidLeagueAdmin.UI.Views.Maps;
 using SquidLeagueAdmin.UI.Views.Matches;
 using SquidLeagueAdmin.UI.Views.Players;
@@ -90,6 +91,11 @@ namespace SquidLeagueAdmin.UI
         private void BtnConfig_Click(object sender, RoutedEventArgs e)
         {
             mainContent.Content = new SettingPage();
+        }
+
+        private void BtnHelpfulPeople_Click(object sender, RoutedEventArgs e)
+        {
+            mainContent.Content = new HelpfulPeoplePage();
         }
     }
 }

@@ -25,6 +25,7 @@
             <Button x:Name="BtnWeapons" Content="Weapons" Click="BtnWeapons_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
             <Button x:Name="BtnCasters" Content="Casters" Click="BtnCasters_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
             <Button x:Name="BtnAdmins" Content="Admins" Click="BtnAdmins_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
+            <Button x:Name="BtnHelpfulPeople" Content="Helpful People" Click="BtnHelpfulPeople_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Margin="0,2,0,0">
             <Button x:Name="BtnConfig" Click="BtnConfig_Click" Style="{StaticResource headerButton}">
