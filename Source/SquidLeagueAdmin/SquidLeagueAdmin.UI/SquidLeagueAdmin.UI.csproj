@@ -247,7 +247,6 @@
     <Folder Include="ViewModels\GameSettings\" />
     <Folder Include="ViewModels\Casters\" />
     <Folder Include="ViewModels\HelpfulPeople\" />
-    <Folder Include="ViewModels\Admins\" />
     <Folder Include="ViewModels\Maps\" />
     <Folder Include="ViewModels\Settings\" />
     <Folder Include="ViewModels\Weapons\" />
