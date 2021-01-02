@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         
         <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="2">
-            <TextBlock Text="Teams Page" FontSize="24" HorizontalAlignment="Center"/>
+            <TextBlock Text="Teams" FontSize="24" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top">
