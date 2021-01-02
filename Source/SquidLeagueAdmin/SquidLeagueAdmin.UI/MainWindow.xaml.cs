@@ -73,11 +73,6 @@ namespace SquidLeagueAdmin.UI
             mainContent.Content = new CasterPage();
         }
 
-        private void BtnAdmins_Click(object sender, RoutedEventArgs e)
-        {
-            mainContent.Content = new AdminPage();
-        }
-
         private void BtnWeapons_Click(object sender, RoutedEventArgs e)
         {
             mainContent.Content = new WeaponPage();
