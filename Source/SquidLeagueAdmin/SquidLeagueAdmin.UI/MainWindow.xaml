@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SquidLeagueAdmin.UI"
         mc:Ignorable="d"
-        Title="Squid League 4 Admin Panel" Height="450" Width="800">
+        Title="Squid League 4 Admin Panel" Height="500" Width="850">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/> <!-- Nav Menu -->

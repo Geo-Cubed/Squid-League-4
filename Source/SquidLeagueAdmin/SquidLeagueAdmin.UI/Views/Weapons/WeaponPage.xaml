@@ -9,8 +9,44 @@
       Title="WeaponPage">
 
     <Grid>
-        <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="Weapons Page" FontSize="24" HorizontalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Text="Weapons" FontSize="24" HorizontalAlignment="Center"/>
         </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <ComboBox x:Name="cmbWeapons" Width="200"/>
+            <Image x:Name="weaponImg" Source="/Images/Splatoon/Weapons/Charger/KensaSplatterscope.png" Width="75"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Text="Weapon:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Image Path:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Sub:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Special:" FontSize="20" HorizontalAlignment="Right"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBox x:Name="tcImgName" Text="Kensa Splatterscope" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,0"/>
+            <TextBox x:Name="tbImgPath" Text="/Images/Splatoon/Weapons/Charger/KensaSplatterscope.png" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbSub" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbSpecial" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Label x:Name="lblSave" Content="Weapon Saved" Foreground="Green"/>
+        </StackPanel>
+
+        <Button x:Name="btnSave" Content="Save" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="100" Height="20"/>
     </Grid>
 </Page>

@@ -39,6 +39,10 @@
             <PasswordBox x:Name="pbPassword" Height="20" Width="300" Margin="5,5,0,2"/>
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label x:Name="lblSaved" Content="Settings Saved" Foreground="Green"/>
+        </StackPanel>
+
         <Button x:Name="btnSave" Content="Save" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="100" Height="20"/>
     </Grid>
 </Page>
