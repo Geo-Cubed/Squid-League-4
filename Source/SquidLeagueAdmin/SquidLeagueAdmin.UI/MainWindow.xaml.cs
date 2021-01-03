@@ -34,7 +34,7 @@ namespace SquidLeagueAdmin.UI
             mainContent.Content = new MatchPage();
         }
 
-        private void BtnResult_Click(object sender, RoutedEventArgs e)
+        private void BtnResults_Click(object sender, RoutedEventArgs e)
         {
             mainContent.Content = new ResultPage();
         }
