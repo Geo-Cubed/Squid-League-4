@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{34FCC42B-7737-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.UI", "SquidLeagueAdmin.UI\SquidLeagueAdmin.UI.csproj", "{9D3A5F96-A904-4DA8-BF2C-62D488AD48EE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{996DB350-C7AE-4A88-A697-628024B4A2CE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{996DB350-C7AE-4A88-A697-628024B4A2CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{70778A89-F788-4DCB-B5F9-3F4BE10CD704}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.CustomExce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.Models", "SquidLeagueAdmin.Models\SquidLeagueAdmin.Models.csproj", "{10C4A451-9939-440A-9985-0937C91EC5C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquidLeagueAdmin.JSON", "SquidLeagueAdmin.JSON\SquidLeagueAdmin.JSON.csproj", "{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.JSON", "SquidLeagueAdmin.JSON\SquidLeagueAdmin.JSON.csproj", "{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

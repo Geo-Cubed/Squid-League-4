@@ -243,19 +243,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Matches\" />
-    <Folder Include="ViewModels\GameSettings\" />
-    <Folder Include="ViewModels\Casters\" />
-    <Folder Include="ViewModels\HelpfulPeople\" />
-    <Folder Include="ViewModels\Maps\" />
-    <Folder Include="ViewModels\Settings\" />
-    <Folder Include="ViewModels\Weapons\" />
-    <Folder Include="ViewModels\Results\" />
-    <Folder Include="ViewModels\Teams\" />
-    <Folder Include="ViewModels\Players\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Images\bottomBar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
