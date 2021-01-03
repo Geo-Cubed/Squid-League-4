@@ -9,8 +9,44 @@
       Title="MatchPage">
 
     <Grid>
-        <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="Match Page" FontSize="24" HorizontalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="2">
+            <TextBlock Text="Matches" FontSize="24" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1">
+            <TextBlock Text="Select Bracket:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Select Bracket Stage:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Select Match:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Home Team:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Away Team:" FontSize="20" HorizontalAlignment="Right"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
+            <ComboBox x:Name="cmbBracket" Width="100" Height="20" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <ComboBox x:Name="cmbBracketStage" Width="100" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbMatch" Width="100" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbHomeTeam" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbAwayTeam" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label x:Name="lblSaved" Content="Match Saved" Foreground="Green"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnDelete" Content="Delete" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

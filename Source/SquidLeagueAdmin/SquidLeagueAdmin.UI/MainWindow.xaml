@@ -16,8 +16,8 @@
         <Rectangle Fill="#3f3f3f" Grid.Row="0"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
             <Button x:Name="BtnHome" Content="Home" Click="BtnHome_Click" Margin="5,0,0,0" Style="{StaticResource headerButton}"/>
-            <Button x:Name="BtnBracket" Content="Bracket" Click="BtnBracket_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
-            <Button x:Name="BtnMatchInsert" Content="Match Results" Click="BtnMatchInsert_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
+            <Button x:Name="BtnMatchInsert" Content="Matches" Click="BtnMatchInsert_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
+            <Button x:Name="BtnResults" Content="Results" Click="BtnResults_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
             <Button x:Name="BtnGameSettings" Content="Game Settings" Click="BtnGameSettings_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
             <Button x:Name="BtnTeams" Content="Teams" Click="BtnTeams_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
             <Button x:Name="BtnPlayers" Content="Players" Click="BtnPlayers_Click" Margin="10,0,0,0" Style="{StaticResource headerButton}"/>
