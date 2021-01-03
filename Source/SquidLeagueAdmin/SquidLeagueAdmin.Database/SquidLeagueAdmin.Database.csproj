@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.22" />
+    <ProjectReference Include="..\SquidLeagueAdmin.JSON\SquidLeagueAdmin.JSON.csproj" />
+    <ProjectReference Include="..\SquidLeagueAdmin.Models\SquidLeagueAdmin.Models.csproj" />
+    <ProjectReference Include="..\SquidLeagueAdmin.RepositoryInterface\SquidLeagueAdmin.RepositoryInterface.csproj" />
   </ItemGroup>
 
 </Project>

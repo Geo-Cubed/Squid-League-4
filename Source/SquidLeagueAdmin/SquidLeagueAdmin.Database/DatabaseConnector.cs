@@ -1,7 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using SquidLeagueAdmin.Database.Interfaces;
+using SquidLeagueAdmin.JSON.Repositories;
 using System;
 using System.Data;
+using System.Linq;
 
 namespace SquidLeagueAdmin.Database
 {
@@ -9,12 +11,17 @@ namespace SquidLeagueAdmin.Database
     {
         private MySqlConnection connection;
 
-        public DatabaseConnector(string connectionStr)
+        public DatabaseConnector()
         {
-            if (string.IsNullOrEmpty(connectionStr))
+            var repo = new JsonConfigRepository();
+            var config = repo.GetItems().FirstOrDefault(); ;
+
+            if (config == null)
             {
                 throw new ArgumentException("Cannot connect with an empty connection string.");
             }
+
+            var connectionStr = $"SERVER={config.Address};UID={config.Username};PORT={config.Port};DATABASE={config.DatabaseName};PASSWORD={config.Password};";
 
             this.connection = new MySqlConnection(connectionStr);
         }
