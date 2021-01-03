@@ -7,7 +7,7 @@ namespace SquidLeagueAdmin.JSON.Repositories
 {
     public class JsonConfigRepository : JsonReader, IRepository<Config>
     {
-        public void AddItem(Config item)
+        public bool AddItem(Config item)
         {
             throw new NotImplementedException();
         }

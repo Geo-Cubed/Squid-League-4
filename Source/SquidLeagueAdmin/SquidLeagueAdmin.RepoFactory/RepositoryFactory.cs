@@ -1,20 +1,13 @@
 ﻿using SquidLeagueAdmin.JSON.Repositories;
 using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
+using SquidLeagueAdmin.Database.Repositories;
 using System;
 
 namespace SquidLeagueAdmin.RepoFactory
 {
     public static class RepositoryFactory
     {
-        // Store the connection string for the database.
-        static readonly string connectionStr;
-
-        static RepositoryFactory()
-        {
-            // TODO: Get the connection string for the database.
-        }
-
         // Do repo stuff here.
         public static IRepository<Config> GetConfigRepository(string type)
         {
@@ -27,6 +20,22 @@ namespace SquidLeagueAdmin.RepoFactory
                     break;
                 default:
                     throw new ArgumentException("Invalid config repository type used.");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<Team> GetTeamRepository(string type)
+        {
+            IRepository<Team> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseTeamRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid team repository used.");
             }
 
             return repo;

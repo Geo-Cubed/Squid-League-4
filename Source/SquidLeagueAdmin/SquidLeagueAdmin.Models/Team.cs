@@ -10,6 +10,6 @@ namespace SquidLeagueAdmin.Models
 
         public string TeamName { get; set; }
 
-        public bool is_active { get; set; }
+        public int IsActive { get; set; }
     }
 }

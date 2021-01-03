@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SquidLeagueAdmin.JSON", "SquidLeagueAdmin.JSON\SquidLeagueAdmin.JSON.csproj", "{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SquidLeagueAdmin.Utilities", "SquidLeagueAdmin.Utilities\SquidLeagueAdmin.Utilities.csproj", "{8FB7DF09-AA15-4D23-BE14-754E97CBCE57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB7DF09-AA15-4D23-BE14-754E97CBCE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB7DF09-AA15-4D23-BE14-754E97CBCE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB7DF09-AA15-4D23-BE14-754E97CBCE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB7DF09-AA15-4D23-BE14-754E97CBCE57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{8D277B7F-74E2-4E49-81B2-6D2866AE6047} = {70778A89-F788-4DCB-B5F9-3F4BE10CD704}
 		{10C4A451-9939-440A-9985-0937C91EC5C8} = {996DB350-C7AE-4A88-A697-628024B4A2CE}
 		{C6BD21E3-79A2-4B5F-A9ED-49E5954DED91} = {27EC8ED4-5DC8-4519-A44D-136382D0CBF2}
+		{8FB7DF09-AA15-4D23-BE14-754E97CBCE57} = {70778A89-F788-4DCB-B5F9-3F4BE10CD704}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F32B7921-9EA2-48F8-B39E-6C71489F3B84}

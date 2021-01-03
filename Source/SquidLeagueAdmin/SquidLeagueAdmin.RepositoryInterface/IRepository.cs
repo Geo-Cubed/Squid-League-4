@@ -11,7 +11,7 @@ namespace SquidLeagueAdmin.RepositoryInterface
 
         public void InsertItems(IEnumerable<T> items);
 
-        public void AddItem(T item);
+        public bool AddItem(T item);
 
         public bool UpdateItem(T item);
 

@@ -1,5 +1,6 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
+using SquidLeagueAdmin.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,14 +13,46 @@ namespace SquidLeagueAdmin.Database.Repositories
         {
         }
 
-        public void AddItem(Team item)
+        public bool AddItem(Team item)
         {
-            throw new NotImplementedException();
+            if (!this.TryOpenConnection())
+            {
+                throw new Exception("There was an issue while trying to open the database connection.");
+            }
+
+            var query = $"call admin_create_team('{item.TeamName}', {item.IsActive});";
+            try
+            {
+                this.NoReturnQuery(query);
+            }
+            catch
+            {
+                return false;
+            }
+
+            this.TryCloseConnection();
+            return true;
         }
 
         public bool DeleteItem(Team item)
         {
-            throw new NotImplementedException();
+            if (!this.TryOpenConnection())
+            {
+                throw new Exception("There was an issue while trying to open the database connection.");
+            }
+
+            var query = $"call admin_delete_team({item.Id});";
+            try
+            {
+                this.NoReturnQuery(query);
+            }
+            catch
+            {
+                return false;
+            }
+
+            this.TryCloseConnection();
+            return true;
         }
 
         public Team GetItem(int id)
@@ -29,7 +62,26 @@ namespace SquidLeagueAdmin.Database.Repositories
 
         public IEnumerable<Team> GetItems()
         {
-            throw new NotImplementedException();
+            if (!this.TryOpenConnection())
+            {
+                throw new Exception("There was an issue while trying to open the database connection.");
+            }
+
+            var result = new List<Team>();
+            var query = "call admin_get_all_team_information();";
+            var read = this.SelectQuery(query);
+            while (read.Read())
+            {
+                result.Add(new Team()
+                {
+                    Id = read.TryGetValue("id", out int? id) ? (int)id : -1,
+                    TeamName = read.TryGetValue("teamName", out string teamName) ? teamName : string.Empty,
+                    IsActive = read.TryGetValue("isActive", out int? isActive) ? (int)isActive : 0
+                });
+            }
+
+            this.TryCloseConnection();
+            return result;
         }
 
         public void InsertItems(IEnumerable<Team> items)
@@ -39,7 +91,23 @@ namespace SquidLeagueAdmin.Database.Repositories
 
         public bool UpdateItem(Team item)
         {
-            throw new NotImplementedException();
+            if (!this.TryOpenConnection())
+            {
+                throw new Exception("There was an issue while trying to open the database connection.");
+            }
+
+            var query = $"call admin_update_team_information({item.Id}, '{item.TeamName}', {item.IsActive});";
+            try
+            {
+                this.NoReturnQuery(query);
+            }
+            catch
+            {
+                return false;
+            }
+
+            this.TryCloseConnection();
+            return true;
         }
     }
 }
