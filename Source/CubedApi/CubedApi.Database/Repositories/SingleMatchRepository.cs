@@ -29,8 +29,8 @@ namespace CubedApi.Database.Repositories
             }
 
             var data = new SingleMatchInformation();
-            var query = $"call get_single_match_information_by_id({id});";
-            var read = this.SelectQuery(query);
+            var query = $"call get_single_match_information_by_id(@param_1);";
+            var read = this.SelectQuery(query, id);
             while (read.Read())
             {
                 data.MatchInforamtion = new Match() 
@@ -53,8 +53,8 @@ namespace CubedApi.Database.Repositories
             }
 
             read.Close();
-            query = $"call get_set_information_by_match_id({id});";
-            read = this.SelectQuery(query);
+            query = $"call get_set_information_by_match_id(@param_1);";
+            read = this.SelectQuery(query, id);
             while (read.Read())
             {
 

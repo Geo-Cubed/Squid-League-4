@@ -10,7 +10,7 @@ namespace CubedApi.Database.Repositories.Extentions
     {
         public static CasterProfile GetCasterByMatchId(this IRepository<CasterProfile> casterRepository, int id)
         {
-            var query = $"call get_caster_by_match_id({id});";
+            var query = $"call get_caster_by_match_id(@param_1);";
             var connection = casterRepository.GetConnection();
             CasterProfile result = null;
             if (!connection.TryOpenConnection())
@@ -18,7 +18,7 @@ namespace CubedApi.Database.Repositories.Extentions
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = connection.SelectQuery(query);
+            var read = connection.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new CasterProfile()

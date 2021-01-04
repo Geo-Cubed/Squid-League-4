@@ -12,7 +12,7 @@ namespace CubedApi.Database.Repositories.Extentions
     {
         public static IEnumerable<Player> GetPlayersByTeamId(this IRepository<Player> playerRepository, int teamId)
         {
-            string query = $"call get_players_by_team_id({teamId});";
+            string query = $"call get_players_by_team_id(@param_1);";
             var connection = playerRepository.GetConnection();
             var result = new List<Player>();
             if (!connection.TryOpenConnection())
@@ -20,7 +20,7 @@ namespace CubedApi.Database.Repositories.Extentions
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = connection.SelectQuery(query);
+            var read = connection.SelectQuery(query, teamId);
             while (read.Read())
             {
                 result.Add(new Player()

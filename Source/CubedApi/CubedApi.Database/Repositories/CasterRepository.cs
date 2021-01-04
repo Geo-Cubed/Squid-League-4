@@ -22,14 +22,14 @@ namespace CubedApi.Database.Repositories
 
         public CasterProfile GetItem(int id)
         {
-            var query = $"call get_caster_by_id({id});";
+            var query = $"call get_caster_by_id(@param_1);";
             CasterProfile result = null;
             if (!this.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new CasterProfile()

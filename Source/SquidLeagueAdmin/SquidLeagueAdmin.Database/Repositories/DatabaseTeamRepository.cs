@@ -20,10 +20,10 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = $"call admin_create_team('{item.TeamName}', {item.IsActive});";
+            var query = $"call admin_create_team(@param_1, @param_2);";
             try
             {
-                this.NoReturnQuery(query);
+                this.NoReturnQuery(query, item.TeamName, item.IsActive);
             }
             catch
             {
@@ -41,10 +41,10 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = $"call admin_delete_team({item.Id});";
+            var query = $"call admin_delete_team(@param_1);";
             try
             {
-                this.NoReturnQuery(query);
+                this.NoReturnQuery(query, item.Id);
             }
             catch
             {
@@ -96,10 +96,10 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = $"call admin_update_team_information({item.Id}, '{item.TeamName}', {item.IsActive});";
+            var query = $"call admin_update_team_information(@param_1, @param_2, @param_3);";
             try
             {
-                this.NoReturnQuery(query);
+                this.NoReturnQuery(query, item.Id, item.TeamName, item.IsActive);
             }
             catch
             {

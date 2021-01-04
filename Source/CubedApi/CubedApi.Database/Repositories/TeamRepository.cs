@@ -22,14 +22,14 @@ namespace CubedApi.Database.Repositories
 
         public Team GetItem(int id)
         {
-            string query = $"call get_team_by_id({id});";
+            string query = $"call get_team_by_id(@param_1);";
             Team result = null;
             if (!this.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new Team()

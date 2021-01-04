@@ -10,8 +10,8 @@
 
         public bool TryCloseConnection();
 
-        public IDataReader SelectQuery(string query);
+        public IDataReader SelectQuery(string query, params object?[] args);
 
-        public void NoReturnQuery(string query);
+        public void NoReturnQuery(string query, params object?[]args);
     }
 }
