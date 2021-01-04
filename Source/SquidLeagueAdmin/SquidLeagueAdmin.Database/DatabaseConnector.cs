@@ -35,6 +35,11 @@ namespace SquidLeagueAdmin.Database
             return this;
         }
 
+        /// <summary>
+        /// Load the provided parameters into the command
+        /// </summary>
+        /// <param name="cmd">Command to load parameters into</param>
+        /// <param name="args">Array of parameters to load</param>
         private void LoadParameters(ref MySqlCommand cmd, object?[] args)
         {
             var counter = 1;
@@ -77,9 +82,12 @@ namespace SquidLeagueAdmin.Database
                 throw new ArgumentException("Cannot run an empty query.");
             }
 
-            // TODO: Load in params
-
             var cmd = new MySqlCommand(query, this.connection);
+            if (args != null && args.Count() > 0)
+            {
+                this.LoadParameters(ref cmd, args);
+            }
+
             return cmd.ExecuteReader();
         }
 
