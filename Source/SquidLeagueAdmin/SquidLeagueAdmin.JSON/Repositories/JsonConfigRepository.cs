@@ -7,9 +7,12 @@ namespace SquidLeagueAdmin.JSON.Repositories
 {
     public class JsonConfigRepository : JsonReader, IRepository<Config>
     {
+        private const string path = "D:/config.json";
+
         public bool AddItem(Config item)
         {
-            throw new NotImplementedException();
+            this.Write(item, path);
+            return true;
         }
 
         public bool DeleteItem(Config item)
@@ -24,7 +27,8 @@ namespace SquidLeagueAdmin.JSON.Repositories
 
         public IEnumerable<Config> GetItems()
         {
-            throw new NotImplementedException();
+            var item = this.Read<Config>(path);
+            return new List<Config>() { item };
         }
 
         public void InsertItems(IEnumerable<Config> items)

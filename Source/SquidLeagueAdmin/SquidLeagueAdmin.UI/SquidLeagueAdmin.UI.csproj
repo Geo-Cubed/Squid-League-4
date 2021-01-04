@@ -243,6 +243,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.0.0.1909" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SquidLeagueAdmin.Models\SquidLeagueAdmin.Models.csproj" />
+    <ProjectReference Include="..\SquidLeagueAdmin.RepoFactory\SquidLeagueAdmin.RepoFactory.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\bottomBar.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
