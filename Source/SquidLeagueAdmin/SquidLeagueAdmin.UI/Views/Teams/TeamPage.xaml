@@ -30,13 +30,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ComboBox x:Name="cmbTeams" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbTeamName" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <CheckBox x:Name="ckbIsActive" IsChecked="True" Margin="5,10,0,2"/>
+            <ComboBox x:Name="cmbTeams" ItemsSource="{Binding Path=Teams}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbTeamName" Text="{Binding TeamName}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <CheckBox x:Name="ckbIsActive" IsChecked="{Binding IsActive}" Margin="5,10,0,2"/>
         </StackPanel>
         
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Team Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Label}" Foreground="Green"/>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
