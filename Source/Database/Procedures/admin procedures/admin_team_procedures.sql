@@ -26,11 +26,14 @@ end|
 drop procedure if exists admin_delete_team|
 create procedure admin_delete_team(in teamId int)
 begin
-	update `team`
-	set `is_active` = 0
-	where `id` = teamId;
+	
 end|
 
 drop procedure if exists admin_create_team|
+create procedure admin_create_team(in teamName varchar(100), in isActive tinyint)
+begin
+	insert into `team` (team_name, is_active)
+    values (teamName, isActive);
+end|
 
 delimiter ;

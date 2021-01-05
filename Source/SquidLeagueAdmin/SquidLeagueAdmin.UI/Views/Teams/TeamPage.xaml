@@ -30,18 +30,19 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ComboBox x:Name="cmbTeams" ItemsSource="{Binding Path=Teams}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbTeams" ItemsSource="{Binding Path=Teams, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedTeam}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbTeamName" Text="{Binding TeamName}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <CheckBox x:Name="ckbIsActive" IsChecked="{Binding IsActive}" Margin="5,10,0,2"/>
         </StackPanel>
         
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="{Binding Label}" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Label}" Foreground="{Binding LabelColour}"/>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Content="Save" Command="{Binding Path=SaveCommand}" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Content="Reload" Command="{Binding Path=ReloadCommand}" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnDelete" Content="Delete" Command="{Binding Path=DeleteCommand}" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

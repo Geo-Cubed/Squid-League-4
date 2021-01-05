@@ -72,12 +72,12 @@ namespace SquidLeagueAdmin.UI.ViewModels.Settings
         {
             this.Model.Password = passBox.Password;
             await Task.Run(() => this.repo.AddItem(this.Model));
-            this.LabelText = "Settings Saved";
-            this.RevertLabel(2);
+            this.DisplayLabelAsync("Settings Saved", 2);
         }
 
-        async void RevertLabel(int timeDelay)
+        async void DisplayLabelAsync(string message, int timeDelay)
         {
+            this.LabelText = message;
             await Task.Run(() => Thread.Sleep(timeDelay * 1000));
             this.LabelText = string.Empty;
         }
