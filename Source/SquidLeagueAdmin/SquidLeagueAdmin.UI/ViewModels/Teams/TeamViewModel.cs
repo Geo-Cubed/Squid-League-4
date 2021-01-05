@@ -35,7 +35,6 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
         }
         #endregion
 
-
         #region Delegates
         public DelegateCommand SaveCommand { get; }
 

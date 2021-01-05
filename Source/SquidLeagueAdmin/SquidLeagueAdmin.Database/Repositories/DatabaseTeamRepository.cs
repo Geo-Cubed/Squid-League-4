@@ -42,17 +42,23 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var query = $"call admin_delete_team(@param_1);";
+            bool output = false;
             try
             {
-                this.NoReturnQuery(query, item.Id);
+                var read = this.SelectQuery(query, item.Id);
+                while (read.Read())
+                {
+                    output = read.TryGetValue("outputCode", out int? outputCode) ? ((outputCode == 1) ? true : false) : false; 
+                }
             }
             catch
             {
+                this.TryCloseConnection();
                 return false;
             }
 
             this.TryCloseConnection();
-            return true;
+            return output;
         }
 
         public Team GetItem(int id)
@@ -69,15 +75,22 @@ namespace SquidLeagueAdmin.Database.Repositories
 
             var result = new List<Team>();
             var query = "call admin_get_all_team_information();";
-            var read = this.SelectQuery(query);
-            while (read.Read())
+            try
             {
-                result.Add(new Team()
+                var read = this.SelectQuery(query);
+                while (read.Read())
                 {
-                    Id = read.TryGetValue("id", out int? id) ? (int)id : -1,
-                    TeamName = read.TryGetValue("teamName", out string teamName) ? teamName : string.Empty,
-                    IsActive = read.TryGetValue("isActive", out int? isActive) ? (int)isActive : 0
-                });
+                    result.Add(new Team()
+                    {
+                        Id = read.TryGetValue("id", out int? id) ? (int)id : -1,
+                        TeamName = read.TryGetValue("teamName", out string teamName) ? teamName : string.Empty,
+                        IsActive = read.TryGetValue("isActive", out int? isActive) ? (int)isActive : 0
+                    });
+                }
+            }
+            catch
+            {
+                this.TryCloseConnection();
             }
 
             this.TryCloseConnection();
@@ -103,6 +116,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
             catch
             {
+                this.TryCloseConnection();
                 return false;
             }
 

@@ -14,7 +14,7 @@ namespace SquidLeagueAdmin.Database
         public DatabaseConnector()
         {
             var repo = new JsonConfigRepository();
-            var config = repo.GetItems().FirstOrDefault(); ;
+            var config = repo.GetItems().FirstOrDefault();
 
             if (config == null)
             {

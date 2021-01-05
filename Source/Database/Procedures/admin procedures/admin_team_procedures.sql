@@ -26,7 +26,20 @@ end|
 drop procedure if exists admin_delete_team|
 create procedure admin_delete_team(in teamId int)
 begin
-	
+	if not exists (select 1 from `match` where `home_team_id` = teamId or `away_team_id` = teamId) then
+		update `player`
+        set `team_id` = null
+        where `team_id` = teamId;
+        
+        delete from `team`
+        where `id` = teamId;
+        
+        -- Delete successful.
+        select 1 as 'outputCode';
+	else
+		-- Delete aborted.
+		select 0 as 'outputCode';
+    end if;
 end|
 
 drop procedure if exists admin_create_team|
