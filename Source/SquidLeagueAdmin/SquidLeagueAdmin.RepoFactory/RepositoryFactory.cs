@@ -40,5 +40,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<Player> GetPlayerRepository(string type)
+        {
+            IRepository<Player> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabasePlayerRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid player repository type.");
+            }
+
+            return repo;
+        }
     }
 }

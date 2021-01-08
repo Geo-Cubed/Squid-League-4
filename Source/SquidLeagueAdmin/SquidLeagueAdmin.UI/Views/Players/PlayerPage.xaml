@@ -36,7 +36,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">
             <ComboBox x:Name="cmbPlayers" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-            <TextBox x:Name="tbIGN" Height="20" Width="150" HorizontalAlignment="Left" Margin="5,5,0,2" MaxLength="10" MaxLines="1" MinLines="1"/>
+            <TextBox x:Name="tbIGN" Height="20" Width="150" Text="{Binding playerName}"  HorizontalAlignment="Left" Margin="5,5,0,2" MaxLength="10" MaxLines="1" MinLines="1"/>
             <ComboBox x:Name="cmbTeams" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbSplatZones" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbRainMaker" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
