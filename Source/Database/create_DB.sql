@@ -67,12 +67,14 @@ create table `squid_league_4`.`match`(
    `home_team_score` int default 0 comment 'Overall score of the home team',
    `away_team_score` int default 0 comment 'Overall score of the away team',
    `caster_profile_id` int comment 'Id of the casters profile',
+   `secondary_caster_profile_id` int commant 'Id of the secondary caster',
    `match_vod_link` varchar(2000) comment 'Link to the VOD of the match',
    `match_date` datetime comment 'Date and time when the match is/was played',
    constraint `PK_match` primary key(`id`),
    constraint `FK_match_home_team` foreign key(`home_team_id`) references `squid_league_4`.`team`(`id`),
    constraint `FK_match_away_team` foreign key(`away_team_id`) references `squid_league_4`.`team`(`id`),
-   constraint `FK_match_caster_profile` foreign key(`caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`)
+   constraint `FK_match_caster_profile` foreign key(`caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`),
+   constraint `FK_match_second_caster_profile` foreign key(`caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`)
 ) comment 'Used to record the overall score of a set';
 
 create table `squid_league_4`.`bracket_swiss`
@@ -169,11 +171,11 @@ create table `squid_league_4`.`weapon_played`(
 
 create table `squid_league_4`.`helpful_people`(
 	`id` int not null auto_increment comment 'Id of the helpful_people table',
-    `user_name` varchar(32) not null comment 'Name of the person',
-    `description` varchar(128) comment 'Short description of what the person did to help',
-    `profile_picture_link` varchar(2000) comment 'Link to the users selected profile picture',
-    `twitter_link` varchar(2000) comment 'Link to the users twitter account',
-    constraint `PK_helpful_people` primary key(`id`)
+   `user_name` varchar(32) not null comment 'Name of the person',
+   `description` varchar(128) comment 'Short description of what the person did to help',
+   `profile_picture_link` varchar(2000) comment 'Link to the users selected profile picture',
+   `twitter_link` varchar(2000) comment 'Link to the users twitter account',
+   constraint `PK_helpful_people` primary key(`id`)
 ) comment 'Used to store people who helped with the project so that I can add more people easily';
 
 /* -- insert more tables here -- */

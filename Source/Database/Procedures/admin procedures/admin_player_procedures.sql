@@ -54,7 +54,16 @@ end|
 drop procedure if exists admin_delete_player|
 create procedure admin_delete_player(in playerId int)
 begin
-	
+	if not exists (select 1 from `player_weapon` where `player_id` = playerId) then
+        delete from `player`
+        where `id` = playerId;
+
+        -- Delete successful
+        select 1;
+    else
+        -- Player has already played a match so cannot be deleted
+        select 0;
+    end if;
 end|
 
 delimiter ;
