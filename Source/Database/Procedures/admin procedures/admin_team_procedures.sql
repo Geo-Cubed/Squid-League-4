@@ -2,8 +2,8 @@ use squid_league_4;
 
 delimiter |
 
-drop procedure if exists admin_get_all_team_information|
-create procedure admin_get_all_team_information()
+drop procedure if exists admin_get_team|
+create procedure admin_get_team()
 begin
 	select
 		`id` as 'id',
@@ -15,8 +15,8 @@ begin
 		`team_name` asc;
 end|
 
-drop procedure if exists admin_update_team_information|
-create procedure admin_update_team_information(in teamId int, in teamName varchar(100), in isActive tinyint)
+drop procedure if exists admin_update_team|
+create procedure admin_update_team(in teamId int, in teamName varchar(100), in isActive tinyint)
 begin
 	update `team`
 	set `team_name` = teamName, `is_active` = isActive

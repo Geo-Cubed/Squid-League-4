@@ -77,7 +77,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var items = new List<Player>();
-            var query = "call admin_get_all_player_information();";
+            var query = "call admin_get_player();";
             var read = this.SelectQuery(query);
             while (read.Read())
             {

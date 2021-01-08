@@ -2,8 +2,8 @@ use `squid_league_4`;
 
 delimiter |
 
-drop procedure if exists admin_get_all_caster_information|
-create procedure admin_get_all_caster_information()
+drop procedure if exists admin_get_caster|
+create procedure admin_get_caster()
 begin
     select
         `id`,
@@ -57,7 +57,7 @@ begin
             `caster_profile_id` = `secondary_caster_profile_id`,
             `secondary_caster_profile_id` = null
         where `secondary_caster_profile_id` = casterId;
-    else if exists (select 1 from `match` where `secondary_caster_profile_id` = casterId) then
+    elseif exists (select 1 from `match` where `secondary_caster_profile_id` = casterId) then
         -- Remove the caster from all the ames which they were the secondary caster.
         update `match`
         set `secondary_caster_profile_id` = null

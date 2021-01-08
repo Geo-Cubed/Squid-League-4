@@ -2,8 +2,8 @@ use `squid_league_4`;
 
 delimiter |
 
-drop procedure if exists admin_get_all_player_information|
-create procedure admin_get_all_player_information()
+drop procedure if exists admin_get_player|
+create procedure admin_get_player()
 begin
 	select
 		`id` as 'id',

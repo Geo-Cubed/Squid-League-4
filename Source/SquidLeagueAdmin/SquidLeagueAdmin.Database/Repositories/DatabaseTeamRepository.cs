@@ -74,7 +74,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Team>();
-            var query = "call admin_get_all_team_information();";
+            var query = "call admin_get_team();";
             try
             {
                 var read = this.SelectQuery(query);
@@ -109,7 +109,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = $"call admin_update_team_information(@param_1, @param_2, @param_3);";
+            var query = $"call admin_update_team(@param_1, @param_2, @param_3);";
             try
             {
                 this.NoReturnQuery(query, item.Id, item.TeamName, item.IsActive);
