@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SquidLeagueAdmin.UI.ViewModels.Players
@@ -29,8 +30,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
 
         public PlayerViewmodel()
         {
+            SaveCommand = new DelegateCommand(this.SaveAsync, () => true);
+            ReloadCommand = new DelegateCommand(this.ReloadAsync, () => true);
+            DeleteCommand = new DelegateCommand(this.DeleteAsync, () => true);
 
-            // TODO: Load player data.
             this.PlayerRepo = RepositoryFactory.GetPlayerRepository("SQL");
             this.TeamRepo = RepositoryFactory.GetTeamRepository("SQL");
             this.LoadDataAsync();
@@ -100,6 +103,37 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
         public DelegateCommand DeleteCommand { get; }
         #endregion
 
+        #region Deleagate Methods
+        public async void SaveAsync()
+        {
+            // Update if model.Id > 0
+
+            // Create if model.Id <= 0
+
+            // Try to update/delete
+
+            // Display appropriate message.
+
+            // Reload data if successful.
+        }
+
+        public async void ReloadAsync()
+        {
+            // Set ranks back to unknown.
+
+            this.LoadDataAsync();
+        }
+
+        public async void DeleteAsync()
+        {
+            // Try to delete the current item.
+
+            // Display appropriate message.
+
+            // Reload Data If successful.
+        }
+        #endregion
+
         #region Public Variables
         public ObservableCollection<Player> players
         {
@@ -161,5 +195,13 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             set => SetProperty(ref this.Colour, value);
         }
         #endregion
+
+        async void DisplayLabelAsync(string message, int timeDelay, bool IsError = false)
+        {
+            this.LabelColour = (IsError) ? "red" : "green";
+            this.Label = message;
+            await Task.Run(() => Thread.Sleep(timeDelay * 1000));
+            this.Label = string.Empty;
+        }
     }
 }
