@@ -22,5 +22,10 @@ namespace SquidLeagueAdmin.Models
         public int? TeamId;
 
         public int IsActive;
+
+        public override string ToString()
+        {
+            return $"{this.InGameName} - {((IsActive == 1) ? "" : "Not ")} Active";
+        }
     }
 }

@@ -35,23 +35,24 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <ComboBox x:Name="cmbPlayers" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <ComboBox x:Name="cmbPlayers" Height="20" ItemsSource="{Binding Path=players,Mode=TwoWay}" SelectedItem="{Binding Path=selectedPlayer}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
             <TextBox x:Name="tbIGN" Height="20" Width="150" Text="{Binding playerName}"  HorizontalAlignment="Left" Margin="5,5,0,2" MaxLength="10" MaxLines="1" MinLines="1"/>
-            <ComboBox x:Name="cmbTeams" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbSplatZones" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbRainMaker" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbTowerControl" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbClamBlitz" Height="20" Width="50" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <CheckBox x:Name="ckbIsActive" IsChecked="True" HorizontalAlignment="Left" Margin="5,10,0,2"/>
+            <ComboBox x:Name="cmbTeams" Height="20" ItemsSource="{Binding Path=teams, Mode=TwoWay}" SelectedItem="{Binding Path=selectedTeam, Mode=TwoWay}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbSplatZones" Height="20" ItemsSource="{Binding Path=splatZones, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSplatZones}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbRainMaker" Height="20" ItemsSource="{Binding Path=rainMaker, Mode=TwoWay}" SelectedItem="{Binding Path=selectedRainMaker}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbTowerControl" Height="20" ItemsSource="{Binding Path=towerControl, Mode=TwoWay}" SelectedItem="{Binding Path=selectedTowerControl}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbClamBlitz" Height="20" ItemsSource="{Binding Path=clamBlitz, Mode=TwoWay}" SelectedItem="{Binding Path=selectedClamBlitz}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <CheckBox x:Name="ckbIsActive" IsChecked="{Binding IsActive}" HorizontalAlignment="Left" Margin="5,10,0,2"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Player Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Label}" Foreground="{Binding LabelColour}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Content="Save" Command="{Binding Path=SaveCommand}" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Content="Reload" Command="{Binding Path=ReloadCommand}" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnDelete" Content="Delete" Command="{Binding Path=DeleteCommand}" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
