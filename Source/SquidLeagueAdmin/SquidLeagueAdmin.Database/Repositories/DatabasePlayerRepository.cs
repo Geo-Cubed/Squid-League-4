@@ -51,16 +51,16 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to connect to the database");
             }
 
-            int result = 0;
+            bool result = false;
             var query = "call admin_delete_player(@param_1);";
             var read = this.SelectQuery(query, item.Id);
             while (read.Read())
             {
-                result = read.TryGetValue("output", out int? output) ? (int)output : 0;
+                result = read.TryGetValue("output", out int? output) ? ((output == 1) ? true : false) : false;
             }
 
             this.TryCloseConnection();
-            return (result == 1) ? true : false;
+            return result;
             
         }
 

@@ -57,6 +57,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
 
         async void SaveAsync()
         {
+            if (this.Model == null)
+            {
+                return;
+            }
+
             // Create New Team.
             if (this.Model.Id < 0)
             {
@@ -90,13 +95,18 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
 
         async void DeleteTeamAsync()
         {
+            if (this.Model == null)
+            {
+                return;
+            }
+
             if (SelectedTeam.Id < 0)
             {
                 this.DisplayLabelAsync("Cannot delete a non existant team.", 2, true);
                 return;
             }
 
-            if (MessageBox.Show($"Permenantly Delete {SelectedTeam.TeamName}?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Permenantly Delete {SelectedTeam.TeamName}?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 if (await Task.Run(() => this.repo.DeleteItem(this.SelectedTeam)))
                 {

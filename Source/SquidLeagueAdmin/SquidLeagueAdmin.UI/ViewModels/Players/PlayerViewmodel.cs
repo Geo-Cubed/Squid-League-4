@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SquidLeagueAdmin.UI.ViewModels.Players
 {
@@ -43,7 +44,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
 
             this.PlayerRepo = RepositoryFactory.GetPlayerRepository("SQL");
             this.TeamRepo = RepositoryFactory.GetTeamRepository("SQL");
-            this.LoadDataAsync();
+            this.LoadTeamDataAsync();
+            this.LoadPlayerDataAsync();
         }
         #endregion
 
@@ -67,10 +69,27 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             ranks.Add(Ranks.x);
         }
 
-        public async void LoadDataAsync()
+        public async void LoadPlayerDataAsync()
         {
-            this.Players = new ObservableCollection<Player>();
-            this.Players.Add(new Player()
+            this.teams = new ObservableCollection<Team>();
+            this.teams.Add(new Team()
+            {
+                Id = -1,
+                TeamName = "No Team",
+                IsActive = 0
+            });
+
+            var teamItems = await Task.Run(() => this.TeamRepo.GetItems());
+            foreach (var team in teamItems)
+            {
+                this.teams.Add(team);
+            }
+        }
+
+        public async void LoadTeamDataAsync()
+        {
+            this.players = new ObservableCollection<Player>();
+            this.players.Add(new Player()
             {
                 Id = -1,
                 InGameName = "New Player",
@@ -85,20 +104,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             var items = await Task.Run(() => this.PlayerRepo.GetItems());
             foreach (var player in items)
             {
-                this.Players.Add(player);
-            }
-
-            this.Teams = new ObservableCollection<Team>();
-            this.Teams.Add(new Team() 
-            {
-                Id = -1,
-                TeamName = "No Team"
-            });
-
-            var teamItems = await Task.Run(() => this.TeamRepo.GetItems());
-            foreach (var team in teamItems)
-            {
-                this.Teams.Add(team);
+                this.players.Add(player);
             }
         }
         #endregion
@@ -114,31 +120,84 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
         #region Deleagate Methods
         public async void SaveAsync()
         {
-            // Update if model.Id > 0
+            if (this.Model == null || this.TeamModel == null)
+            {
+                return;
+            }
 
-            // Create if model.Id <= 0
+            if (this.Model.InGameName == null || this.Model.InGameName.Trim() == string.Empty)
+            {
+                this.DisplayLabelAsync("Player must have a name", 2, true);
+                return;
+            }
 
-            // Try to update/delete
+            if (this.TeamModel.Id == 0)
+            {
+                this.TeamModel.Id = -1;
+            }
 
-            // Display appropriate message.
+            this.Model.TeamId = this.TeamModel.Id;
+            if (this.Model.Id == null || this.Model.Id < 0)
+            {
+                try
+                {
+                    await Task.Run(() => this.PlayerRepo.AddItem(this.Model));
+                    this.DisplayLabelAsync($"{this.Model.InGameName} Created Successfully", 2);
+                }
+                catch
+                {
+                    this.DisplayLabelAsync($"There was an issue creating {this.Model}", 2, true);
+                    return;
+                }
+            }
+            else
+            {
+                try
+                {
+                    await Task.Run(() => this.PlayerRepo.UpdateItem(this.Model));
+                    this.DisplayLabelAsync($"Updated {this.Model.InGameName} Successfully", 2);
+                }
+                catch
+                {
+                    this.DisplayLabelAsync($"There was an issue while trying to update {this.Model.InGameName}", 4, true);
+                    return;
+                }
+            }
 
-            // Reload data if successful.
+            this.ReloadAsync();
         }
 
         public async void ReloadAsync()
         {
-            // Set ranks back to unknown.
-
-            this.LoadDataAsync();
+            this.LoadTeamDataAsync();
+            this.LoadPlayerDataAsync();
         }
 
         public async void DeleteAsync()
         {
-            // Try to delete the current item.
+            if (this.Model == null)
+            {
+                return;
+            }
 
-            // Display appropriate message.
+            if (this.Model.Id < 0)
+            {
+                this.DisplayLabelAsync("Cannot delete a player that doesn't exist!", 3, true);
+                return;
+            }
 
-            // Reload Data If successful.
+            if (MessageBox.Show($"Permenantly Delete {this.Model.InGameName}?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                if (await Task.Run(() => this.PlayerRepo.DeleteItem(this.Model)))
+                {
+                    this.DisplayLabelAsync($"Player {this.Model.InGameName} Deleted Successfully", 2);
+                    this.ReloadAsync();
+                }
+                else
+                {
+                    this.DisplayLabelAsync($"Cannot delete player {this.Model.InGameName}", 2, true);
+                }
+            }
         }
         #endregion
 
@@ -173,7 +232,13 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
                     this.selectedRainMaker = value.RainMakerRank;
                     this.selectedTowerControl = value.TowerControlRank;
                     this.selectedClamBlitz = value.ClamBlitzRank;
-                    this.selectedTeam = this.Teams.Where(x => x.Id == value.TeamId).FirstOrDefault();
+                    var team = this.Teams.Where(x => x.Id == value.TeamId).FirstOrDefault();
+                    if (team == null)
+                    {
+                        team = this.Teams.ElementAt(0);
+                    }
+
+                    this.selectedTeam = team;
                     this.IsActive = (value.IsActive == 1) ? true : false;
                 }
             }
@@ -238,20 +303,19 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             get => this.TeamModel;
             set
             {
+                var item = new Team();
                 if (value == null)
                 {
-                    this.TeamModel.Id = -1;
-                    this.TeamModel.TeamName = "No Team";
-                    this.TeamModel.IsActive = 0;
+                    item.Id = -1;
+                    item.TeamName = "No Team";
+                    item.IsActive = 0;
                 }
                 else
                 {
-                    this.TeamModel.Id = value.Id;
-                    this.TeamModel.TeamName = value.TeamName;
-                    this.TeamModel.IsActive = value.IsActive;
+                    item = value;
                 }
-                
-                this.Model.TeamId = this.TeamModel.Id;
+
+                SetProperty(ref this.TeamModel, value);
             }
         }
 

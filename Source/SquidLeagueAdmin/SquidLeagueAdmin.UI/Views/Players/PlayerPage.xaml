@@ -35,13 +35,13 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <ComboBox x:Name="cmbPlayers" Height="20" ItemsSource="{Binding Path=players,Mode=TwoWay}" SelectedItem="{Binding Path=selectedPlayer}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <ComboBox x:Name="cmbPlayers" Height="20" ItemsSource="{Binding Path=players, Mode=TwoWay}" SelectedItem="{Binding Path=selectedPlayer}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
             <TextBox x:Name="tbIGN" Height="20" Width="150" Text="{Binding playerName}"  HorizontalAlignment="Left" Margin="5,5,0,2" MaxLength="10" MaxLines="1" MinLines="1"/>
-            <ComboBox x:Name="cmbTeams" Height="20" ItemsSource="{Binding Path=teams, Mode=TwoWay}" SelectedItem="{Binding Path=selectedTeam, Mode=TwoWay}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbSplatZones" Height="20" ItemsSource="{Binding Path=splatZones, Mode=TwoWay, Converter={local1:EnumConverter}}" SelectedItem="{Binding Path=selectedSplatZones}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbRainMaker" Height="20" ItemsSource="{Binding Path=rainMaker, Mode=TwoWay, Converter={local1:EnumConverter}}" SelectedItem="{Binding Path=selectedRainMaker}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbTowerControl" Height="20" ItemsSource="{Binding Path=towerControl, Mode=TwoWay, Converter={local1:EnumConverter}}" SelectedItem="{Binding Path=selectedTowerControl}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbClamBlitz" Height="20" ItemsSource="{Binding Path=clamBlitz, Mode=TwoWay, Converter={local1:EnumConverter}}" SelectedItem="{Binding Path=selectedClamBlitz}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbTeams" Height="20" ItemsSource="{Binding Path=teams, Mode=TwoWay}" SelectedItem="{Binding selectedTeam}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbSplatZones" Height="20" ItemsSource="{Binding Path=splatZones, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSplatZones}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbRainMaker" Height="20" ItemsSource="{Binding Path=rainMaker, Mode=TwoWay}" SelectedItem="{Binding Path=selectedRainMaker}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbTowerControl" Height="20" ItemsSource="{Binding Path=towerControl, Mode=TwoWay}" SelectedItem="{Binding Path=selectedTowerControl}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbClamBlitz" Height="20" ItemsSource="{Binding Path=clamBlitz, Mode=TwoWay}" SelectedItem="{Binding Path=selectedClamBlitz}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <CheckBox x:Name="ckbIsActive" IsChecked="{Binding IsActive}" HorizontalAlignment="Left" Margin="5,10,0,2"/>
         </StackPanel>
 
