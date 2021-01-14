@@ -56,5 +56,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<Caster> GetCasterRepository(string type)
+        {
+            IRepository<Caster> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseCasterRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid caster repository type.");
+            }
+
+            return repo;
+        }
     }
 }

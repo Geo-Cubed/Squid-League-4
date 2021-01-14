@@ -35,24 +35,24 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
-            <ComboBox x:Name="cmbCasters" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbName" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbTwitter" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbYouTube" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbTwitch" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbDiscord" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbProfilePicture" Width="300" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <CheckBox x:Name="ckbIsActive" IsChecked="True" HorizontalAlignment="Left" Margin="5,10,0,2"/>
+            <ComboBox x:Name="cmbCasters" ItemsSource="{Binding Path=casters, Mode=TwoWay}" SelectedItem="{Binding Path=selectedCaster}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbName" Text="{Binding Path=name}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbTwitter" Text="{Binding Path=twitter}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbYouTube" Text="{Binding Path=youtube}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbTwitch" Text="{Binding Path=twitch}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbDiscord" Text="{Binding Path=discord}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbProfilePicture" Text="{Binding Path=profilePicture}" Width="300" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <CheckBox x:Name="ckbIsActive" IsChecked="{Binding Path=isActive}" HorizontalAlignment="Left" Margin="5,10,0,2"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Caster Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Path=lblText}" Foreground="{Binding Path=lblColour}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
-            <Button x:Name="btnDelete" Content="Delete" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Command="{Binding Path=saveCommand}" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Command="{Binding Path=reloadCommand}" Content="Reload" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnDelete" Command="{Binding Path=deleteCommand}" Content="Delete" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
