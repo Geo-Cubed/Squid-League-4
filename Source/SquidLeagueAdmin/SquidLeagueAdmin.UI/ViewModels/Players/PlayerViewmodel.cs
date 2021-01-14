@@ -46,6 +46,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             this.TeamRepo = RepositoryFactory.GetTeamRepository("SQL");
             this.LoadTeamDataAsync();
             this.LoadPlayerDataAsync();
+            this.LabelColour = "green";
         }
         #endregion
 

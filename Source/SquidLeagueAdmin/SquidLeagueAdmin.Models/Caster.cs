@@ -21,5 +21,10 @@ namespace SquidLeagueAdmin.Models
         public string ProfilePicture;
 
         public int IsActive;
+
+        public override string ToString()
+        {
+            return $"{this.Name} - {((this.IsActive == 0) ? "Not" : "")} Active";
+        }
     }
 }

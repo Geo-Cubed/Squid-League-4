@@ -13,7 +13,7 @@ begin
         `twitch`,
         `discord`,
         `profile_picture_path` as 'picturePath',
-        `is_active` as `isActive`
+        `is_active` as 'isActive'
     from 
         `caster_profile`
     order by
