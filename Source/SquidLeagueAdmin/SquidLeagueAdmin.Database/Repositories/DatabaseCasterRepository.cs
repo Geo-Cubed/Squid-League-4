@@ -40,11 +40,17 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_delete_caster(@param_1)";
+            var query = "call admin_delete_caster(@param_1);";
             try
             {
-                this.NoReturnQuery(query, item.Id);
-                return true;
+                var result = false;
+                var read = this.SelectQuery(query, item.Id);
+                while (read.Read())
+                {
+                    result = read.TryGetValue("output", out int? output) ? ((output == 1) ? true : false) : false;
+                }
+
+                return result;
             }
             catch
             {
@@ -80,7 +86,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                     Twitter = read.TryGetValue("twitter", out string twitter) ? twitter : string.Empty,
                     Youtube = read.TryGetValue("youtube", out string youtube) ? youtube : string.Empty,
                     Twitch = read.TryGetValue("twitch", out string twitch) ? twitch : string.Empty,
-                    Discord = read.TryGetValue("youtube", out string discord) ? discord : string.Empty,
+                    Discord = read.TryGetValue("discord", out string discord) ? discord : string.Empty,
                     ProfilePicture = read.TryGetValue("picturePath", out string picturePath) ? picturePath : string.Empty,
                     IsActive = read.TryGetValue("isActive", out int? isActive) ? (int)isActive : 0
                 });

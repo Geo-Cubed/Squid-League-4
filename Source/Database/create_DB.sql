@@ -67,14 +67,14 @@ create table `squid_league_4`.`match`(
    `home_team_score` int default 0 comment 'Overall score of the home team',
    `away_team_score` int default 0 comment 'Overall score of the away team',
    `caster_profile_id` int comment 'Id of the casters profile',
-   `secondary_caster_profile_id` int commant 'Id of the secondary caster',
+   `secondary_caster_profile_id` int comment 'Id of the secondary caster',
    `match_vod_link` varchar(2000) comment 'Link to the VOD of the match',
    `match_date` datetime comment 'Date and time when the match is/was played',
    constraint `PK_match` primary key(`id`),
    constraint `FK_match_home_team` foreign key(`home_team_id`) references `squid_league_4`.`team`(`id`),
    constraint `FK_match_away_team` foreign key(`away_team_id`) references `squid_league_4`.`team`(`id`),
    constraint `FK_match_caster_profile` foreign key(`caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`),
-   constraint `FK_match_second_caster_profile` foreign key(`caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`)
+   constraint `FK_match_second_caster_profile` foreign key(`secondary_caster_profile_id`) references `squid_league_4`.`caster_profile`(`id`)
 ) comment 'Used to record the overall score of a set';
 
 create table `squid_league_4`.`bracket_swiss`

@@ -50,23 +50,15 @@ end|
 drop procedure if exists admin_delete_caster|
 create procedure admin_delete_caster(in casterId int)
 begin
-    if exists (select 1 from `match` where `caster_profile_id` = casterId) then
-        -- Remove the caster from all games which they were the primary caster.
-        update `match`
-        set 
-            `caster_profile_id` = `secondary_caster_profile_id`,
-            `secondary_caster_profile_id` = null
-        where `secondary_caster_profile_id` = casterId;
-    elseif exists (select 1 from `match` where `secondary_caster_profile_id` = casterId) then
-        -- Remove the caster from all the ames which they were the secondary caster.
-        update `match`
-        set `secondary_caster_profile_id` = null
-        where `secondary_caster_profile_id` = casterId;
+    if exists (select 1 from `match` where `caster_profile_id` = casterId or `secondary_caster_profile_id` = casterId) then
+        select 0 as 'output';
+    else
+		-- Remove the caster.
+		delete from `caster_profile`
+		where `id` = casterId;
+    
+		select 1 as 'output';
     end if;
-
-    -- Remove the caster.
-    delete from `caster_profile`
-    where `id` = casterId;
 end|
 
 delimiter ;
