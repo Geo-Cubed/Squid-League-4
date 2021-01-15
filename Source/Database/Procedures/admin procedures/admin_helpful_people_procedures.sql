@@ -42,7 +42,7 @@ end|
 drop procedure if exists admin_delete_helpful_people|
 create procedure admin_delete_helpful_people(in helpfulId int)
 begin
-    delete from `helpful_person`
+    delete from `helpful_people`
     where `id` = helpfulId;
 end|
 

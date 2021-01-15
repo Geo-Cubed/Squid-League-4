@@ -88,5 +88,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<Map> GetMapRepository(string type)
+        {
+            IRepository<Map> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseMapRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid map repository type.");
+            }
+
+            return repo;
+        }
     }
 }

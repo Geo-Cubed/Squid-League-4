@@ -30,18 +30,18 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
-            <ComboBox x:Name="cmbMaps" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbName" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbPath" Width="300" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbMaps" ItemsSource="{Binding Path=maps, Mode=TwoWay}" SelectedItem="{Binding Path=selectedMap}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbName" Text="{Binding Path=name}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <TextBox x:Name="tbPath" Text="{Binding Path=picturePath}" Width="300" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Map Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Path=lblText}" Foreground="{Binding Path=lblColour}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Command="{Binding Path=saveCommand}" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Command="{Binding Path=reloadCommand}" Content="Reload" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
