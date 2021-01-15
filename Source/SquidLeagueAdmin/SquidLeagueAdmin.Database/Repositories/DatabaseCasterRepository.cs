@@ -11,7 +11,26 @@ namespace SquidLeagueAdmin.Database.Repositories
     {
         public bool AddItem(Caster item)
         {
-            throw new NotImplementedException();
+            if (!this.TryOpenConnection())
+            {
+                throw new Exception("There was an issue while trying to open the database connection");
+            }
+
+            var query = "call admin_create_caster(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7);";
+            try
+            {
+                this.NoReturnQuery(query, item.Name, item.Twitter, item.Youtube, item.Twitch, item.Discord,
+                    item.ProfilePicture, item.IsActive);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                this.TryCloseConnection();
+            }
         }
 
         public bool DeleteItem(Caster item)

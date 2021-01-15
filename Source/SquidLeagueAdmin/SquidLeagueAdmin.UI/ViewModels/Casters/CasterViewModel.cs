@@ -161,7 +161,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
                 }
                 else
                 {
-                    this.Model.IsActive = value.Id;
+                    this.Model.Id = value.Id;
                     this.name = value.Name;
                     this.twitter = value.Twitter;
                     this.youtube = value.Youtube;
@@ -230,10 +230,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
 
         async void DisplayLabelAsync(string message, int timeDelay, bool IsError = false)
         {
-            this.labelColour = (IsError) ? "red" : "green";
-            this.labelText = message;
+            this.lblColour = (IsError) ? "red" : "green";
+            this.lblText = message;
             await Task.Run(() => Thread.Sleep(timeDelay * 1000));
-            this.labelText = string.Empty;
+            this.lblText = string.Empty;
         }
     }
 }
