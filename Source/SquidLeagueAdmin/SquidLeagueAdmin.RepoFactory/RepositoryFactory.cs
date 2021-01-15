@@ -72,5 +72,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<HelpfulPeople> GetHelpfulPersonRepository(string type)
+        {
+            IRepository<HelpfulPeople> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseHelpfulPersonRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid helpful person repository type.");
+            }
+
+            return repo;
+        }
     }
 }

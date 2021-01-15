@@ -75,12 +75,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
 
             if (this.Model.Id < 0)
             {
-                try
-                {
-                    await Task.Run(() => this.casterRepo.AddItem(this.Model));
+                if (await Task.Run(() => this.casterRepo.AddItem(this.Model)))
+                {                  
                     this.DisplayLabelAsync($"{this.Model.Name} created successfully", 2);
                 }
-                catch
+                else
                 {
                     this.DisplayLabelAsync($"There was an error while trying to create {this.Model.Name}", 2, true);
                     return;
@@ -88,12 +87,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
             }
             else
             {
-                try
-                {
-                    await Task.Run(() => this.casterRepo.UpdateItem(this.Model));
+                if (await Task.Run(() => this.casterRepo.UpdateItem(this.Model)))
+                {                 
                     this.DisplayLabelAsync($"{this.Model.Name} updated successfully", 2);
                 }
-                catch
+                else
                 {
                     this.DisplayLabelAsync($"There was an issue while trying to update {this.Model.Name}", 2, true);
                     return;

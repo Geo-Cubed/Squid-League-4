@@ -10,7 +10,7 @@ begin
         `user_name` as 'userName',
         `description`,
         `profile_picture_link` as 'picturePath',
-        `twitter_link` as 'twitterLink'
+        `twitter_link` as 'twitter'
     from 
         `helpful_people`
     order by
