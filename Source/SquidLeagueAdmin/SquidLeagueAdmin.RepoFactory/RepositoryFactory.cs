@@ -104,5 +104,53 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<Weapon> GetWeaponRepository(string type)
+        {
+            IRepository<Weapon> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseWeaponRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Ivalid weapon repository type.");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<Sub> GetSubRepository(string type)
+        {
+            IRepository<Sub> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseSubRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid sub repository type.");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<Special> GetSpecialRepository(string type)
+        {
+            IRepository<Special> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseSpecialRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid special repository type.");
+            }
+
+            return repo;
+        }
     }
 }

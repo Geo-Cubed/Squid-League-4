@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SquidLeagueAdmin.UI.ViewModels.Weapons;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace SquidLeagueAdmin.UI.Views.Weapons
         public WeaponPage()
         {
             InitializeComponent();
+            DataContext = new WeaponViewModel();
         }
     }
 }
