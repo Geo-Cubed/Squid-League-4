@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SquidLeagueAdmin.UI.ViewModels.GameSettings;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace SquidLeagueAdmin.UI.Views.GameSettings
         public GameSettingPage()
         {
             InitializeComponent();
+            DataContext = new GameSettingViewModel();
         }
     }
 }

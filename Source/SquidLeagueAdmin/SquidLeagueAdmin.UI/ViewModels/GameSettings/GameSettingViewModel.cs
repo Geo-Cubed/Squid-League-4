@@ -1,10 +1,17 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using SquidLeagueAdmin.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 {
-    class GameSettingViewModel
+    public class GameSettingViewModel : BindableBase
     {
+        private GameSetting model;
+        public GameSettingViewModel()
+        {
+
+        }
     }
 }
