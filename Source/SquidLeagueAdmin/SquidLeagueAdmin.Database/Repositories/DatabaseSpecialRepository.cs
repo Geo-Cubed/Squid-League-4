@@ -32,7 +32,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Special>();
-            var query = "call admin_get_specail();";
+            var query = "call admin_get_special();";
             var read = this.SelectQuery(query);
             while (read.Read())
             {

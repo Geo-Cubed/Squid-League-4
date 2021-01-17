@@ -34,22 +34,32 @@ namespace SquidLeagueAdmin.Database.Repositories
 
             var result = new List<Weapon>();
             var query = "call admin_get_weapon();";
-            var read = this.SelectQuery(query);
-            while (read.Read())
+            try
             {
-                result.Add(new Weapon()
+                var read = this.SelectQuery(query);
+                while (read.Read())
                 {
-                    Id = read.TryGetValue("id", out int? id) ? (int)id : -1,
-                    Name = read.TryGetValue("name", out string name) ? name : string.Empty,
-                    PicturePath = read.TryGetValue("picturePath", out string path) ? path : string.Empty,
-                    SubId = read.TryGetValue("subId", out int? subId) ? (int)subId : -1,
-                    SpecialId = read.TryGetValue("specialId", out int? specialId) ? (int)specialId : -1,
-                    Type = read.TryGetValue("weaponType", out string weaponType) ? weaponType.GetEnumFromDescription<WeaponType>() : WeaponType.Blaster,
-                    Role = read.TryGetValue("weaponRole", out string weaponRole) ? weaponRole.GetEnumFromDescription<WeaponType>()
-                });
+                    result.Add(new Weapon()
+                    {
+                        Id = read.TryGetValue("id", out int? id) ? (int)id : -1,
+                        Name = read.TryGetValue("name", out string name) ? name : string.Empty,
+                        PicturePath = read.TryGetValue("picturePath", out string path) ? path : string.Empty,
+                        SubId = read.TryGetValue("subId", out int? subId) ? (int)subId : -1,
+                        SpecialId = read.TryGetValue("specialId", out int? specialId) ? (int)specialId : -1,
+                        Type = read.TryGetValue("weaponType", out string weaponType) ? weaponType.GetEnumFromDescription<WeaponType>() : WeaponType.Blaster,
+                        Role = read.TryGetValue("weaponRole", out string weaponRole) ? weaponRole.GetEnumFromDescription<WeaponRole>() : WeaponRole.Anchor
+                    });
+                }
             }
-
-            this.TryCloseConnection();
+            catch
+            {
+                result.Add(new Weapon() { Id = -1, Name = "SQL ISSUE -> Tell Geo", Role = WeaponRole.Anchor, Type = WeaponType.Charger });
+            }
+            finally
+            {
+                this.TryCloseConnection();
+            }
+            
             return result;
         }
 

@@ -29,25 +29,27 @@
             <TextBlock Text="Image Path:" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Sub:" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Special:" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Type:" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Role:" FontSize="20" HorizontalAlignment="Right"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ComboBox x:Name="cmbWeapons" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-            <TextBox x:Name="tcImgName" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,2"/>
-            <TextBox x:Name="tbImgPath" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <ComboBox x:Name="cmbSub" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbSpecial" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbRole" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbWeapons" ItemsSource="{Binding Path=weapons,Mode=TwoWay}" SelectedItem="{Binding Path=selectedWeapon, Mode=TwoWay}" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <TextBox x:Name="tcImgName" Text="{Binding Path=name}" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,2"/>
+            <TextBox x:Name="tbImgPath" Text="{Binding Path=path}" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbSub" ItemsSource="{Binding Path=subs, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSub,Mode=TwoWay}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbSpecial" ItemsSource="{Binding Path=specials, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSpecial, Mode=TwoWay}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbType" ItemsSource="{Binding Path=types, Mode=TwoWay}" SelectedItem="{Binding Path=selectedType, Mode=TwoWay}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbRole" ItemsSource="{Binding Path=roles, Mode=TwoWay}" SelectedItem="{Binding Path=selectedRole, Mode=TwoWay}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Weapon Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Path=lblText}" Foreground="{Binding Path=lblColour}"/>
         </StackPanel>
         
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Command="{Binding Path=saveCommand}" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Command="{Binding Path=reloadCommand}" Content="Reload" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
