@@ -21,6 +21,7 @@
  * weapon_played
  * helpful_people
  * ...
+ * system_switch
  * user <- might not need depending on log in method.
  * audit
  */
@@ -179,6 +180,13 @@ create table `squid_league_4`.`helpful_people`(
 ) comment 'Used to store people who helped with the project so that I can add more people easily';
 
 /* -- insert more tables here -- */
+
+create table `squid_league_4`.`system_switch`(
+	`id` int not null auto_increment comment 'Id of the system switch',
+    `name` varchar(128) not null comment 'Name of the setting',
+    `value` varchar(128) not null comment 'Value for the setting',
+    constraint `PK_system_switch` primary key(`id`)
+) comment 'Used to store settings for the squid league applications';
 
 create table `squid_league_4`.`user`(
    `id` int not null auto_increment comment 'Id of the user table',
