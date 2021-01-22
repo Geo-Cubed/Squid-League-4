@@ -11,7 +11,7 @@ namespace SquidLeagueAdmin.UI.Views.Players
         public PlayerPage()
         {
             InitializeComponent();
-            DataContext = new PlayerViewmodel();
+            DataContext = new PlayerViewModel();
         }
     }
 }

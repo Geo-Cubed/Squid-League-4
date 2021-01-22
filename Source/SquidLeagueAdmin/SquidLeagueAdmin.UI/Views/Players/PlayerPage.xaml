@@ -35,7 +35,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <ComboBox x:Name="cmbPlayers" Height="20" ItemsSource="{Binding Path=players, Mode=TwoWay}" SelectedItem="{Binding Path=selectedPlayer}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <ComboBox x:Name="cmbPlayers" Height="20" ItemsSource="{Binding Path=players, Mode=TwoWay}" SelectedItem="{Binding Path=selectedPlayer}" SelectedIndex="{Binding Path=selectedPlayerIndex}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
             <TextBox x:Name="tbIGN" Height="20" Width="150" Text="{Binding playerName}"  HorizontalAlignment="Left" Margin="5,5,0,2" MaxLength="10" MaxLines="1" MinLines="1"/>
             <ComboBox x:Name="cmbTeams" Height="20" ItemsSource="{Binding Path=teams, Mode=TwoWay}" SelectedItem="{Binding selectedTeam}" Width="200" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbSplatZones" Height="20" ItemsSource="{Binding Path=splatZones, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSplatZones}" Width="100" HorizontalAlignment="Left" Margin="5,5,0,2"/>

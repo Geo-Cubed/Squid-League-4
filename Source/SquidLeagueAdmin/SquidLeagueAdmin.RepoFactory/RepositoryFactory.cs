@@ -152,5 +152,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<SystemSwitch> GetSystemSwitchRepository(string type)
+        {
+            IRepository<SystemSwitch> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseSystemSwitchRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid system switch repository type");
+            }
+
+            return repo;
+        }
     }
 }

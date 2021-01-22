@@ -7,6 +7,7 @@ using SquidLeagueAdmin.UI.Views.Matches;
 using SquidLeagueAdmin.UI.Views.Players;
 using SquidLeagueAdmin.UI.Views.Results;
 using SquidLeagueAdmin.UI.Views.Settings;
+using SquidLeagueAdmin.UI.Views.SystemSwitch;
 using SquidLeagueAdmin.UI.Views.Teams;
 using SquidLeagueAdmin.UI.Views.Weapons;
 using System.Windows;
@@ -77,6 +78,11 @@ namespace SquidLeagueAdmin.UI
         private void BtnHelpfulPeople_Click(object sender, RoutedEventArgs e)
         {
             mainContent.Content = new HelpfulPeoplePage();
+        }
+
+        private void BtnSystemSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            mainContent.Content = new SystemSwitchPage();
         }
     }
 }

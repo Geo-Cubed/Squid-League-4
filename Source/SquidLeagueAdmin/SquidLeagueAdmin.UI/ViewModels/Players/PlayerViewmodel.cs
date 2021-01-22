@@ -15,10 +15,11 @@ using System.Windows;
 
 namespace SquidLeagueAdmin.UI.ViewModels.Players
 {
-    public class PlayerViewmodel : BindableBase
+    public class PlayerViewModel : BindableBase
     {
         #region Constructor and Private Variables
         private Player Model = new Player();
+        private int PlayerIndex;
         private IRepository<Player> PlayerRepo;
         private IRepository<Team> TeamRepo;
         private ObservableCollection<Player> Players;
@@ -31,7 +32,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
         private string LabelText;
         private string Colour;
 
-        public PlayerViewmodel()
+        public PlayerViewModel()
         {
             SaveCommand = new DelegateCommand(this.SaveAsync, () => true);
             ReloadCommand = new DelegateCommand(this.ReloadAsync, () => true);
@@ -72,23 +73,6 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
 
         public async void LoadPlayerDataAsync()
         {
-            this.teams = new ObservableCollection<Team>();
-            this.teams.Add(new Team()
-            {
-                Id = -1,
-                TeamName = "No Team",
-                IsActive = 0
-            });
-
-            var teamItems = await Task.Run(() => this.TeamRepo.GetItems());
-            foreach (var team in teamItems)
-            {
-                this.teams.Add(team);
-            }
-        }
-
-        public async void LoadTeamDataAsync()
-        {
             this.players = new ObservableCollection<Player>();
             this.players.Add(new Player()
             {
@@ -102,10 +86,28 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
                 IsActive = 0
             });
 
+            this.selectedPlayerIndex = 0;
             var items = await Task.Run(() => this.PlayerRepo.GetItems());
             foreach (var player in items)
             {
                 this.players.Add(player);
+            }
+        }
+
+        public async void LoadTeamDataAsync()
+        {
+            this.teams = new ObservableCollection<Team>();
+            this.teams.Add(new Team()
+            {
+                Id = -1,
+                TeamName = "No Team",
+                IsActive = 0
+            });
+
+            var teamItems = await Task.Run(() => this.TeamRepo.GetItems());
+            foreach (var team in teamItems)
+            {
+                this.teams.Add(team);
             }
         }
         #endregion
@@ -242,6 +244,23 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
                     this.selectedTeam = team;
                     this.IsActive = (value.IsActive == 1) ? true : false;
                 }
+            }
+        }
+
+        public int selectedPlayerIndex
+        {
+            get => this.PlayerIndex;
+            set
+            {
+                if (value < 0 || value > (this.players.Count() + 1))
+                {
+                    SetProperty(ref this.PlayerIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.PlayerIndex, value);
+                }
+
             }
         }
 
