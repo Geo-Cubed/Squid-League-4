@@ -3,7 +3,9 @@ using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +18,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
         private Caster Model;
         private IRepository<Caster> casterRepo;
         private ObservableCollection<Caster> allCasters;
+        private int casterIndex;
         private string labelText;
         private string labelColour;
 
@@ -35,14 +38,37 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
         #region public methods
         public async void LoadDataAsync()
         {
-            this.casters = new ObservableCollection<Caster>();
-            this.casters.Add(new Caster() { Id = -1, Name = "New Caster", IsActive = 0});
+            this.casters = new ObservableCollection<Caster>()
+            {
+                new Caster() { Id = -1, Name = "New Caster", IsActive = 0}
+            };
 
+            this.SelectedCasterIndex = 0;
             var data = await Task.Run(() => this.casterRepo.GetItems());
             foreach (var item in data)
             {
                 this.casters.Add(item);
             }
+        }
+
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId >= 0)
+            {
+                return;
+            }
+
+            var index = 0;
+            foreach (var item in this.casters)
+            {
+                ++index;
+                if (item.Id == lastId)
+                {
+                    break;
+                }
+            }
+
+            this.casterIndex = index;
         }
         #endregion
 
@@ -98,12 +124,16 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
                 }
             }
 
+            var lastId = Model.Id;
             this.LoadDataAsync();
+            this.TryLoadPreviousModel(lastId);
         }
 
         public async void ReloadAsync()
         {
+            var lastId = Model.Id;
             this.LoadDataAsync();
+            this.TryLoadPreviousModel(lastId);
         }
 
         public async void DeleteAsync()
@@ -167,6 +197,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
                     this.discord = value.Discord;
                     this.profilePicture = value.ProfilePicture;
                     this.isActive = (value.IsActive == 1) ? true : false;
+                }
+            }
+        }
+
+        public int SelectedCasterIndex
+        {
+            get => this.casterIndex;
+            set
+            {
+                if (value < 0 || value > (this.casters.Count() + 1))
+                {
+                    SetProperty(ref this.casterIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.casterIndex, value);
                 }
             }
         }
