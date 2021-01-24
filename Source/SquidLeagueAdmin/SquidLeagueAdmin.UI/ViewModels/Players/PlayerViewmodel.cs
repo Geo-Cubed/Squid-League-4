@@ -71,7 +71,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             ranks.Add(Ranks.x);
         }
 
-        public async void LoadPlayerDataAsync()
+        public async void LoadPlayerDataAsync(int lastId = -1)
         {
             this.players = new ObservableCollection<Player>();
             this.players.Add(new Player()
@@ -92,6 +92,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             {
                 this.players.Add(player);
             }
+
+            this.TryLoadPreviousModel(lastId);
         }
 
         public async void LoadTeamDataAsync()
@@ -108,6 +110,37 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             foreach (var team in teamItems)
             {
                 this.teams.Add(team);
+            }
+        }
+
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.selectedPlayerIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.players)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.selectedPlayerIndex = index;
+            }
+            else
+            {
+                this.selectedPlayerIndex = 0;
             }
         }
         #endregion
@@ -172,8 +205,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
 
         public async void ReloadAsync()
         {
+            var lastId = (int)this.Model.Id;
             this.LoadTeamDataAsync();
-            this.LoadPlayerDataAsync();
+            this.LoadPlayerDataAsync(lastId);
         }
 
         public async void DeleteAsync()
@@ -201,6 +235,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
                     this.DisplayLabelAsync($"Cannot delete player {this.Model.InGameName}", 2, true);
                 }
             }
+
+            this.LoadTeamDataAsync();
+            this.LoadPlayerDataAsync();
         }
         #endregion
 

@@ -5,6 +5,7 @@ using SquidLeagueAdmin.RepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
         private HelpfulPerson Model;
         private ObservableCollection<HelpfulPerson> allPeople;
         private IRepository<HelpfulPerson> personRepo;
+        private int selectedIndex;
         private string labelText;
         private string labelColour;
 
@@ -36,17 +38,51 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
         #endregion
 
         #region Public methods
-        public async void LoadDataAsync()
+        public async void LoadDataAsync(int lastId = -1)
         {
             this.helpfulPeople = new ObservableCollection<HelpfulPerson>();
             this.helpfulPeople.Add(new HelpfulPerson() { Id = -1, UserName = "New Person" });
 
+            this.selectedPersonIndex = 0;
             var data = await Task.Run(() => this.personRepo.GetItems());
             foreach (var item in data)
             {
                 this.helpfulPeople.Add(item);
             }
+
+            this.LoadDataAsync(lastId);
         }
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.selectedPersonIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.helpfulPeople)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.selectedPersonIndex = index;
+            }
+            else
+            {
+                this.selectedPersonIndex = 0;
+            }
+        }
+
         #endregion
 
         #region Delegates
@@ -101,12 +137,14 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
                 }
             }
 
-            this.LoadDataAsync();
+            var lastId = this.Model.Id;
+            this.LoadDataAsync(lastId);
         }
 
         public async void ReloadAsync()
         {
-            this.LoadDataAsync();
+            var lastId = this.Model.Id;
+            this.LoadDataAsync(lastId);
         }
 
         public async void DeleteAsync()
@@ -164,6 +202,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
                     this.description = value.Description;
                     this.profilePicture = value.ProfilePicture;
                     this.twitter = value.Twitter;
+                }
+            }
+        }
+
+        public int selectedPersonIndex
+        {
+            get => this.selectedIndex;
+            set
+            {
+                if (value < 0 || value > (this.helpfulPeople.Count() + 1))
+                {
+                    SetProperty(ref this.selectedIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.selectedIndex, value);
                 }
             }
         }

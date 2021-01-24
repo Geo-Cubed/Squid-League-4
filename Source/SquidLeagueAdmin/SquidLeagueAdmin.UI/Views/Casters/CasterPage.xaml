@@ -35,7 +35,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
-            <ComboBox x:Name="cmbCasters" ItemsSource="{Binding Path=casters, Mode=TwoWay}" SelectedItem="{Binding Path=selectedCaster}" SelectedIndex="{Binding Path=SelectedCasterIndex, Mode=TwoWay}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbCasters" ItemsSource="{Binding Path=casters, Mode=TwoWay}" SelectedItem="{Binding Path=selectedCaster}" SelectedIndex="{Binding Path=SelectedCasterIndex}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbName" Text="{Binding Path=name}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbTwitter" Text="{Binding Path=twitter}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbYouTube" Text="{Binding Path=youtube}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>

@@ -30,45 +30,59 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
 
             this.casterRepo = RepositoryFactory.GetCasterRepository("SQL");
             this.Model = new Caster();
+            this.casterIndex = 0;
             this.LoadDataAsync();
             this.labelColour = "green";
         }
         #endregion
 
         #region public methods
-        public async void LoadDataAsync()
+        public async void LoadDataAsync(int lastId = -1)
         {
             this.casters = new ObservableCollection<Caster>()
             {
                 new Caster() { Id = -1, Name = "New Caster", IsActive = 0}
             };
 
-            this.SelectedCasterIndex = 0;
+            //this.SelectedCasterIndex = 0;
             var data = await Task.Run(() => this.casterRepo.GetItems());
             foreach (var item in data)
             {
                 this.casters.Add(item);
             }
+
+            this.TryLoadPreviousModel(lastId);
         }
 
         public void TryLoadPreviousModel(int lastId)
         {
-            if (lastId >= 0)
+            if (lastId <= 0)
             {
+                this.SelectedCasterIndex = 0;
                 return;
             }
 
+            var found = false;
             var index = 0;
             foreach (var item in this.casters)
             {
-                ++index;
                 if (item.Id == lastId)
                 {
+                    found = true;
                     break;
                 }
+                
+                ++index;
             }
 
-            this.casterIndex = index;
+            if (found)
+            {
+                this.SelectedCasterIndex = index;
+            }
+            else
+            {
+                this.SelectedCasterIndex = 0;
+            }
         }
         #endregion
 
@@ -125,15 +139,13 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
             }
 
             var lastId = Model.Id;
-            this.LoadDataAsync();
-            this.TryLoadPreviousModel(lastId);
+            this.LoadDataAsync(lastId);
         }
 
         public async void ReloadAsync()
         {
             var lastId = Model.Id;
-            this.LoadDataAsync();
-            this.TryLoadPreviousModel(lastId);
+            this.LoadDataAsync(lastId);
         }
 
         public async void DeleteAsync()
