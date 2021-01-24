@@ -40,18 +40,19 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
         #region Public methods
         public async void LoadDataAsync(int lastId = -1)
         {
-            this.helpfulPeople = new ObservableCollection<HelpfulPerson>();
-            this.helpfulPeople.Add(new HelpfulPerson() { Id = -1, UserName = "New Person" });
+            this.helpfulPeopleItems = new ObservableCollection<HelpfulPerson>();
+            this.helpfulPeopleItems.Add(new HelpfulPerson() { Id = -1, UserName = "New Person" });
 
-            this.selectedPersonIndex = 0;
+            //this.selectedPersonIndex = 0;
             var data = await Task.Run(() => this.personRepo.GetItems());
             foreach (var item in data)
             {
-                this.helpfulPeople.Add(item);
+                this.helpfulPeopleItems.Add(item);
             }
 
-            this.LoadDataAsync(lastId);
+            this.TryLoadPreviousModel(lastId);
         }
+
         public void TryLoadPreviousModel(int lastId)
         {
             if (lastId <= 0)
@@ -62,7 +63,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
 
             var found = false;
             var index = 0;
-            foreach (var item in this.helpfulPeople)
+            foreach (var item in this.helpfulPeopleItems)
             {
                 if (item.Id == lastId)
                 {
@@ -176,7 +177,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
         #endregion
 
         #region Bindings
-        public ObservableCollection<HelpfulPerson> helpfulPeople
+        public ObservableCollection<HelpfulPerson> helpfulPeopleItems
         {
             get => this.allPeople;
             set => SetProperty(ref this.allPeople, value);
@@ -211,7 +212,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
             get => this.selectedIndex;
             set
             {
-                if (value < 0 || value > (this.helpfulPeople.Count() + 1))
+                if (value < 0 || value > (this.helpfulPeopleItems.Count() + 1))
                 {
                     SetProperty(ref this.selectedIndex, 0);
                 }

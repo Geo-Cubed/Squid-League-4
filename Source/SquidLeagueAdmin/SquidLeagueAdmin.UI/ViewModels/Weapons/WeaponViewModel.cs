@@ -19,6 +19,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
         #region Constructor and private variables
         private Weapon model;
         private ObservableCollection<Weapon> allWeapons;
+        private int weaponIndex;
 
         private WeaponType modelType;
         private ObservableCollection<WeaponType> allTypes;
@@ -62,7 +63,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
         #endregion
 
         #region Public methods
-        public async void LoadWeaponDataAsync()
+        public async void LoadWeaponDataAsync(int lastId = -1)
         {
             this.weapons = new ObservableCollection<Weapon>();
 
@@ -71,6 +72,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
             {
                 this.weapons.Add(item);
             }
+
+            this.TryLoadPreviousModel(lastId);
         }
 
         public async void LoadWeaponTypesAsync()
@@ -117,6 +120,37 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
                 this.specials.Add(item);
             }
         }
+
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.SelectedWeaponIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.weapons)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.SelectedWeaponIndex = index;
+            }
+            else
+            {
+                this.SelectedWeaponIndex = 0;
+            }
+        }
         #endregion
 
         #region Delegates
@@ -151,9 +185,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
 
         private async void ReloadAsync()
         {
+            var lastId = this.model.Id;
             this.LoadWeaponSubAsync();
             this.LoadWeaponSpecialAsync();
-            this.LoadWeaponDataAsync();
+            this.LoadWeaponDataAsync(lastId);
         }
         #endregion
 
@@ -188,6 +223,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
                     this.selectedSpecial = this.specials.Where(x => x.Id == value.SpecialId).FirstOrDefault();
                     this.selectedType = value.Type;
                     this.selectedRole = value.Role;
+                }
+            }
+        }
+
+        public int SelectedWeaponIndex
+        {
+            get => this.weaponIndex;
+            set
+            {
+                if (value < 0 || value > (this.weapons.Count() + 1))
+                {
+                    SetProperty(ref this.weaponIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.weaponIndex, value);
                 }
             }
         }

@@ -30,7 +30,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ComboBox x:Name="cmbTeams" ItemsSource="{Binding Path=Teams, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedTeam}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbTeams" ItemsSource="{Binding Path=Teams, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedTeam}" SelectedIndex="{Binding Path=SelectedTeamIndex}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
             <TextBox x:Name="tbTeamName" Text="{Binding TeamName}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <CheckBox x:Name="ckbIsActive" IsChecked="{Binding IsActive}" Margin="5,10,0,2"/>
         </StackPanel>

@@ -6,6 +6,7 @@ using SquidLeagueAdmin.RepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
         private Map Model;
         private ObservableCollection<Map> allMaps;
         private IRepository<Map> mapRepo;
+        private int mapIndex;
         private string labelText;
         private string labelColour;
         public MapViewModel()
@@ -33,7 +35,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
         #endregion
 
         #region Public methods
-        public async void LoadDataAsync()
+        public async void LoadDataAsync(int lastId = -1)
         {
             this.maps = new ObservableCollection<Map>();
 
@@ -41,6 +43,39 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
             foreach (var item in data)
             {
                 this.maps.Add(item);
+            }
+
+            this.TryLoadPreviousModel(lastId);
+        }
+
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.selectedMapIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.maps)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.selectedMapIndex = index;
+            }
+            else
+            {
+                this.selectedMapIndex = 0;
             }
         }
         #endregion
@@ -68,7 +103,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
             if (await Task.Run(() => this.mapRepo.UpdateItem(this.Model)))
             {
                 this.DisplayLabelAsync($"Successfully updated {this.Model.Name}", 2);
-                this.LoadDataAsync();
+                var lastId = this.Model.Id;
+                this.LoadDataAsync(lastId);
             }
             else
             {
@@ -78,7 +114,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
 
         public async void ReloadAsync()
         {
-            this.LoadDataAsync();
+            var lastId = this.Model.Id;
+            this.LoadDataAsync(lastId);
         }
         #endregion
 
@@ -105,6 +142,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
                     this.Model.Id = value.Id;
                     this.name = value.Name;
                     this.picturePath = value.PicturePath;
+                }
+            }
+        }
+
+        public int selectedMapIndex
+        {
+            get => this.mapIndex;
+            set
+            {
+                if (value < 0 || value > (this.maps.Count() + 1))
+                {
+                    SetProperty(ref this.mapIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.mapIndex, value);
                 }
             }
         }

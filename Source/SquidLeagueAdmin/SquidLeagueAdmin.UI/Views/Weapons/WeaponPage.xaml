@@ -34,7 +34,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ComboBox x:Name="cmbWeapons" ItemsSource="{Binding Path=weapons,Mode=TwoWay}" SelectedItem="{Binding Path=selectedWeapon, Mode=TwoWay}" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+            <ComboBox x:Name="cmbWeapons" ItemsSource="{Binding Path=weapons,Mode=TwoWay}" SelectedItem="{Binding Path=selectedWeapon, Mode=TwoWay}" SelectedIndex="{Binding Path=SelectedWeaponIndex}" Height="20" Width="200" HorizontalAlignment="Left" Margin="5,5,0,0"/>
             <TextBox x:Name="tcImgName" Text="{Binding Path=name}" Width="200" HorizontalAlignment="Left" Height="20" Margin="5,5,0,2"/>
             <TextBox x:Name="tbImgPath" Text="{Binding Path=path}" Width="400" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbSub" ItemsSource="{Binding Path=subs, Mode=TwoWay}" SelectedItem="{Binding Path=selectedSub,Mode=TwoWay}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>

@@ -6,6 +6,7 @@ using SquidLeagueAdmin.RepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,19 +20,66 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
         private Team Model { get; set; }
         private IRepository<Team> repo;
         private ObservableCollection<Team> AllTeams;
+        private int TeamIndex;
         private string LabelText;
         private string Colour;
 
         public TeamViewModel()
         {
             SaveCommand = new DelegateCommand(SaveAsync, () => true);
-            ReloadCommand = new DelegateCommand(LoadTeamsAsync, () => true);
+            ReloadCommand = new DelegateCommand(ReloadAsync, () => true);
             DeleteCommand = new DelegateCommand(DeleteTeamAsync, () => true);
 
             this.repo = RepositoryFactory.GetTeamRepository("SQL");
             this.LoadTeamsAsync();
             this.Model = new Team() { Id = -1 };
             this.LabelColour = "green";
+        }
+        #endregion
+
+        #region Public methods
+        public async void LoadTeamsAsync(int lastId = -1)
+        {
+            this.Teams = new ObservableCollection<Team>();
+            this.Teams.Add(new Team() { Id = -1, TeamName = "New Team", IsActive = 0 });
+            var items = await Task.Run(() => repo.GetItems());
+            foreach (var team in items)
+            {
+                this.Teams.Add(team);
+            }
+
+            this.TryLoadPreviousModel(lastId);
+        }
+
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.SelectedTeamIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.Teams)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.SelectedTeamIndex = index;
+            }
+            else
+            {
+                this.SelectedTeamIndex = 0;
+            }
         }
         #endregion
 
@@ -44,17 +92,6 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
         #endregion
 
         #region Delegate Commands
-        async void LoadTeamsAsync()
-        {
-            this.Teams = new ObservableCollection<Team>();
-            this.Teams.Add(new Team() { Id = -1, TeamName = "New Team", IsActive = 0 });
-            var items = await Task.Run(() => repo.GetItems());
-            foreach (var team in items)
-            {
-                this.Teams.Add(team);
-            }
-        }
-
         async void SaveAsync()
         {
             if (this.Model == null)
@@ -90,7 +127,14 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
                 }
             }
 
-            this.LoadTeamsAsync();
+            var lastId = this.Model.Id;
+            this.LoadTeamsAsync(lastId);
+        }
+
+        async void ReloadAsync()
+        {
+            var lastId = this.Model.Id;
+            this.LoadTeamsAsync(lastId);
         }
 
         async void DeleteTeamAsync()
@@ -144,6 +188,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
                     this.TeamName = value.TeamName;
                     this.IsActive = (value.IsActive == 1) ? true : false;
                     this.Model.Id = value.Id;
+                }
+            }
+        }
+
+        public int SelectedTeamIndex
+        {
+            get => this.TeamIndex;
+            set
+            {
+                if (value < 0 || value > (this.Teams.Count() + 1))
+                {
+                    SetProperty(ref this.TeamIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.TeamIndex, value);
                 }
             }
         }

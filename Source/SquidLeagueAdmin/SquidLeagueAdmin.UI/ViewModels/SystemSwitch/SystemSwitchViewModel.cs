@@ -15,6 +15,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
 {
     public class SystemSwitchViewModel : BindableBase
     {
+        #region Constructor and private variables
         private Switch currentSwitch;
         private int selectedSwitchIndex;
         private ObservableCollection<Switch> allSwitches;
@@ -34,8 +35,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
             this.switchRepo = RepositoryFactory.GetSystemSwitchRepository("SQL");
             this.LoadDataAsync();
         }
-        
-        public async void LoadDataAsync()
+        #endregion
+
+        #region Public methods
+        public async void LoadDataAsync(int lastId = -1)
         {
             this.Switches = new ObservableCollection<Switch>();
             this.Switches.Add(new Switch() { Id = -1, Name = "New Switch" });
@@ -45,14 +48,51 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
             {
                 this.Switches.Add(item);
             }
+
+            this.TryLoadPreviousModel(lastId);
         }
 
+        public void TryLoadPreviousModel(int lastId)
+        {
+            if (lastId <= 0)
+            {
+                this.SwitchIndex = 0;
+                return;
+            }
+
+            var found = false;
+            var index = 0;
+            foreach (var item in this.Switches)
+            {
+                if (item.Id == lastId)
+                {
+                    found = true;
+                    break;
+                }
+
+                ++index;
+            }
+
+            if (found)
+            {
+                this.SwitchIndex = index;
+            }
+            else
+            {
+                this.SwitchIndex = 0;
+            }
+        }
+        #endregion
+
+        #region Delegates
         public DelegateCommand SaveCommand { get; }
 
         public DelegateCommand ReloadCommand { get; }
 
         public DelegateCommand DeleteCommand { get; }
+        #endregion
 
+        #region Delegate Commands
         public async void SaveAsync()
         {
             if (this.SelectedSwitch == null)
@@ -99,12 +139,14 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
                 }
             }
 
-            this.LoadDataAsync();
+            var lastId = this.SelectedSwitch.Id;
+            this.LoadDataAsync(lastId);
         }
 
         public async void ReloadAsync()
         {
-            this.LoadDataAsync();
+            var lastId = this.SelectedSwitch.Id;
+            this.LoadDataAsync(lastId);
         }
 
         public async void DeleteAsync()
@@ -133,7 +175,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
                 }
             }
         }
+        #endregion
 
+        #region Bindables
         public ObservableCollection<Switch> Switches
         {
             get => this.allSwitches;
@@ -203,6 +247,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
             get => this.lblColour;
             set => SetProperty(ref this.lblColour, value);
         }
+        #endregion
 
         async void DisplayLabelAsync(string message, int timeDelay, bool IsError = false)
         {
