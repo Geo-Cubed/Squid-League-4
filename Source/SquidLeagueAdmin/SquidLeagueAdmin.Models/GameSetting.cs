@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SquidLeagueAdmin.Models.Enums;
+using SquidLeagueAdmin.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +12,7 @@ namespace SquidLeagueAdmin.Models
 
         public int MapId;
 
-        public int ModeId;
+        public GameModes Mode;
 
         public string BracketStage;
 
@@ -18,7 +20,14 @@ namespace SquidLeagueAdmin.Models
 
         public override string ToString()
         {
-            return $"Stage: {this.BracketStage} Game: {this.SortOrder}";
+            if (this.Id <= 0)
+            {
+                return "New Setting";
+            }
+            else
+            {
+                return $"Game: {this.SortOrder} Stage: {this.BracketStage} Mode: {Mode.GetDescription()}";
+            }
         }
     }
 }

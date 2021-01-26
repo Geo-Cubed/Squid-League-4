@@ -168,5 +168,21 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<GameSetting> GetGameSettingRepository(string type)
+        {
+            IRepository<GameSetting> repo = null;
+
+            switch (type)
+            {
+                case "SQL":
+                    repo = new DatabaseGameSettingRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid game setting repository type");
+            }
+
+            return repo;
+        }
     }
 }

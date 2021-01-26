@@ -32,21 +32,21 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
-            <ComboBox x:Name="cmbBracketType" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbBracketType" ItemsSource="{Binding Path=Brackets, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedBracket}" SelectedIndex="{Binding Path=BracketIndex}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbBracketStage" Width="100" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbGameOrder" Width="100" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbMap" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
-            <ComboBox x:Name="cmbMode" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbMode" ItemsSource="{Binding Path=Modes, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedMode, Mode=TwoWay}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label x:Name="lblSaved" Content="Game Setting Saved" Foreground="Green"/>
+            <Label x:Name="lblSaved" Content="{Binding Path=LabelText}" Foreground="{Binding Path=LabelColour}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="btnSave" Content="Save" Width="100" Height="20"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="20" Margin="10,0,0,0"/>
-            <Button x:Name="btnDelete" Content="Delete" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnSave" Command="{Binding Path=SaveCommand}" Content="Save" Width="100" Height="20"/>
+            <Button x:Name="btnReload" Command="{Binding Path=ReloadCommand}" Content="Reload" Width="100" Height="20" Margin="10,0,0,0"/>
+            <Button x:Name="btnDelete" Command="{Binding Path=DeleteCommand}" Content="Delete" Width="100" Height="20" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>
