@@ -20,8 +20,14 @@ namespace SquidLeagueAdmin.Database.Repositories
             var query = "call admin_create_game_setting(@param_1, @param_2, @param_3, @param_4);";
             try
             {
-                this.NoReturnQuery(query, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);
-                return true;
+                var read = this.SelectQuery(query, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);
+                var result = false;
+                while (read.Read())
+                {
+                    result = read.TryGetValue("output", out int? output) ? (output == 1 ? true : false) : false;
+                }
+
+                return result;
             }
             catch
             {
@@ -47,7 +53,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 var read = this.SelectQuery(query, item.Id);
                 while (read.Read())
                 {
-                    result = read.TryGetValue("output", out int? value) ? ((value == 1) ? true : false) : false;
+                    result = read.TryGetValue("output", out int? value) ? (value == 1 ? true : false) : false;
                 }
 
                 return result;
@@ -108,8 +114,14 @@ namespace SquidLeagueAdmin.Database.Repositories
             var query = "call admin_update_game_setting(@param_1, @param_2, @param_3, @param_4, @param_5);";
             try
             {
-                this.NoReturnQuery(query, item.Id, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);
-                return true;
+                var read = this.SelectQuery(query, item.Id, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);
+                var result = false;
+                while (read.Read())
+                {
+                    result = read.TryGetValue("output", out int? output) ? (output == 1 ? true : false) : false;
+                }
+
+                return result;
             }
             catch
             {
