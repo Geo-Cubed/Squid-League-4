@@ -7,6 +7,7 @@ using SquidLeagueAdmin.RepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         private IRepository<GameSetting> settingRepo;
         private IRepository<Map> mapRepo;
         private IRepository<Switch> switchRepo;
+
+        private List<Switch> allSwitches;
 
         private ObservableCollection<string> brackets;
         private string selectedBracket;
@@ -53,12 +56,51 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             this.mapRepo = RepositoryFactory.GetMapRepository("SQL");
             this.switchRepo = RepositoryFactory.GetSystemSwitchRepository("SQL");
 
+            this.LoadMaps();
+            this.LoadSwitches();
             this.LoadBrackets();
             this.LoadGameModes();
+            this.LoadSettings();
         }
         #endregion
 
         #region Methods
+        private async void LoadMaps()
+        {
+            this.Maps = new ObservableCollection<Map>() 
+            { 
+                new Map() { Id = -1, Name = "No Map" } 
+            };
+
+            var data = await Task.Run(() => this.mapRepo.GetItems());
+            foreach (var item in data)
+            {
+                this.Maps.Add(item);
+            }
+        }
+
+        private async void LoadSwitches()
+        {
+            this.allSwitches = new List<Switch>();
+
+            var data = await Task.Run(() => this.switchRepo.GetItems());
+            foreach (var item in data)
+            {
+                this.allSwitches.Add(item);
+            }
+        }
+
+        private async void LoadSettings()
+        {
+            this.allSettings = new List<GameSetting>();
+
+            var data = await Task.Run(() => this.settingRepo.GetItems());
+            foreach (var item in data)
+            {
+                this.allSettings.Add(item);
+            }
+        }
+
         private async void LoadBrackets()
         {
             this.Brackets = new ObservableCollection<string>()
@@ -72,6 +114,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         {
             this.Modes = new ObservableCollection<GameModes>()
             {
+                GameModes.Undefined,
                 GameModes.ClamBlitz,
                 GameModes.RainMaker,
                 GameModes.SplatZones,
@@ -133,6 +176,26 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         {
             get => this.selectedMode;
             set => SetProperty(ref this.selectedMode, value);
+        }
+
+        public ObservableCollection<Map> Maps
+        {
+            get => this.maps;
+            set => SetProperty(ref this.maps, value);
+        }
+
+        public Map SelectedMap
+        {
+            get
+            {
+                if (this.Maps.Where(x => x.Id == this.gameSetting.Id).Any())
+                {
+                    return this.Maps.Where(x => x.Id == this.gameSetting.Id).First();
+                }
+
+                return this.Maps.ElementAt(0);
+            }
+            set => SetProperty(ref this.gameSetting.MapId, value.Id);
         }
 
         public string LabelText
