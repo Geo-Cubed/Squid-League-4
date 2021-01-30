@@ -4,6 +4,7 @@ using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
+using SquidLeagueAdmin.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,6 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
     {
         #region Constructor and Private variables
         private GameSetting gameSetting;
-        private ObservableCollection<GameSetting> currentSettings;
         private List<GameSetting> allSettings;
 
         private IRepository<GameSetting> settingRepo;
@@ -28,18 +28,16 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         private List<Switch> allSwitches;
 
-        private ObservableCollection<string> brackets;
-        private string selectedBracket;
+        private ObservableCollection<BracketTypes> brackets;
+        private BracketTypes selectedBracket;
 
-        private ObservableCollection<string> swissStages;
-        private ObservableCollection<string> knockoutStages;
+        private ObservableCollection<string> stages;
+
         private ObservableCollection<Map> maps;
 
         private ObservableCollection<GameModes> modes;
-        private GameModes selectedMode;
 
-        private ObservableCollection<int> swissSortOrders;
-        private ObservableCollection<int> knockoutSortOrders;
+        private ObservableCollection<int> sortOrder;
 
         private string lblText;
         private string lblColour;
@@ -103,10 +101,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         private async void LoadBrackets()
         {
-            this.Brackets = new ObservableCollection<string>()
+            this.Brackets = new ObservableCollection<BracketTypes>()
             {
-                "Swiss",
-                "Knockout"
+                BracketTypes.swiss,
+                BracketTypes.knockout
             };
         }
 
@@ -150,19 +148,119 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         #endregion
 
         #region Bindables
-        public ObservableCollection<string> Brackets
+        public ObservableCollection<BracketTypes> Brackets
         {
             get => this.brackets;
             set => SetProperty(ref this.brackets, value);
         }
 
-        public string SelectedBracket
+        public BracketTypes SelectedBracket
         {
             get => this.selectedBracket;
             set 
             {
                 SetProperty(ref this.selectedBracket, value);
-                // TODO: Logic to swap out other combo boxes
+
+                var currentStages = this.allSwitches
+                    .Where(x => x.Name == $"{value.GetDescription().ToUpper()}_STAGE")
+                    .Select(y => y.Value);
+
+                this.Stages = new ObservableCollection<string>();
+                foreach (var stage in currentStages)
+                {
+                    this.Stages.Add(stage);
+                }
+            }
+        }
+
+        public ObservableCollection<string> Stages
+        {
+            get => this.stages;
+            set => SetProperty(ref this.stages, value);
+        }
+
+        public string SelectedStage
+        {
+            get
+            {
+                if (this.Stages.Where(x => x.ToUpper() == this.gameSetting.BracketStage.ToUpper()).Any())
+                {
+                    return this.Stages
+                        .Where(x => x.ToUpper() == this.gameSetting.BracketStage.ToUpper())
+                        .First();
+                }
+
+                return "No Stage";
+            }
+            set
+            {
+                SetProperty(ref this.gameSetting.BracketStage, value);
+
+                if (this.allSwitches.Where(x => x.Name == $"{this.SelectedBracket.GetDescription().ToUpper()}_STAGE_{this.gameSetting.BracketStage.ToUpper()}_BO").Any())
+                {
+                    var val = this.allSwitches
+                        .Where(x => x.Name == $"{this.selectedBracket.GetDescription().ToUpper()}_STAGE_{this.gameSetting.BracketStage.ToUpper()}_BO")
+                        .First()
+                        .Value;
+
+                    var bestOf = int.TryParse(val, out int parsed) ? parsed : 0;
+
+                    this.SortOrder = new ObservableCollection<int>();
+                    if (bestOf <= 0)
+                    {
+                        this.SortOrder.Add(0);
+                    }
+                    
+                    for (int i = 1; i <= bestOf; ++i)
+                    {
+                        this.SortOrder.Add(i);
+                    }
+                }
+                else
+                {
+                    this.SortOrder = new ObservableCollection<int>() { 0 };
+                }
+            }
+        }
+
+        public ObservableCollection<int> SortOrder
+        {
+            get => this.sortOrder;
+            set => SetProperty(ref this.sortOrder, value);
+        }
+
+        public int SelectedSortOrder
+        {
+            get
+            {
+                if (this.SortOrder.Where(x => x == gameSetting.SortOrder).Any())
+                {
+                    return this.SortOrder.Where(x => x == gameSetting.SortOrder).First();
+                }
+
+                return 0;
+            }
+            set
+            {
+                SetProperty(ref this.gameSetting.SortOrder, value);
+
+                if (this.allSettings.Where(x => 
+                    x.BracketStage.ToUpper() == this.gameSetting.BracketStage.ToUpper()
+                    && x.SortOrder == this.gameSetting.SortOrder).Any())
+                {
+                    var setting = this.allSettings
+                        .Where(x => x.BracketStage.ToUpper() == this.gameSetting.BracketStage.ToUpper()
+                            && x.SortOrder == this.gameSetting.SortOrder)
+                        .First();
+
+                    this.SelectedMap = this.Maps.Where(x => x.Id == setting.MapId).First();
+                    this.SelectedMode = setting.Mode;
+                }
+                else
+                {
+                    this.SelectedMap = this.Maps.ElementAt(0);
+                    this.SelectedMode = GameModes.Undefined;
+                }
             }
         }
 
@@ -174,8 +272,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         public GameModes SelectedMode
         {
-            get => this.selectedMode;
-            set => SetProperty(ref this.selectedMode, value);
+            get => this.gameSetting.Mode;
+            set => SetProperty(ref this.gameSetting.Mode, value);
         }
 
         public ObservableCollection<Map> Maps
