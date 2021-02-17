@@ -30,14 +30,17 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         private ObservableCollection<BracketTypes> brackets;
         private BracketTypes selectedBracket;
+        private int bracketIndex;
 
         private ObservableCollection<string> stages;
+        private int stageIndex;
+
+        private ObservableCollection<int> sortOrder;
+        private int sortOrderIndex;
 
         private ObservableCollection<Map> maps;
 
         private ObservableCollection<GameModes> modes;
-
-        private ObservableCollection<int> sortOrder;
 
         private string lblText;
         private string lblColour;
@@ -173,6 +176,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             }
         }
 
+        public int BracketIndex
+        {
+            get => this.bracketIndex;
+            set
+            {
+                if (value <= 0)
+                {
+                    SetProperty(ref this.bracketIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.bracketIndex, value);
+                }
+            }
+        }
+
         public ObservableCollection<string> Stages
         {
             get => this.stages;
@@ -223,6 +242,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             }
         }
 
+        public int StageIndex
+        {
+            get => this.stageIndex;
+            set
+            {
+                if (value <= 0 || value > this.Stages.Count() - 1)
+                {
+                    SetProperty(ref this.stageIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.stageIndex, value);
+                }
+            }
+        }
+
         public ObservableCollection<int> SortOrder
         {
             get => this.sortOrder;
@@ -260,6 +295,22 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                 {
                     this.SelectedMap = this.Maps.ElementAt(0);
                     this.SelectedMode = GameModes.Undefined;
+                }
+            }
+        }
+
+        public int SortOrderIndex
+        {
+            get => this.sortOrderIndex;
+            set
+            {
+                if (value <= 0 || value > this.SortOrder.Count() - 1)
+                {
+                    SetProperty(ref this.sortOrderIndex, 0);
+                }
+                else
+                {
+                    SetProperty(ref this.sortOrderIndex, value);
                 }
             }
         }

@@ -32,7 +32,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
-            <ComboBox x:Name="cmbBracketType" ItemsSource="{Binding Path=Brackets, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedBracket}" SelectedIndex="{Binding Path=BracketIndex}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="cmbBracketType" ItemsSource="{Binding Path=Brackets, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedBracket}" Width="200" Height="20" Margin="5,5,0,0" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbBracketStage" ItemsSource="{Binding Path=Stages, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedStage}" Width="100" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbGameOrder" ItemsSource="{Binding Path=SortOrder, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedSortOrder}" Width="100" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbMap" ItemsSource="{Binding Path=Maps, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedMap}" Width="200" Height="20" Margin="5,5,0,2" HorizontalAlignment="Left"/>
