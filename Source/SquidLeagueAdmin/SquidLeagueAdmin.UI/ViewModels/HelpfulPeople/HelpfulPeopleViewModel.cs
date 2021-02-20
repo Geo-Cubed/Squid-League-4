@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using System;
@@ -30,7 +31,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.HelpfulPeople
             reloadCommand = new DelegateCommand(ReloadAsync, () => true);
             deleteCommand = new DelegateCommand(DeleteAsync, () => true);
 
-            this.personRepo = RepositoryFactory.GetHelpfulPersonRepository("SQL");
+            this.personRepo = RepositoryFactory.GetHelpfulPersonRepository(RepositoryTypes.Database);
             this.lblColour = "green";
             this.Model = new HelpfulPerson() { Id = -1 };
             this.LoadDataAsync();

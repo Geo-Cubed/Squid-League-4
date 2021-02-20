@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Casters
             reloadCommand = new DelegateCommand(this.ReloadAsync, () => true);
             deleteCommand = new DelegateCommand(this.DeleteAsync, () => true);
 
-            this.casterRepo = RepositoryFactory.GetCasterRepository("SQL");
+            this.casterRepo = RepositoryFactory.GetCasterRepository(RepositoryTypes.Database);
             this.Model = new Caster();
             this.casterIndex = 0;
             this.LoadDataAsync();

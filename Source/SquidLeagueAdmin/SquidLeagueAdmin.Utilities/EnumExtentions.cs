@@ -8,6 +8,11 @@ namespace SquidLeagueAdmin.Utilities
 {
     public static class EnumExtentions
     {
+        /// <summary>
+        /// Gets the description decorator of a given enum.
+        /// </summary>
+        /// <param name="anyEnum">An <see cref="Enum"/> to get the description of.</param>
+        /// <returns>The enum description or the enum to string if there is no description.</returns>
         public static string GetDescription(this Enum anyEnum)
         {
             Type enumType = anyEnum.GetType();

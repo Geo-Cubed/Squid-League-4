@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using System;
@@ -27,7 +28,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Maps
             saveCommand = new DelegateCommand(SaveAsync, () => true);
             reloadCommand = new DelegateCommand(ReloadAsync, () => true);
 
-            this.mapRepo = RepositoryFactory.GetMapRepository("SQL");
+            this.mapRepo = RepositoryFactory.GetMapRepository(RepositoryTypes.Database);
             this.Model = new Map() { Id = -1 };
             this.lblColour = "green";
             this.LoadDataAsync();

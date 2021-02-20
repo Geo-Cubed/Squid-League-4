@@ -34,7 +34,7 @@
         </StackPanel>
 
 
-        <Frame x:Name="mainContent" BorderBrush="Green" BorderThickness="1" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="mainContent" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 
         <Image Source="/Images/bottomBar.png" Grid.Row="2" Stretch="Fill"/>
     </Grid>

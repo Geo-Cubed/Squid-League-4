@@ -53,9 +53,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
             this.LabelColour = "Green";
             this.gameSetting = new GameSetting();
-            this.settingRepo = RepositoryFactory.GetGameSettingRepository("SQL");
-            this.mapRepo = RepositoryFactory.GetMapRepository("SQL");
-            this.switchRepo = RepositoryFactory.GetSystemSwitchRepository("SQL");
+            this.settingRepo = RepositoryFactory.GetGameSettingRepository(RepositoryTypes.Database);
+            this.mapRepo = RepositoryFactory.GetMapRepository(RepositoryTypes.Database);
+            this.switchRepo = RepositoryFactory.GetSystemSwitchRepository(RepositoryTypes.Database);
 
             this.LoadMaps();
             this.LoadSwitches();
@@ -202,6 +202,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         {
             get
             {
+                if (this.gameSetting.BracketStage == null)
+                {
+                    return "No Stage";
+                }
+
                 if (this.Stages.Where(x => x.ToUpper() == this.gameSetting.BracketStage.ToUpper()).Any())
                 {
                     return this.Stages
@@ -213,6 +218,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             }
             set
             {
+                if (value == null)
+                {
+                    return;
+                }
+
                 SetProperty(ref this.gameSetting.BracketStage, value);
 
                 if (this.allSwitches.Where(x => x.Name == $"{this.SelectedBracket.GetDescription().ToUpper()}_STAGE_{this.gameSetting.BracketStage.ToUpper()}_BO").Any())
@@ -273,10 +283,16 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                     return this.SortOrder.Where(x => x == gameSetting.SortOrder).First();
                 }
 
-                return 0;
+                this.SortOrder = new ObservableCollection<int>() { -1 };
+                return this.SortOrder.ElementAt(0);
             }
             set
             {
+                if (value == int.MinValue)
+                {
+                    return;
+                }
+
                 SetProperty(ref this.gameSetting.SortOrder, value);
 
                 if (this.allSettings.Where(x => 

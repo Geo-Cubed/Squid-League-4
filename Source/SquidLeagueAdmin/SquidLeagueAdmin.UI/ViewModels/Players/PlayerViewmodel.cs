@@ -43,8 +43,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Players
             this.LoadRanks(ref this.TcRank);
             this.LoadRanks(ref this.CbRank);
 
-            this.PlayerRepo = RepositoryFactory.GetPlayerRepository("SQL");
-            this.TeamRepo = RepositoryFactory.GetTeamRepository("SQL");
+            this.PlayerRepo = RepositoryFactory.GetPlayerRepository(RepositoryTypes.Database);
+            this.TeamRepo = RepositoryFactory.GetTeamRepository(RepositoryTypes.Database);
             this.LoadTeamDataAsync();
             this.LoadPlayerDataAsync();
             this.LabelColour = "green";

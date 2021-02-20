@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using System;
@@ -32,7 +33,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.SystemSwitch
             this.currentSwitch = new Switch();
             this.LabelColour = "green";
 
-            this.switchRepo = RepositoryFactory.GetSystemSwitchRepository("SQL");
+            this.switchRepo = RepositoryFactory.GetSystemSwitchRepository(RepositoryTypes.Database);
             this.LoadDataAsync();
         }
         #endregion

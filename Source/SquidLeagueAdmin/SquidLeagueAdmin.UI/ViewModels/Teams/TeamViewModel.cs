@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using System;
@@ -30,7 +31,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Teams
             ReloadCommand = new DelegateCommand(ReloadAsync, () => true);
             DeleteCommand = new DelegateCommand(DeleteTeamAsync, () => true);
 
-            this.repo = RepositoryFactory.GetTeamRepository("SQL");
+            this.repo = RepositoryFactory.GetTeamRepository(RepositoryTypes.Database);
             this.LoadTeamsAsync();
             this.Model = new Team() { Id = -1 };
             this.LabelColour = "green";

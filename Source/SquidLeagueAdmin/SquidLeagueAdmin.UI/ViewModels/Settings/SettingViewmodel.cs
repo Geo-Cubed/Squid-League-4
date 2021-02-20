@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
+using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
@@ -27,7 +28,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.Settings
 
             try
             {
-                this.repo = RepositoryFactory.GetConfigRepository("JSON");
+                this.repo = RepositoryFactory.GetConfigRepository(RepositoryTypes.Json);
                 this.Model = this.repo.GetItems().FirstOrDefault();
             }
             catch (Exception ex)

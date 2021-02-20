@@ -45,9 +45,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.Weapons
             saveCommand = new DelegateCommand(SaveAsync, () => true);
             reloadCommand = new DelegateCommand(ReloadAsync, () => true);    
 
-            this.weaponRepo = RepositoryFactory.GetWeaponRepository("SQL");
-            this.subRepo = RepositoryFactory.GetSubRepository("SQL");
-            this.specialRepo = RepositoryFactory.GetSpecialRepository("SQL");
+            this.weaponRepo = RepositoryFactory.GetWeaponRepository(RepositoryTypes.Database);
+            this.subRepo = RepositoryFactory.GetSubRepository(RepositoryTypes.Database);
+            this.specialRepo = RepositoryFactory.GetSpecialRepository(RepositoryTypes.Database);
 
             this.lblColour = "green";
             this.model = new Weapon() { Id = -1, Name = "No Weapon Selected" };
