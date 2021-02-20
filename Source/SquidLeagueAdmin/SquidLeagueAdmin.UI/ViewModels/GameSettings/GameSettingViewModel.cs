@@ -30,13 +30,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         private ObservableCollection<BracketTypes> brackets;
         private BracketTypes selectedBracket;
-        private int bracketIndex;
 
         private ObservableCollection<string> stages;
-        private int stageIndex;
 
         private ObservableCollection<int> sortOrder;
-        private int sortOrderIndex;
 
         private ObservableCollection<Map> maps;
 
@@ -56,6 +53,12 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             this.settingRepo = RepositoryFactory.GetGameSettingRepository(RepositoryTypes.Database);
             this.mapRepo = RepositoryFactory.GetMapRepository(RepositoryTypes.Database);
             this.switchRepo = RepositoryFactory.GetSystemSwitchRepository(RepositoryTypes.Database);
+
+            this.Brackets = new ObservableCollection<BracketTypes>();
+            this.Stages = new ObservableCollection<string>();
+            this.SortOrder = new ObservableCollection<int>();
+            this.Maps = new ObservableCollection<Map>();
+            this.Modes = new ObservableCollection<GameModes>();
 
             this.LoadMaps();
             this.LoadSwitches();
@@ -102,16 +105,17 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             }
         }
 
-        private async void LoadBrackets()
+        private void LoadBrackets()
         {
             this.Brackets = new ObservableCollection<BracketTypes>()
             {
+                BracketTypes.none,
                 BracketTypes.swiss,
                 BracketTypes.knockout
             };
         }
 
-        private async void LoadGameModes()
+        private void LoadGameModes()
         {
             this.Modes = new ObservableCollection<GameModes>()
             {
@@ -122,6 +126,21 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                 GameModes.TowerControl,
                 GameModes.TurfWar
             };
+        }
+
+        private void LoadStages(BracketTypes bracket)
+        {
+            var currentStages = this.allSwitches
+                .Where(x => x.Name == $"{bracket.GetDescription().ToUpper()}_STAGE")
+                .Select(y => y.Value);
+
+            this.Stages = new ObservableCollection<string>();
+            foreach (var stage in currentStages)
+            {
+                this.Stages.Add(stage);
+            }
+
+            this.SortOrder = new ObservableCollection<int>();
         }
         #endregion
 
@@ -141,7 +160,17 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         private async void ReloadAsync()
         {
+            this.Brackets = new ObservableCollection<BracketTypes>();
+            this.Stages = new ObservableCollection<string>();
+            this.SortOrder = new ObservableCollection<int>();
+            this.Maps = new ObservableCollection<Map>();
+            this.Modes = new ObservableCollection<GameModes>();
 
+            this.LoadMaps();
+            this.LoadSwitches();
+            this.LoadBrackets();
+            this.LoadGameModes();
+            this.LoadSettings();
         }
 
         private async void DeleteAsync()
@@ -163,32 +192,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             set 
             {
                 SetProperty(ref this.selectedBracket, value);
-
-                var currentStages = this.allSwitches
-                    .Where(x => x.Name == $"{value.GetDescription().ToUpper()}_STAGE")
-                    .Select(y => y.Value);
-
-                this.Stages = new ObservableCollection<string>();
-                foreach (var stage in currentStages)
-                {
-                    this.Stages.Add(stage);
-                }
-            }
-        }
-
-        public int BracketIndex
-        {
-            get => this.bracketIndex;
-            set
-            {
-                if (value <= 0)
-                {
-                    SetProperty(ref this.bracketIndex, 0);
-                }
-                else
-                {
-                    SetProperty(ref this.bracketIndex, value);
-                }
+                this.LoadStages(value);
             }
         }
 
@@ -252,29 +256,13 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             }
         }
 
-        public int StageIndex
-        {
-            get => this.stageIndex;
-            set
-            {
-                if (value <= 0 || value > this.Stages.Count() - 1)
-                {
-                    SetProperty(ref this.stageIndex, 0);
-                }
-                else
-                {
-                    SetProperty(ref this.stageIndex, value);
-                }
-            }
-        }
-
         public ObservableCollection<int> SortOrder
         {
             get => this.sortOrder;
             set => SetProperty(ref this.sortOrder, value);
         }
 
-        public int SelectedSortOrder
+        public int? SelectedSortOrder
         {
             get
             {
@@ -283,17 +271,16 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                     return this.SortOrder.Where(x => x == gameSetting.SortOrder).First();
                 }
 
-                this.SortOrder = new ObservableCollection<int>() { -1 };
-                return this.SortOrder.ElementAt(0);
+                return null;
             }
             set
             {
-                if (value == int.MinValue)
+                if (value == null || value == int.MinValue)
                 {
                     return;
                 }
 
-                SetProperty(ref this.gameSetting.SortOrder, value);
+                SetProperty(ref this.gameSetting.SortOrder, (int)value);
 
                 if (this.allSettings.Where(x => 
                     x.BracketStage.ToUpper() == this.gameSetting.BracketStage.ToUpper()
@@ -311,22 +298,6 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                 {
                     this.SelectedMap = this.Maps.ElementAt(0);
                     this.SelectedMode = GameModes.Undefined;
-                }
-            }
-        }
-
-        public int SortOrderIndex
-        {
-            get => this.sortOrderIndex;
-            set
-            {
-                if (value <= 0 || value > this.SortOrder.Count() - 1)
-                {
-                    SetProperty(ref this.sortOrderIndex, 0);
-                }
-                else
-                {
-                    SetProperty(ref this.sortOrderIndex, value);
                 }
             }
         }
@@ -360,7 +331,15 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
                 return this.Maps.ElementAt(0);
             }
-            set => SetProperty(ref this.gameSetting.MapId, value.Id);
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+
+                SetProperty(ref this.gameSetting.MapId, value.Id);
+            }
         }
 
         public string LabelText
