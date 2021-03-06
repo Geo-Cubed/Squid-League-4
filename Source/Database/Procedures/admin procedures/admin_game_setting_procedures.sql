@@ -19,8 +19,16 @@ end|
 drop procedure if exists `admin_get_game_setting`|
 create procedure `admin_get_game_setting`()
 begin
-	select *
-    from `game_setting`
+	select 
+		gs.id as 'id',
+        gs.game_map_id as 'mapId',
+        gm.mode_name as 'modeName',
+        gs.bracket_stage as 'stage',
+        gs.sort_order as 'sortOrder'
+    from 
+		`game_setting` as gs
+			inner join
+		`game_mode` as gm on gs.game_mode_id = gm.id
     order by `bracket_stage` asc, `sort_order` asc;
 end|
 

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Switch = SquidLeagueAdmin.Models.SystemSwitch; 
 
 namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
@@ -36,8 +37,10 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         private ObservableCollection<int> sortOrder;
 
         private ObservableCollection<Map> maps;
+        private Map selectedMap;
 
         private ObservableCollection<GameModes> modes;
+        private GameModes selectedMode;
 
         private string lblText;
         private string lblColour;
@@ -61,6 +64,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
             this.Modes = new ObservableCollection<GameModes>();
 
             this.LoadMaps();
+            this.SelectedMap = this.Maps.First();
             this.LoadSwitches();
             this.LoadBrackets();
             this.LoadGameModes();
@@ -155,27 +159,109 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
         #region Delegate Commands
         private async void SaveAsync()
         {
+            if (this.selectedBracket != BracketTypes.swiss && this.selectedBracket != BracketTypes.knockout)
+            {
+                this.DisplayLabelAsync("Cannot save with no bracket type", 2, true);
+                return;
+            }
 
+            if (!this.Stages.Contains(this.SelectedStage))
+            {
+                this.DisplayLabelAsync("Cannot save with no stage", 2, true);
+                return;
+            }
+
+            if (this.SelectedSortOrder == null || !this.SortOrder.Contains((int)this.SelectedSortOrder))
+            {
+                this.DisplayLabelAsync("Cannot save with no sort order", 2, true);
+                return;
+            }
+
+            if (this.SelectedMap.Id <= 0)
+            {
+                this.DisplayLabelAsync("Cannot save with no map", 2, true);
+                return;
+            }
+
+            if (this.SelectedMode == GameModes.Undefined)
+            {
+                this.DisplayLabelAsync("Cannot save with no mode", 2, true);
+                return;
+            }
+
+            if (this.gameSetting.Id <= 0)
+            {
+                // Create new setting.
+                try
+                {
+                    await Task.Run(() => this.settingRepo.AddItem(this.gameSetting));
+                    this.DisplayLabelAsync("Setting saved successfully", 2);
+                }
+                catch
+                {
+                    this.DisplayLabelAsync("There was an issue while trying to save", 2, true);
+                    return;
+                }
+            }
+            else
+            {
+                // Update setting.
+                try
+                {
+                    await Task.Run(() => this.settingRepo.UpdateItem(this.gameSetting));
+                    this.DisplayLabelAsync("Setting updated successfully", 2);
+                }
+                catch
+                {
+                    this.DisplayLabelAsync("There was an issue while trying to update", 2, true);
+                    return;
+                }
+            }
+
+            this.ReloadAsync();
         }
 
         private async void ReloadAsync()
         {
+            this.SelectedMap = this.Maps.ElementAt(0);
+            this.SelectedMode = this.Modes.ElementAt(0);
             this.Brackets = new ObservableCollection<BracketTypes>();
             this.Stages = new ObservableCollection<string>();
             this.SortOrder = new ObservableCollection<int>();
-            this.Maps = new ObservableCollection<Map>();
-            this.Modes = new ObservableCollection<GameModes>();
 
-            this.LoadMaps();
             this.LoadSwitches();
             this.LoadBrackets();
-            this.LoadGameModes();
             this.LoadSettings();
+            this.SelectedBracket = BracketTypes.none;
         }
 
         private async void DeleteAsync()
         {
+            // Checks if the game setting exists or not.
+            if ((this.SelectedBracket != BracketTypes.knockout && this.SelectedBracket != BracketTypes.swiss)
+                || !this.Stages.Contains(this.SelectedStage)
+                || this.SelectedSortOrder == null 
+                || !this.SortOrder.Contains((int)this.SelectedSortOrder)
+                || this.gameSetting.Id <= 0)
+            {
+                this.DisplayLabelAsync("Cannot delete a setting that doesn't exist", 2, true);
+                return;
+            }
 
+            if (MessageBox.Show($"Permenantly Delete setting: {this.gameSetting}?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                if (await Task.Run(() => this.settingRepo.DeleteItem(this.gameSetting)))
+                {
+                    this.DisplayLabelAsync("Setting deleted successfully", 2);
+                }
+                else
+                {
+                    this.DisplayLabelAsync("There was an issue trying to delete", 2, true);
+                    return;
+                }
+
+                this.ReloadAsync();
+            }
         }
         #endregion
 
@@ -291,12 +377,16 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                             && x.SortOrder == this.gameSetting.SortOrder)
                         .First();
 
-                    this.SelectedMap = this.Maps.Where(x => x.Id == setting.MapId).First();
+                    this.gameSetting.Id = setting.Id;
+                    this.SelectedMap = this.Maps
+                        .Where(x => x.Id == setting.MapId)
+                        .DefaultIfEmpty(this.Maps.First())
+                        .First();
                     this.SelectedMode = setting.Mode;
                 }
                 else
                 {
-                    this.SelectedMap = this.Maps.ElementAt(0);
+                    this.SelectedMap = this.Maps.First();
                     this.SelectedMode = GameModes.Undefined;
                 }
             }
@@ -310,8 +400,12 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         public GameModes SelectedMode
         {
-            get => this.gameSetting.Mode;
-            set => SetProperty(ref this.gameSetting.Mode, value);
+            get => this.selectedMode;
+            set
+            {
+                this.gameSetting.Mode = value;
+                SetProperty(ref this.selectedMode, value);
+            }
         }
 
         public ObservableCollection<Map> Maps
@@ -322,15 +416,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 
         public Map SelectedMap
         {
-            get
-            {
-                if (this.Maps.Where(x => x.Id == this.gameSetting.Id).Any())
-                {
-                    return this.Maps.Where(x => x.Id == this.gameSetting.Id).First();
-                }
-
-                return this.Maps.ElementAt(0);
-            }
+            get => this.selectedMap;
             set
             {
                 if (value == null)
@@ -338,7 +424,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                     return;
                 }
 
-                SetProperty(ref this.gameSetting.MapId, value.Id);
+                this.gameSetting.MapId = value.Id;
+                SetProperty(ref this.selectedMap, value);
             }
         }
 
