@@ -386,6 +386,7 @@ namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
                 }
                 else
                 {
+                    this.gameSetting.Id = -1;
                     this.SelectedMap = this.Maps.First();
                     this.SelectedMode = GameModes.Undefined;
                 }
