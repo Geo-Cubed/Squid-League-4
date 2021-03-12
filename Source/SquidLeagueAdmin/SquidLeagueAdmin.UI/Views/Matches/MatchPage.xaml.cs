@@ -21,6 +21,7 @@ namespace SquidLeagueAdmin.UI.Views.Matches
         public MatchPage()
         {
             InitializeComponent();
+            DataContext = new MatchViewModel();
         }
     }
 }

@@ -5,15 +5,13 @@ using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepoFactory;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Switch = SquidLeagueAdmin.Models.SystemSwitch; 
+using Switch = SquidLeagueAdmin.Models.SystemSwitch;
 
 namespace SquidLeagueAdmin.UI.ViewModels.GameSettings
 {
