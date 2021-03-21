@@ -14,6 +14,9 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
     public class MatchViewmodel : BindableBase
     {
         #region Private variables and constructor
+        private List<Match> allMatches;
+        private Match currentMatch;
+
         private ObservableCollection<BracketTypes> brackets;
         private BracketTypes selectedBracket;
 
@@ -26,6 +29,14 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         private ObservableCollection<Team> teams;
         private Team selectedHomeTeam;
         private Team selectedAwayTeam;
+
+        private ObservableCollection<Caster> casters;
+        private Caster selectedCaster;
+        private Caster selectedSecondaryCaster;
+
+        private string vodLink;
+
+        private DateTime? matchDate;
 
         private string labelText;
         private string labelColour;
@@ -119,6 +130,36 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         {
             get => this.selectedAwayTeam;
             set => SetProperty(ref this.selectedAwayTeam, value);
+        }
+
+        public ObservableCollection<Caster> Casters
+        {
+            get => this.casters;
+            set => SetProperty(ref this.casters, value);
+        }
+
+        public Caster SelectedCaster
+        {
+            get => this.selectedCaster;
+            set => SetProperty(ref this.selectedCaster, value);
+        }
+
+        public Caster SelectedSecondCaster
+        {
+            get => this.selectedSecondaryCaster;
+            set => SetProperty(ref this.selectedSecondaryCaster, value);
+        }
+
+        public string VodLink
+        {
+            get => this.vodLink;
+            set => SetProperty(ref this.vodLink, value);
+        }
+
+        public DateTime? MatchDate
+        {
+            get => this.matchDate;
+            set => SetProperty(ref this.matchDate, value);
         }
 
         public string LabelText

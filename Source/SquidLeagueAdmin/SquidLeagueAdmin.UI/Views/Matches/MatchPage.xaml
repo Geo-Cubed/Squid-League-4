@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SquidLeagueAdmin.UI.Views.Matches"
+      xmlns:tk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MatchPage">
@@ -41,10 +42,16 @@
             <ComboBox x:Name="cmbMatch" ItemsSource="{Binding Path=Matches, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedMatch}" Width="300" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbHomeTeam" ItemsSource="{Binding Path=Teams}" SelectedItem="{Binding Path=SelectedHomeTeam}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
             <ComboBox x:Name="cmbAwayTeam" ItemsSource="{Binding Path=Teams}" SelectedItem="{Binding Path=SelectedAwayTeam}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbMainCaster" Width="150" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <ComboBox x:Name="cmbSecondaryCaster" Width="150" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <TextBox x:Name="tbMatchVod" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
-            <DatePicker x:Name="dpMatchDate" Width="150" Height="25" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbMainCaster" ItemsSource="{Binding Path=Casters}" SelectedItem="{Binding Path=SelectedCaster}" Width="150" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <ComboBox x:Name="cmbSecondaryCaster" ItemsSource="{Binding Path=Casters}" SelectedItem="{Binding Path=SelectedSecondCaster}" Width="150" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <TextBox x:Name="tbMatchVod" Text="{Binding Path=VodLink}" Width="200" Height="20" HorizontalAlignment="Left" Margin="5,5,0,2"/>
+            <tk:DateTimePicker Format ="Custom" x:Name="dpMatchDate"
+                               FormatString="dd-MMM-yy hh:mm"
+                               Value="{Binding Path=MatchDate}"
+                               Width="150" 
+                               Height="25" 
+                               HorizontalAlignment="Left" 
+                               Margin="5,5,0,2"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">
