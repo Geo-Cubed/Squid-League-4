@@ -10,7 +10,11 @@ namespace SquidLeagueAdmin.Models
 
         public int HomeTeamId;
 
+        public string HomeTeamName;
+
         public int AwayTeamId;
+
+        public string AwayTeamName;
 
         public int HomeTeamScore;
 
@@ -23,5 +27,15 @@ namespace SquidLeagueAdmin.Models
         public string MatchVod;
 
         public DateTime? MatchDate;
+
+        public override string ToString()
+        {
+            if (Id <= 0)
+            {
+                return "New Match";
+            }
+
+            return $"{HomeTeamName} : {HomeTeamScore} - {AwayTeamScore} : {AwayTeamName}";
+        }
     }
 }

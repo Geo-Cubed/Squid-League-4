@@ -185,5 +185,20 @@ namespace SquidLeagueAdmin.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<Match> GetMatchRepository(RepositoryTypes type)
+        {
+            IRepository<Match> repo = null;
+            switch (type)
+            {
+                case RepositoryTypes.Database:
+                    repo = null;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid match repository type");
+            }
+
+            return repo;
+        }
     }
 }

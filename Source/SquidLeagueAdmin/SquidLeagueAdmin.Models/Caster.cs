@@ -24,6 +24,11 @@ namespace SquidLeagueAdmin.Models
 
         public override string ToString()
         {
+            if (Id <= 0 && string.IsNullOrEmpty(Name))
+            {
+                return "No Caster";
+            }
+
             return $"{this.Name} - {((this.IsActive == 0) ? "Not" : "")} Active";
         }
     }

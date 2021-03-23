@@ -2,12 +2,16 @@
 using Prism.Mvvm;
 using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.Models.Enums;
+using SquidLeagueAdmin.RepoFactory;
+using SquidLeagueAdmin.RepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Switch = SquidLeagueAdmin.Models.SystemSwitch;
 
 namespace SquidLeagueAdmin.UI.ViewModels.Matches
 {
@@ -16,6 +20,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         #region Private variables and constructor
         private List<Match> allMatches;
         private Match currentMatch;
+
+        private IRepository<Match> matchRepo;
+        private IRepository<Caster> casterRepo;
+        private IRepository<Team> teamRepo;
+        private IRepository<Switch> switchRepo;
 
         private ObservableCollection<BracketTypes> brackets;
         private BracketTypes selectedBracket;
@@ -47,8 +56,63 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
             ReloadCommand = new DelegateCommand(ReloadAsync, () => true);
             DeleteCommand = new DelegateCommand(DeleteAsync, () => true);
 
+            this.matchRepo = RepositoryFactory.GetMatchRepository(RepositoryTypes.Database);
+            this.teamRepo = RepositoryFactory.GetTeamRepository(RepositoryTypes.Database);
+            this.casterRepo = RepositoryFactory.GetCasterRepository(RepositoryTypes.Database);
+            this.switchRepo = RepositoryFactory.GetSystemSwitchRepository(RepositoryTypes.Database);
+
+            this.Brackets = new ObservableCollection<BracketTypes>();
+            this.Stages = new ObservableCollection<string>();
+            this.Matches = new ObservableCollection<Match>();
+            this.Casters = new ObservableCollection<Caster>();
+            this.Teams = new ObservableCollection<Team>();
+
             this.LabelText = string.Empty;
             this.LabelColour = "green";
+        }
+        #endregion
+
+        #region Methods
+        private void LoadBrackets()
+        {
+            this.Brackets = new ObservableCollection<BracketTypes>();
+            this.Brackets.Add(BracketTypes.none);
+            this.Brackets.Add(BracketTypes.swiss);
+            this.Brackets.Add(BracketTypes.knockout);
+        }
+
+        private async void LoadMatches()
+        {
+            var dbMatches = await Task.Run(() => this.matchRepo.GetItems());
+            this.allMatches = dbMatches.ToList();
+        }
+
+        private async void LoadCasters()
+        {
+            this.Casters = new ObservableCollection<Caster>()
+            {
+                new Caster() { Id = -1 }
+            };
+
+            var dbCasters = await Task.Run(() => this.casterRepo.GetItems());
+            foreach (var caster in dbCasters)
+            {
+                this.Casters.Add(caster);
+            }
+        }
+
+        private async void LoadTeams()
+        {
+            this.Teams = new ObservableCollection<Team>()
+            {
+                new Team() { Id = -1 }
+            };
+
+            var dbTeams = await Task.Run(() => this.teamRepo.GetItems());
+            foreach (var team in dbTeams)
+            {
+                this.Teams.Add(team);
+            }
         }
         #endregion
 

@@ -14,6 +14,11 @@ namespace SquidLeagueAdmin.Models
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(TeamName))
+            {
+                return "New Team";
+            }
+
             return $"{TeamName} - {((IsActive == 1) ? "" : "not ")} active";
         }
     }

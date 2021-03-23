@@ -5,17 +5,25 @@ drop procedure if exists `admin_get_match`|
 create procedure `admin_get_match`()
 begin
 	select
-		`id`,
-        `home_team_id` as 'homeTeamId',
-        `away_team_id` as 'awayTeamId',
-        `caster_profile_id` as 'casterProfileId',
-        `match_vod_link` as 'matchVodLink',
-        `match_date` as 'matchDate',
-        `secondary_caster_profile_id` as 'secondaryCasterProfile'
+		m.`id` as 'id',
+        m.`home_team_id` as 'homeTeamId',
+        t1.`team_name` as 'homeTeamName',
+        m.`home_team_score` as 'homeTeamScore',
+        m.`away_team_id` as 'awayTeamId',
+        t2.`team_name` as 'awayTeamName',
+        m.`away_team_score` as 'awayTeamScore',
+        m.`caster_profile_id` as 'casterProfileId',
+        m.`match_vod_link` as 'matchVodLink',
+        m.`match_date` as 'matchDate',
+        m.`secondary_caster_profile_id` as 'secondaryCasterProfile'
 	from
-		`match`
+		`match` as m
+			inner join
+		`team` as t1 on m.`home_team_id` = t1.`id`
+			inner join
+		`team` as t2 on m.`away_team_id` = t2.`id`
 	order by
-		`match_date` desc;
+		m.`match_date` desc;
 end|
 
 drop procedure if exists `admin_create_match`|
