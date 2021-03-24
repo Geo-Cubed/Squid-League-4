@@ -2,6 +2,7 @@
 using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Weapon>();
-            var query = "call admin_get_weapon();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.WeaponTable);
             try
             {
                 var read = this.SelectQuery(query);
@@ -75,7 +76,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue trying to open the database connection.");
             }
 
-            var query = "call admin_update_weapon(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.WeaponTable, 7);
             try
             {
                 this.NoReturnQuery(query, item.Id, item.Name, item.PicturePath, item.SubId, item.SpecialId,

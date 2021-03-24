@@ -2,6 +2,7 @@
 using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_create_game_setting(@param_1, @param_2, @param_3, @param_4);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Create, DatabaseQueryHelper.GameSettingTable, 4);
             try
             {
                 var read = this.SelectQuery(query, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);
@@ -46,7 +47,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_delete_game_setting(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Delete, DatabaseQueryHelper.GameSettingTable, 1);
             try
             {
                 var result = false;
@@ -81,7 +82,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<GameSetting>();
-            var query = "call admin_get_game_setting();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.GameSettingTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {
@@ -111,7 +112,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to connect to the database");
             }
 
-            var query = "call admin_update_game_setting(@param_1, @param_2, @param_3, @param_4, @param_5);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.GameSettingTable, 5);
             try
             {
                 var read = this.SelectQuery(query, item.Id, item.MapId, item.Mode.GetDescription(), item.BracketStage, item.SortOrder);

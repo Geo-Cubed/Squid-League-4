@@ -1,6 +1,7 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_create_system_switch(@param_1, @param_2);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Create, DatabaseQueryHelper.SystemSwitchTable, 2);
             try
             {
                 this.NoReturnQuery(query, item.Name, item.Value);
@@ -39,7 +40,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_delete_system_switch(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Delete, DatabaseQueryHelper.SystemSwitchTable, 1);
             try
             {
                 this.NoReturnQuery(query, item.Id);
@@ -68,7 +69,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<SystemSwitch>();
-            var query = "call admin_get_system_switch();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.SystemSwitchTable);
             try 
             {
                 var read = this.SelectQuery(query);
@@ -106,7 +107,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_update_system_switch(@param_1, @param_2, @param_3)";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.SystemSwitchTable, 3);
             try
             {
                 this.NoReturnQuery(query, item.Id, item.Name, item.Value);

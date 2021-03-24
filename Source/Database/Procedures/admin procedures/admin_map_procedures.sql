@@ -2,8 +2,8 @@ use `squid_league_4`;
 
 delimiter |
 
-drop procedure if exists admin_get_maps|
-create procedure admin_get_maps()
+drop procedure if exists `admin_get_game_map`|
+create procedure `admin_get_game_map`()
 begin
 	select
 		`id`,
@@ -15,8 +15,8 @@ begin
 		`map_name` asc;
 end|
 
-drop procedure if exists admin_update_maps|
-create procedure admin_update_maps(in mapId int, in mapName varchar(50), in picturePath varchar(2000))
+drop procedure if exists `admin_update_game_map`|
+create procedure `admin_update_game_map`(in mapId int, in mapName varchar(50), in picturePath varchar(2000))
 begin
 	update `game_map`
     set

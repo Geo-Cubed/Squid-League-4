@@ -2,6 +2,7 @@
 using SquidLeagueAdmin.Models.Enums;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,7 +22,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_create_player(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Create, DatabaseQueryHelper.PlayerTable, 7);
             try
             {
                 this.NoReturnQuery(
@@ -52,7 +53,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             bool result = false;
-            var query = "call admin_delete_player(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Delete, DatabaseQueryHelper.PlayerTable, 1);
             var read = this.SelectQuery(query, item.Id);
             while (read.Read())
             {
@@ -77,7 +78,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var items = new List<Player>();
-            var query = "call admin_get_player();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.PlayerTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {
@@ -112,7 +113,7 @@ namespace SquidLeagueAdmin.Database.Repositories
 
             try
             {
-                var query = "call admin_update_player(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7, @param_8);";
+                var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.PlayerTable, 8);
                 this.NoReturnQuery(
                     query,
                     item.Id,

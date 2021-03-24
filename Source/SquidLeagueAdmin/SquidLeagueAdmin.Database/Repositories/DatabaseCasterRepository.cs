@@ -1,6 +1,7 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_create_caster(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Create, DatabaseQueryHelper.CasterTable, 7);
             try
             {
                 this.NoReturnQuery(query, item.Name, item.Twitter, item.Youtube, item.Twitch, item.Discord,
@@ -40,7 +41,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_delete_caster(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Delete, DatabaseQueryHelper.CasterTable, 1);
             try
             {
                 var result = false;
@@ -75,7 +76,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Caster>();
-            var query = "call admin_get_caster();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.CasterTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {
@@ -108,7 +109,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection");
             }
 
-            var query = "call admin_update_caster(@param_1, @param_2, @param_3, @param_4, @param_5, @param_6, @param_7, @param_8);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.CasterTable, 8);
             try
             {
                 this.NoReturnQuery(query, item.Id, item.Name, item.Twitter, item.Youtube, item.Twitch,

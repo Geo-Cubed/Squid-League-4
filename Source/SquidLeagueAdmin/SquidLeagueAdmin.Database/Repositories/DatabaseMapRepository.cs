@@ -1,6 +1,7 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,7 +33,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Map>();
-            var query = "call admin_get_maps();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.MapTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {
@@ -60,7 +61,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = "call admin_update_maps(@param_1, @param_2, @param_3);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.MapTable, 3);
             try
             {
                 this.NoReturnQuery(query, item.Id, item.Name, item.PicturePath);

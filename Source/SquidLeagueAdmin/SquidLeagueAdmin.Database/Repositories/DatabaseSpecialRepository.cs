@@ -1,6 +1,7 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,7 +33,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<Special>();
-            var query = "call admin_get_special();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.SpecialTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {

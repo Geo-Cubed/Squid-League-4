@@ -1,6 +1,7 @@
 ﻿using SquidLeagueAdmin.Models;
 using SquidLeagueAdmin.RepositoryInterface;
 using SquidLeagueAdmin.Utilities;
+using SquidLeagueAdmin.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = "call admin_create_helpful_people(@param_1, @param_2, @param_3, @param_4);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Create, DatabaseQueryHelper.HelpfulPeopleTable, 4);
             try
             {
                 this.NoReturnQuery(query, item.UserName, item.Description, item.ProfilePicture, item.Twitter);
@@ -38,7 +39,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = "call admin_delete_helpful_people(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Delete, DatabaseQueryHelper.HelpfulPeopleTable, 1);
             try
             {
                 this.NoReturnQuery(query, item.Id);
@@ -67,7 +68,7 @@ namespace SquidLeagueAdmin.Database.Repositories
             }
 
             var result = new List<HelpfulPeople>();
-            var query = "call admin_get_helpful_people();";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Get, DatabaseQueryHelper.HelpfulPeopleTable);
             var read = this.SelectQuery(query);
             while (read.Read())
             {
@@ -97,7 +98,7 @@ namespace SquidLeagueAdmin.Database.Repositories
                 throw new Exception("There was an issue while trying to open the database connection.");
             }
 
-            var query = "call admin_update_helpful_people(@param_1, @param_2, @param_3, @param_4, @param_5);";
+            var query = DatabaseQueryHelper.FullQuery(QueryType.Update, DatabaseQueryHelper.HelpfulPeopleTable, 5);
             try
             {
                 this.NoReturnQuery(query, item.Id, item.UserName, item.Description, item.ProfilePicture, item.Twitter);
