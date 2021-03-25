@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SquidLeagueAdmin.UI.ViewModels.Matches;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,7 +22,7 @@ namespace SquidLeagueAdmin.UI.Views.Matches
         public MatchPage()
         {
             InitializeComponent();
-            DataContext = new MatchViewModel();
+            DataContext = new MatchViewmodel();
         }
     }
 }

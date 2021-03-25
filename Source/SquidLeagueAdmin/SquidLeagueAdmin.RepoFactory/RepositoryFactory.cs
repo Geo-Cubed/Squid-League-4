@@ -192,7 +192,7 @@ namespace SquidLeagueAdmin.RepoFactory
             switch (type)
             {
                 case RepositoryTypes.Database:
-                    repo = null;
+                    repo = new DatabaseMatchRepository();
                     break;
                 default:
                     throw new ArgumentException("Invalid match repository type");

@@ -69,6 +69,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
 
             this.LabelText = string.Empty;
             this.LabelColour = "green";
+
+            this.LoadTeams();
+            this.LoadCasters();
+            this.LoadBrackets();
+            this.LoadMatches();
         }
         #endregion
 
@@ -117,11 +122,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         #endregion
 
         #region Delegates
-        public DelegateCommand SaveCommand;
+        public DelegateCommand SaveCommand { get; }
 
-        public DelegateCommand ReloadCommand;
+        public DelegateCommand ReloadCommand { get; }
 
-        public DelegateCommand DeleteCommand;
+        public DelegateCommand DeleteCommand { get; }
         #endregion
 
         #region Delegate commands
