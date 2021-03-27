@@ -1,8 +1,8 @@
 use squid_league_4;
 delimiter |
 
-drop procedure if exists get_all_team_information|
-create procedure get_all_team_information()
+drop procedure if exists api_get_team|
+create procedure api_get_team()
 begin
 	select
 		`id`,
@@ -17,8 +17,8 @@ begin
 		`team_name` asc, `id` asc;
 end|
 
-drop procedure if exists get_team_by_id|
-create procedure get_team_by_id(in teamId int)
+drop procedure if exists api_get_team_by_team_id|
+create procedure api_get_team_by_team_id(in teamId int)
 begin 
 	select 
 		`id`,
@@ -30,8 +30,8 @@ begin
         and `id` = teamId;
 end|  
 
-drop procedure if exists get_team_by_player_id|
-create procedure get_team_by_player_id(in playerId int)
+drop procedure if exists api_get_team_by_player_id|
+create procedure api_get_team_by_player_id(in playerId int)
 begin
 	select
 		case

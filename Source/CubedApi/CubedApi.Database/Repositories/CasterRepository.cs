@@ -9,27 +9,35 @@ using CubedApi.Utilities;
 
 namespace CubedApi.Database.Repositories
 {
-    public class CasterRepository : DatabaseConnector, IRepository<CasterProfile>
+    public class CasterRepository : IRepository<CasterProfile>
     {
-        public CasterRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public CasterRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("A repository needs an implementation of a database connector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public CasterProfile GetItem(int id)
         {
             var query = $"call get_caster_by_id(@param_1);";
             CasterProfile result = null;
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query, id);
+            var read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new CasterProfile()
@@ -45,11 +53,7 @@ namespace CubedApi.Database.Repositories
                 };
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
 
@@ -57,12 +61,12 @@ namespace CubedApi.Database.Repositories
         {
             var query = "call get_all_caster_information();";
             var result = new List<CasterProfile>();
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 result.Add(new CasterProfile()
@@ -78,11 +82,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the connection");
-            }
-
+            this.connector.TryCloseConnection()
             return result;
         }
     }

@@ -2,8 +2,8 @@ use squid_league_4;
 
 DELIMITER |
 
-drop procedure if exists get_all_helpful_people_information|
-create procedure get_all_helpful_people_information()
+drop procedure if exists api_get_helpful_people|
+create procedure api_get_helpful_people()
 begin
 	select
 		`id`,

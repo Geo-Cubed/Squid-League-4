@@ -19,9 +19,8 @@ namespace CubedApi.BLL.Matches
 
         static MatchCommands()
         {
-            connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            matchRepository = RepositoryFactory.GetSwissMatchRepository("SQL", connectionStr);
-            singleMatchRepository = RepositoryFactory.GetSingleMatchRepository("SQL", connectionStr);
+            matchRepository = RepositoryFactory.GetSwissMatchRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            singleMatchRepository = RepositoryFactory.GetSingleMatchRepository(RepoFactory.Enum.RepositoryTypes.Database);
         }
 
         public static IEnumerable<Match> GetAllSwissMatches()

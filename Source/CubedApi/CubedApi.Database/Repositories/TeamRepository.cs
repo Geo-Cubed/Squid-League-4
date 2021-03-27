@@ -9,27 +9,35 @@ using System.Text;
 
 namespace CubedApi.Database.Repositories
 {
-    public class TeamRepository : DatabaseConnector, IRepository<Team>
+    public class TeamRepository : IRepository<Team>
     {
-        public TeamRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public TeamRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementation of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public Team GetItem(int id)
         {
             string query = $"call get_team_by_id(@param_1);";
             Team result = null;
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query, id);
+            var read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new Team()
@@ -40,11 +48,7 @@ namespace CubedApi.Database.Repositories
                 };
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
 
@@ -52,12 +56,12 @@ namespace CubedApi.Database.Repositories
         {
             string query = $"call get_all_team_information();";
             var result = new List<Team>();
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 result.Add(new Team()
@@ -68,11 +72,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
     }

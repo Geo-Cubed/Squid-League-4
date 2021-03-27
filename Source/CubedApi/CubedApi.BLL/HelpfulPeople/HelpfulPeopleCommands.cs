@@ -17,8 +17,7 @@ namespace CubedApi.BLL.HelpfulPeople
 
         static HelpfulPeopleCommands()
         {
-            connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            helpfulPeopleRepository = RepositoryFactory.GetHelpfulPeopleRepository("SQL", connectionStr);
+            helpfulPeopleRepository = RepositoryFactory.GetHelpfulPeopleRepository(RepoFactory.Enum.RepositoryTypes.Database);
         }
 
         public static IEnumerable<specialThanks> GetAllHelpfulPeople()

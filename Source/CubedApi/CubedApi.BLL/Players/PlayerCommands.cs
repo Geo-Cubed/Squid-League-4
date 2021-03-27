@@ -18,8 +18,7 @@ namespace CubedApi.BLL.Players
 
         static PlayerCommands()
         {
-            connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            playerRepository = RepositoryFactory.GetPlayerRepository("SQL", connectionStr);
+            playerRepository = RepositoryFactory.GetPlayerRepository(RepoFactory.Enum.RepositoryTypes.Database);
         }
 
         /// <summary>

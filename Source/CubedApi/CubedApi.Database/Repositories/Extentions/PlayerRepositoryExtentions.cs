@@ -39,11 +39,7 @@ namespace CubedApi.Database.Repositories.Extentions
                 });
             }
 
-            if (!connection.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            connection.TryCloseConnection();
             return result;
         }
     }

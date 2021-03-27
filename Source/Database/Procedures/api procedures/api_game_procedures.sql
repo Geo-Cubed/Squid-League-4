@@ -2,8 +2,8 @@ use squid_league_4;
 
 delimiter |
 
-drop procedure if exists get_set_information_by_match_id|
-create procedure get_set_information_by_match_id(in matchId int)
+drop procedure if exists api_get_set_information_by_match_id|
+create procedure api_get_set_information_by_match_id(in matchId int)
 begin
 	select
 		*

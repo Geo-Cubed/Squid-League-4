@@ -11,15 +11,23 @@ using System.Text;
 
 namespace CubedApi.Database.Repositories
 {
-    public class TeamPlayerRepository : DatabaseConnector, IRepository<TeamPlayers>
+    public class TeamPlayerRepository : IRepository<TeamPlayers>
     {
-        public TeamPlayerRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public TeamPlayerRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementaiton of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public TeamPlayers GetItem(int id)
@@ -31,12 +39,12 @@ namespace CubedApi.Database.Repositories
         {
             var query = "call get_all_team_information();";
             var result = new List<TeamPlayers>();
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("An error occured while trying to open the database connection");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 result.Add(new TeamPlayers()
@@ -50,7 +58,7 @@ namespace CubedApi.Database.Repositories
 
             read.Close();
             query = "call get_all_players_on_teams();";
-            read = this.SelectQuery(query);
+            read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 var id = read.TryGetValue("teamId", out int? teamId) ? teamId : null;
@@ -72,11 +80,7 @@ namespace CubedApi.Database.Repositories
                 }
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("An error occured while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
     }

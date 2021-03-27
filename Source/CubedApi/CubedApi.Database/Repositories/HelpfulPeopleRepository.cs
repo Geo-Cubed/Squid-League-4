@@ -9,10 +9,17 @@ using System.Text;
 
 namespace CubedApi.Database.Repositories
 {
-    public class HelpfulPeopleRepository : DatabaseConnector, IRepository<HelpfulPeople>
+    public class HelpfulPeopleRepository : IRepository<HelpfulPeople>
     {
-        public HelpfulPeopleRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+        public HelpfulPeopleRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementation of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
@@ -27,14 +34,14 @@ namespace CubedApi.Database.Repositories
 
         public IEnumerable<HelpfulPeople> GetItems()
         {
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to open the database connection");
             }
 
             var query = "call get_all_helpful_people_information();";
             var data = new List<HelpfulPeople>();
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 data.Add(new HelpfulPeople() 
@@ -47,11 +54,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return data;
         }
     }

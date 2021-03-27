@@ -1,21 +1,33 @@
-﻿using CubedApi.Database.Repositories;
+﻿using CubedApi.Database;
+using CubedApi.Database.Repositories;
+using CubedApi.DatabaseInterface;
 using CubedApi.Models.DatabaseTables;
 using CubedApi.Models.ModelLinkers;
+using CubedApi.RepoFactory.Enum;
 using CubedApi.RepositoryInterface;
 using System;
+using System.IO;
 
 namespace CubedApi.RepoFactory
 {
     public static class RepositoryFactory
     {
-        public static IRepository<Player> GetPlayerRepository(string type, string connectionStr = "")
+        private static IDatabaseConnector connector;
+        static RepositoryFactory()
+        {
+            // TODO: Make Class non static and move to DI where it hands out 1 version of repo factory whenever it requests an IRepoFactory
+            var connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
+            connector = new DatabaseConnector(connectionStr);
+        }
+
+        public static IRepository<Player> GetPlayerRepository(RepositoryTypes type)
         {
             IRepository<Player> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new PlayerRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new PlayerRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid player repository.");
@@ -24,14 +36,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<Team> GetTeamRepository(string type, string connectionStr = "")
+        public static IRepository<Team> GetTeamRepository(RepositoryTypes type)
         {
             IRepository<Team> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new TeamRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new TeamRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid team repository.");
@@ -40,14 +52,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<TeamPlayers> GetTeamProfileRepository(string type, string connectionStr = "")
+        public static IRepository<TeamPlayers> GetTeamProfileRepository(RepositoryTypes type)
         {
             IRepository<TeamPlayers> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new TeamPlayerRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new TeamPlayerRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid team profile repository");
@@ -56,14 +68,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<CasterProfile> GetCasterRepository(string type, string connectionStr = "")
+        public static IRepository<CasterProfile> GetCasterRepository(RepositoryTypes type)
         {
             IRepository<CasterProfile> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new CasterRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new CasterRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid caster repository");
@@ -72,14 +84,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<HelpfulPeople> GetHelpfulPeopleRepository(string type, string connectionStr = "")
+        public static IRepository<HelpfulPeople> GetHelpfulPeopleRepository(RepositoryTypes type)
         {
             IRepository<HelpfulPeople> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new HelpfulPeopleRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new HelpfulPeopleRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid helpful people repository");
@@ -88,14 +100,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<Match> GetSwissMatchRepository(string type, string connectionStr = "")
+        public static IRepository<Match> GetSwissMatchRepository(RepositoryTypes type)
         {
             IRepository<Match> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new SwissMatchRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new SwissMatchRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid swiss match repository");
@@ -104,14 +116,14 @@ namespace CubedApi.RepoFactory
             return repository;
         }
 
-        public static IRepository<SingleMatchInformation> GetSingleMatchRepository(string type, string connectionStr = "")
+        public static IRepository<SingleMatchInformation> GetSingleMatchRepository(RepositoryTypes type)
         {
             IRepository<SingleMatchInformation> repository = null;
 
             switch (type)
             {
-                case "SQL":
-                    repository = new SingleMatchRepository(connectionStr);
+                case RepositoryTypes.Database:
+                    repository = new SingleMatchRepository(connector);
                     break;
                 default:
                     throw new ArgumentException("Invalid single match repository");

@@ -19,8 +19,7 @@ namespace CubedApi.BLL.Casters
 
         static CasterCommands()
         {
-            connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            casterRepository = RepositoryFactory.GetCasterRepository("SQL", connectionStr);
+            casterRepository = RepositoryFactory.GetCasterRepository(RepoFactory.Enum.RepositoryTypes.Database);
         }
 
         /// <summary>

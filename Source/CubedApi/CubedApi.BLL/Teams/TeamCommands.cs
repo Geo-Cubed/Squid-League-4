@@ -21,9 +21,8 @@ namespace CubedApi.BLL.Teams
 
         static TeamCommands()
         {
-            connectionStr = File.ReadAllText(@"D://connectionStr.txt");//"NOT FOR YOU YET GITHUB"; // TODO: Move this to a better place.
-            teamRepository = RepositoryFactory.GetTeamRepository("SQL", connectionStr);
-            teamProfileRepository = RepositoryFactory.GetTeamProfileRepository("SQL", connectionStr);
+            teamRepository = RepositoryFactory.GetTeamRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            teamProfileRepository = RepositoryFactory.GetTeamProfileRepository(RepoFactory.Enum.RepositoryTypes.Database);
         }
 
         /// <summary>

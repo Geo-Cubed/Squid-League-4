@@ -2,8 +2,8 @@ use `squid_league_4`;
 
 delimiter |
 
-drop procedure if exists get_all_caster_information|
-create procedure get_all_caster_information()
+drop procedure if exists api_get_caster|
+create procedure api_get_caster()
 begin
 	select
 		`id`,
@@ -21,8 +21,8 @@ begin
 		`caster_name` asc;
 end|
 
-drop procedure if exists get_caster_by_id|
-create procedure get_caster_by_id(in casterId int)
+drop procedure if exists api_get_caster_by_caster_id|
+create procedure api_get_caster_by_caster_id(in casterId int)
 begin
 	select
 		`id`,
@@ -39,8 +39,8 @@ begin
         and `id` = casterId;
 end|
 
-drop procedure if exists get_caster_by_match_id|
-create procedure get_caster_by_match_id(in matchId int)
+drop procedure if exists api_get_caster_by_match_id|
+create procedure api_get_caster_by_match_id(in matchId int)
 begin
 	select
 		c.`id` as 'id',

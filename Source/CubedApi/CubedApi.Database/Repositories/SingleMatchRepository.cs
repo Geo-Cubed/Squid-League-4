@@ -10,27 +10,35 @@ using System.Text;
 
 namespace CubedApi.Database.Repositories
 {
-    public class SingleMatchRepository : DatabaseConnector, IRepository<SingleMatchInformation>
+    public class SingleMatchRepository : IRepository<SingleMatchInformation>
     {
-        public SingleMatchRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public SingleMatchRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementation of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public SingleMatchInformation GetItem(int id)
         {
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to open the database connection");
             }
 
             var data = new SingleMatchInformation();
             var query = $"call get_single_match_information_by_id(@param_1);";
-            var read = this.SelectQuery(query, id);
+            var read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
                 data.MatchInforamtion = new Match() 
@@ -54,17 +62,13 @@ namespace CubedApi.Database.Repositories
 
             read.Close();
             query = $"call get_set_information_by_match_id(@param_1);";
-            read = this.SelectQuery(query, id);
+            read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
 
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return data;
         }
 

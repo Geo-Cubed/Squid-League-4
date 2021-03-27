@@ -2,8 +2,8 @@ use squid_league_4;
 
 delimiter |
 
-drop procedure if exists get_all_swiss_match_information|
-create procedure get_all_swiss_match_information()
+drop procedure if exists api_get_swiss_match|
+create procedure api_get_swiss_match()
 begin
 	select
 		m.`id` as 'id',
@@ -36,8 +36,8 @@ begin
 		s.`match_week` asc, 'hasHappened' desc, m.`id` asc;  
 end|
 
-drop procedure if exists get_all_knockout_match_information|
-create procedure get_all_knockout_match_information()
+drop procedure if exists api_get_knockout_match|
+create procedure api_get_knockout_match()
 begin
 	select
 		m.`id` as 'id',
@@ -70,8 +70,8 @@ begin
 		'hasHappened' desc, m.`id` asc;  
 end|
 
-drop procedure if exists get_single_match_information_by_id|
-create procedure get_single_match_information_by_id(in matchId int)
+drop procedure if exists api_get_match_by_match_id|
+create procedure api_get_match_by_match_id(in matchId int)
 begin
 	select
 		m.`id` as 'id',

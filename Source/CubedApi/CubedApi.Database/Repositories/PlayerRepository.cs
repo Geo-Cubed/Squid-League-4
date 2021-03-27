@@ -3,31 +3,40 @@ using CubedApi.DatabaseInterface;
 using CubedApi.Models.DatabaseTables;
 using CubedApi.RepositoryInterface;
 using CubedApi.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace CubedApi.Database.Repositories
 {
-    public class PlayerRepository : DatabaseConnector, IRepository<Player>
+    public class PlayerRepository : IRepository<Player>
     {
-        public PlayerRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public PlayerRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementation of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public Player GetItem(int id)
         {
             var query = $"call get_player_by_id(@param_1);";
             Player result = null;
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query, id);
+            var read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
                 result = new Player()
@@ -47,11 +56,7 @@ namespace CubedApi.Database.Repositories
                 };
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
 
@@ -59,12 +64,12 @@ namespace CubedApi.Database.Repositories
         {
             var query = "call get_all_player_information();";
             var result = new List<Player>();
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to connect to the database");
             }
 
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 result.Add(new Player()
@@ -84,11 +89,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return result;
         }
     }

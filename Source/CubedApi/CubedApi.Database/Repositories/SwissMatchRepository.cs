@@ -9,15 +9,23 @@ using System.Text;
 
 namespace CubedApi.Database.Repositories
 {
-    public class SwissMatchRepository : DatabaseConnector, IRepository<Match>
+    public class SwissMatchRepository : IRepository<Match>
     {
-        public SwissMatchRepository(string connectionStr) : base(connectionStr)
+        private IDatabaseConnector connector;
+
+        public SwissMatchRepository(IDatabaseConnector connector)
         {
+            if (connector == null)
+            {
+                throw new ArgumentNullException("Repository needs an implementation of a IDatabaseConnector.");
+            }
+
+            this.connector = connector;
         }
 
         public IDatabaseConnector GetConnection()
         {
-            return this.GetDBConnection();
+            return this.connector.GetDBConnection();
         }
 
         public Match GetItem(int id)
@@ -27,14 +35,14 @@ namespace CubedApi.Database.Repositories
 
         public IEnumerable<Match> GetItems()
         {
-            if (!this.TryOpenConnection())
+            if (!this.connector.TryOpenConnection())
             {
                 throw new DatabaseOpenConnectionException("There was an issue while trying to open the database connection");
             }
 
             var data = new List<Match>();
             var query = "call get_all_swiss_match_information();";
-            var read = this.SelectQuery(query);
+            var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
                 data.Add(new Match()
@@ -55,11 +63,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            if (!this.TryCloseConnection())
-            {
-                throw new DatabaseCloseConnectionException("There was an issue while trying to close the database connection");
-            }
-
+            this.connector.TryCloseConnection();
             return data;
             
         }
