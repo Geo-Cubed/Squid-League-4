@@ -25,7 +25,7 @@ namespace SquidLeagueAdmin.Utilities
         /// <summary>
         /// Constructs the name of a mysql procedure that can be called.
         /// </summary>
-        /// <param name="type">A <see cref="QueryType"/> referencing a crud operation.</param>
+        /// <param name="type">A <see cref="QueryType"/> representing a crud operation.</param>
         /// <param name="table">The name of the table the procedure is for.</param>
         /// <returns>The name of a mysql query that can be called.</returns>
         public static string QueryConstructor(QueryType type, string table)

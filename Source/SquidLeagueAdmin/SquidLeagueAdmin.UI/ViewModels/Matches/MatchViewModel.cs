@@ -74,6 +74,8 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
             this.LoadCasters();
             this.LoadBrackets();
             this.LoadMatches();
+
+            currentMatch = new Match() { Id = -1 };
         }
         #endregion
 
@@ -180,7 +182,11 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         public Match SelectedMatch
         {
             get => this.selectedMatch;
-            set => SetProperty(ref this.selectedMatch, value);
+            set 
+            {
+                SetProperty(ref this.selectedMatch, value);
+                this.currentMatch = value;
+            }
         }
 
         public ObservableCollection<Team> Teams
@@ -192,13 +198,27 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         public Team SelectedHomeTeam
         {
             get => this.selectedHomeTeam;
-            set => SetProperty(ref this.selectedHomeTeam, value);
+            set
+            {
+                SetProperty(ref this.selectedHomeTeam, value);
+                if (value != null && value.Id > 0)
+                {
+                    this.currentMatch.HomeTeamId = value.Id;
+                }
+            }
         }
 
         public Team SelectedAwayTeam
         {
             get => this.selectedAwayTeam;
-            set => SetProperty(ref this.selectedAwayTeam, value);
+            set 
+            {
+                SetProperty(ref this.selectedAwayTeam, value);
+                if (value != null && value.Id > 0)
+                {
+                    this.currentMatch.AwayTeamId = value.Id;
+                }
+            }
         }
 
         public ObservableCollection<Caster> Casters
@@ -210,25 +230,52 @@ namespace SquidLeagueAdmin.UI.ViewModels.Matches
         public Caster SelectedCaster
         {
             get => this.selectedCaster;
-            set => SetProperty(ref this.selectedCaster, value);
+            set
+            {
+                SetProperty(ref this.selectedCaster, value);
+                if (value != null)
+                {
+                    this.currentMatch.CasterId = value.Id;
+                }
+            }
         }
 
         public Caster SelectedSecondCaster
         {
             get => this.selectedSecondaryCaster;
-            set => SetProperty(ref this.selectedSecondaryCaster, value);
+            set
+            {
+                SetProperty(ref this.selectedSecondaryCaster, value);
+                if (value != null)
+                {
+                    this.currentMatch.SecondaryCasterId = value.Id;
+                }
+            }
         }
 
         public string VodLink
         {
             get => this.vodLink;
-            set => SetProperty(ref this.vodLink, value);
+            set
+            {
+                SetProperty(ref this.vodLink, value);
+                this.currentMatch.MatchVod = value;
+            }
         }
 
         public DateTime? MatchDate
         {
             get => this.matchDate;
-            set => SetProperty(ref this.matchDate, value);
+            set
+            {
+                SetProperty(ref this.matchDate, value);
+                if (value != null)
+                {
+                    value = new DateTime(value.Value.Hour, value.Value.Minute, 0).ToUniversalTime();
+                }
+
+                this.currentMatch.MatchDate = value;
+            }
         }
 
         public string LabelText
