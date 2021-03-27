@@ -4,6 +4,7 @@ using CubedApi.Models.DatabaseTables;
 using CubedApi.Models.ModelLinkers;
 using CubedApi.RepositoryInterface;
 using CubedApi.Utilities;
+using CubedApi.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,12 @@ namespace CubedApi.Database.Repositories
 
         public IEnumerable<TeamPlayers> GetItems()
         {
-            var query = "call get_all_team_information();";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.TeamTable,
+                string.Empty
+            );
+
             var result = new List<TeamPlayers>();
             if (!this.connector.TryOpenConnection())
             {
@@ -57,7 +63,12 @@ namespace CubedApi.Database.Repositories
             }
 
             read.Close();
-            query = "call get_all_players_on_teams();";
+            query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.PlayerTable,
+                DatabaseQueryHelper.OnSuffixConstructor(DatabaseQueryHelper.TeamTable)
+            );
+
             read = this.connector.SelectQuery(query);
             while (read.Read())
             {

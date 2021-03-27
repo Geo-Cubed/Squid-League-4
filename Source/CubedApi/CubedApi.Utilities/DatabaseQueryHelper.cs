@@ -24,6 +24,13 @@ namespace CubedApi.Utilities
         public static string TeamTable = "team";
         public static string WeaponTable = "weapon";
 
+        // Special names.
+        public static string SetInformation = "set_information";
+        public static string UpcommingMatches = "upcomming_matches";
+        public static string SwissMatch = "swiss_match";
+        public static string KnockoutMatch = "knockout_match";
+
+
         /// <summary>
         /// Constructs the name of a mysql procedure that can be called.
         /// </summary>
@@ -35,9 +42,14 @@ namespace CubedApi.Utilities
             return string.Format("{0}_{1}_{2}", Prefix, type.ToString().ToLower(), table);
         }
 
-        public static string SuffixConstructor(string table, string suffixType)
+        public static string BySuffixConstructor(string table, string suffix)
         {
-            return string.Format("by_{0}_{1}", table, suffixType);
+            return string.Format("by_{0}_{1}", table, suffix);
+        }
+
+        public static string OnSuffixConstructor(string table)
+        {
+            return string.Format("on_{0}", table);
         }
 
         /// <summary>
@@ -45,11 +57,17 @@ namespace CubedApi.Utilities
         /// </summary>
         /// <param name="type">A <see cref="QueryType"/> representing a crud operation.</param>
         /// <param name="table">The name of the table the query acts on.</param>
+        /// <param name="suffix">The suffix of the query.</param>
         /// <param name="numberOfParams">The number of parameters the query has.</param>
         /// <returns>A full query for the operation and table specified.</returns>
-        public static string FullQuery(QueryTypes type, string table, int numberOfParams = 0)
+        public static string FullQuery(QueryTypes type, string table, string suffix, int numberOfParams = 0)
         {
             var queryName = QueryConstructor(type, table);
+            if (!string.IsNullOrEmpty(suffix))
+            {
+                queryName = string.Format("{0}_{1}", queryName, suffix);
+            }
+
             return FullQuery(queryName, numberOfParams);
         }
 

@@ -10,7 +10,13 @@ namespace CubedApi.Database.Repositories.Extentions
     {
         public static CasterProfile GetCasterByMatchId(this IRepository<CasterProfile> casterRepository, int id)
         {
-            var query = $"call get_caster_by_match_id(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(
+                Utilities.Enums.QueryTypes.get,
+                DatabaseQueryHelper.CasterTable,
+                DatabaseQueryHelper.BySuffixConstructor(DatabaseQueryHelper.MatchTable, DatabaseQueryHelper.SuffixId),
+                1
+            );
+
             var connection = casterRepository.GetConnection();
             CasterProfile result = null;
             if (!connection.TryOpenConnection())

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CubedApi.Utilities;
+using CubedApi.Utilities.Enums;
 
 namespace CubedApi.Database.Repositories
 {
@@ -30,7 +31,13 @@ namespace CubedApi.Database.Repositories
 
         public CasterProfile GetItem(int id)
         {
-            var query = $"call get_caster_by_id(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.CasterTable,
+                DatabaseQueryHelper.BySuffixConstructor(DatabaseQueryHelper.CasterTable, DatabaseQueryHelper.SuffixId),
+                1
+            );
+
             CasterProfile result = null;
             if (!this.connector.TryOpenConnection())
             {
@@ -59,7 +66,12 @@ namespace CubedApi.Database.Repositories
 
         public IEnumerable<CasterProfile> GetItems()
         {
-            var query = "call get_all_caster_information();";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.CasterTable,
+                string.Empty
+            );
+
             var result = new List<CasterProfile>();
             if (!this.connector.TryOpenConnection())
             {
@@ -82,7 +94,7 @@ namespace CubedApi.Database.Repositories
                 });
             }
 
-            this.connector.TryCloseConnection()
+            this.connector.TryCloseConnection();
             return result;
         }
     }

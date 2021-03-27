@@ -107,8 +107,8 @@ begin
 		m.`id` = matchId;  
 end|
 
-drop procedure if exists get_upcomming_matches|
-create procedure get_upcomming_matches()
+drop procedure if exists api_get_upcomming_matches|
+create procedure api_get_upcomming_matches()
 begin
 	select
 		t1.`team_name` as 'homeTeamName',

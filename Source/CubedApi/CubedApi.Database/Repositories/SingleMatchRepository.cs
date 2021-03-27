@@ -4,6 +4,7 @@ using CubedApi.Models.DatabaseTables;
 using CubedApi.Models.ModelLinkers;
 using CubedApi.RepositoryInterface;
 using CubedApi.Utilities;
+using CubedApi.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,7 +38,13 @@ namespace CubedApi.Database.Repositories
             }
 
             var data = new SingleMatchInformation();
-            var query = $"call get_single_match_information_by_id(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.MatchTable,
+                DatabaseQueryHelper.BySuffixConstructor(DatabaseQueryHelper.MatchTable, DatabaseQueryHelper.SuffixId),
+                1
+            );
+
             var read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {
@@ -61,7 +68,13 @@ namespace CubedApi.Database.Repositories
             }
 
             read.Close();
-            query = $"call get_set_information_by_match_id(@param_1);";
+            query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.SetInformation,
+                DatabaseQueryHelper.BySuffixConstructor(DatabaseQueryHelper.MatchTable, DatabaseQueryHelper.SuffixId),
+                1
+            );
+
             read = this.connector.SelectQuery(query, id);
             while (read.Read())
             {

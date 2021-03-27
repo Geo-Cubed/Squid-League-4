@@ -3,6 +3,7 @@ using CubedApi.DatabaseInterface;
 using CubedApi.Models.DatabaseTables;
 using CubedApi.RepositoryInterface;
 using CubedApi.Utilities;
+using CubedApi.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,7 +40,12 @@ namespace CubedApi.Database.Repositories
                 throw new DatabaseOpenConnectionException("There was an issue while trying to open the database connection");
             }
 
-            var query = "call get_all_helpful_people_information();";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.HelpfulPeopleTable,
+                string.Empty
+            );
+
             var data = new List<HelpfulPeople>();
             var read = this.connector.SelectQuery(query);
             while (read.Read())

@@ -12,7 +12,13 @@ namespace CubedApi.Database.Repositories.Extentions
     {
         public static IEnumerable<Player> GetPlayersByTeamId(this IRepository<Player> playerRepository, int teamId)
         {
-            string query = $"call get_players_by_team_id(@param_1);";
+            var query = DatabaseQueryHelper.FullQuery(
+                Utilities.Enums.QueryTypes.get,
+                DatabaseQueryHelper.PlayerTable,
+                DatabaseQueryHelper.BySuffixConstructor(DatabaseQueryHelper.TeamTable, DatabaseQueryHelper.SuffixId),
+                1
+            );
+
             var connection = playerRepository.GetConnection();
             var result = new List<Player>();
             if (!connection.TryOpenConnection())

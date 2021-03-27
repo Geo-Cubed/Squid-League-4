@@ -3,6 +3,7 @@ using CubedApi.DatabaseInterface;
 using CubedApi.Models.DatabaseTables;
 using CubedApi.RepositoryInterface;
 using CubedApi.Utilities;
+using CubedApi.Utilities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,12 @@ namespace CubedApi.Database.Repositories
             }
 
             var data = new List<Match>();
-            var query = "call get_all_swiss_match_information();";
+            var query = DatabaseQueryHelper.FullQuery(
+                QueryTypes.get,
+                DatabaseQueryHelper.SwissMatch,
+                string.Empty
+            );
+
             var read = this.connector.SelectQuery(query);
             while (read.Read())
             {
