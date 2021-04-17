@@ -1,11 +1,10 @@
-﻿using CubedApi.BLL.HelpfulPeople;
-using CubedApi.CustomExceptions;
-using CubedApi.Models.DatabaseTables;
+﻿using CubedApi.Api.Commands.HelpfulPeople;
+using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Data;
+using CubedApi.Api.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CubedApi.Api.Controllers
 {
@@ -13,13 +12,27 @@ namespace CubedApi.Api.Controllers
     [ApiController]
     public class HelpfulPeopleController : ControllerBase
     {
+        private readonly SquidLeagueContext _context;
+        private readonly HelpfulPeopleCommands _helpfulPeopleCommands;
+
+        public HelpfulPeopleController(SquidLeagueContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
+            this._helpfulPeopleCommands = new HelpfulPeopleCommands(this._context);
+        }
+
         // GET: _apis/<HelpfulPeopleController>
         [HttpGet]
-        public ActionResult<IEnumerable<HelpfulPeople>> Get()
+        public ActionResult<List<HelpfulPerson>> Get()
         {
             try
             {
-                return (List<HelpfulPeople>)HelpfulPeopleCommands.GetAllHelpfulPeople();
+                return this._helpfulPeopleCommands.GetAllHelpfulPeople();
             }
             catch (NoDataException)
             {

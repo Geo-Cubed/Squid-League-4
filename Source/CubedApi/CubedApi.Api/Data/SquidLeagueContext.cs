@@ -1,5 +1,5 @@
 ﻿using System;
-using CubedApi.Api.Models;
+using CubedApi.Api.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

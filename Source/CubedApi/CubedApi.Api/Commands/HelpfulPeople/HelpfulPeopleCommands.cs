@@ -1,27 +1,29 @@
-﻿using CubedApi.RepoFactory;
-using CubedApi.RepositoryInterface;
-using specialThanks = CubedApi.Models.DatabaseTables.HelpfulPeople;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using CubedApi.CustomExceptions;
+﻿using System.Collections.Generic;
 using System.Linq;
+using CubedApi.Api.Data;
+using System;
+using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Common.CustomExceptions;
 
 namespace CubedApi.Api.Commands.HelpfulPeople
 {
-    public static class HelpfulPeopleCommands
+    public class HelpfulPeopleCommands
     {
-        private static readonly IRepository<specialThanks> helpfulPeopleRepository;
+        private readonly SquidLeagueContext _context;
 
-        static HelpfulPeopleCommands()
+        public HelpfulPeopleCommands(SquidLeagueContext context)
         {
-            helpfulPeopleRepository = RepositoryFactory.GetHelpfulPeopleRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
         }
 
-        public static IEnumerable<specialThanks> GetAllHelpfulPeople()
+        public List<HelpfulPerson> GetAllHelpfulPeople()
         {
-            var data = helpfulPeopleRepository.GetItems();
+            var data = this._context.HelpfulPeople;
             if (data.Count() == 0)
             {
                 throw new NoDataException();

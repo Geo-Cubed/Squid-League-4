@@ -1,12 +1,10 @@
-﻿using CubedApi.BLL.Matches;
-using CubedApi.CustomExceptions;
-using CubedApi.Models.DatabaseTables;
-using CubedApi.Models.ModelLinkers;
+﻿using CubedApi.Api.Commands.Matches;
+using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Data;
+using CubedApi.Api.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +14,20 @@ namespace CubedApi.Api.Controllers
     [ApiController]
     public class MatchController : ControllerBase
     {
+        private readonly SquidLeagueContext _context;
+        private readonly MatchCommands _matchCommands;
+
+        public MatchController(SquidLeagueContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
+            this._matchCommands = new MatchCommands(this._context);
+        }
+
         // GET: _apis/<MatchController>
         [HttpGet]
         public ActionResult<List<Match>> GetAllMatches()
@@ -29,7 +41,7 @@ namespace CubedApi.Api.Controllers
         {
             try
             {
-                return (List<Match>)MatchCommands.GetAllSwissMatches();
+                return this._matchCommands.GetAllSwissMatches();
             }
             catch (NoDataException)
             {
@@ -43,11 +55,11 @@ namespace CubedApi.Api.Controllers
 
         // GET api/<MatchController>/5
         [HttpGet("{id}")]
-        public ActionResult<SingleMatchInformation> Get(int id)
+        public ActionResult<Tuple<Match, List<Game>>> Get(int id)
         {
             try
             {
-                return MatchCommands.GetMatchInformationById(id);
+                return this._matchCommands.GetMatchInformationById(id);
             }
             catch (DataIsNullException)
             {

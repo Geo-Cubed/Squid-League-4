@@ -13,6 +13,7 @@
     <Folder Include="Commands\" />
     <Folder Include="Common\CustomExceptions\" />
     <Folder Include="Common\Utilities\" />
+    <Folder Include="Models\EntityLinkers\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,11 +22,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CubedApi.Models\CubedApi.Models.csproj" />
-    <ProjectReference Include="..\CubedApi.RepositoryInterface\CubedApi.RepositoryInterface.csproj" />
   </ItemGroup>
 
 

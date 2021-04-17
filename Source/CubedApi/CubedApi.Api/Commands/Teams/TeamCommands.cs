@@ -1,42 +1,42 @@
-﻿using CubedApi.CustomExceptions;
-using CubedApi.Database.Repositories.Extentions;
-using CubedApi.Models.DatabaseTables;
-using CubedApi.Models.ModelLinkers;
-using CubedApi.RepoFactory;
-using CubedApi.RepositoryInterface;
-using CubedApi.Utilities;
+﻿using CubedApi.Api.Data;
+using CubedApi.Api.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Common.CustomExceptions;
 
 namespace CubedApi.Api.Commands.Teams
 {
-    public static class TeamCommands
+    public class TeamCommands
     {
-        private static readonly IRepository<Team> teamRepository;
-        private static readonly IRepository<TeamPlayers> teamProfileRepository;
+        private readonly SquidLeagueContext _context;
 
-        static TeamCommands()
+        public TeamCommands(SquidLeagueContext context)
         {
-            teamRepository = RepositoryFactory.GetTeamRepository(RepoFactory.Enum.RepositoryTypes.Database);
-            teamProfileRepository = RepositoryFactory.GetTeamProfileRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            if (context == null)
+            {
+                throw new ArgumentException("Cannot have a null db context.");
+            }
+
+            this._context = context;
         }
 
         /// <summary>
         /// Gets all active teams
         /// </summary>
         /// <returns>All active teams in the database</returns>
-        public static IEnumerable<Team> GetAllTeams()
+        public List<Team> GetAllTeams()
         {
-            var teams = teamRepository.GetItems();
+            var teams = this._context.Teams.Where(t => t.IsActive ?? false);
             if (teams.Count() == 0 || teams.IsNull())
             {
                 throw new NoDataException();
             }
 
-            return teams;
+            return teams.ToList();
         }
 
         /// <summary>
@@ -44,14 +44,14 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">The id of the team to fetch</param>
         /// <returns>The team with the id</returns>
-        public static Team GetTeamById(int id)
+        public Team GetTeamById(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var team = teamRepository.GetItem(id);
+            var team = this._context.Teams.FirstOrDefault(t => t.Id == id && (t.IsActive ?? false));
             if (team.IsNull())
             {
                 throw new DataIsNullException();
@@ -65,14 +65,14 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">id of the player to get the team of</param>
         /// <returns>the team the player is on</returns>
-        public static Team GetTeamByPlayerId(int id)
+        public Team GetTeamByPlayerId(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var team = teamRepository.GetTeamByPlayerId(id);
+            var team = this._context.Teams.FirstOrDefault(t => t.Players.Where(p => p.Id == id && (p.IsActive ?? false)).Any());
             if (team.IsNull())
             {
                 throw new DataIsNullException();
@@ -85,15 +85,24 @@ namespace CubedApi.Api.Commands.Teams
         /// gets all the teams with the players on it
         /// </summary>
         /// <returns>a list of teams with players</returns>
-        public static IEnumerable<TeamPlayers> GetTeamProfiles()
+        public List<Tuple<Team, List<Player>>> GetTeamProfiles()
         {
-            var teams = teamProfileRepository.GetItems();
+            var teams = this._context.Teams.Where(t => t.IsActive ?? false);
             if (teams.Count() == 0)
             {
                 throw new NoDataException();
             }
 
-            return teams;
+            var teamPlayers = new List<Tuple<Team, List<Player>>>();
+            foreach (var team in teams)
+            {
+                var players = this._context.Players.Where(p => (int)p.TeamId == team.Id && (p.IsActive ?? false));
+                if (players.Any())
+                {
+                    teamPlayers.Add(new Tuple<Team, List<Player>>(team, players.ToList()));
+                }
+            }
+            return teamPlayers;
         }
     }
 }

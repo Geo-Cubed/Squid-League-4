@@ -1,46 +1,51 @@
-﻿using CubedApi.CustomExceptions;
-using CubedApi.Models.DatabaseTables;
-using CubedApi.Models.ModelLinkers;
-using CubedApi.RepoFactory;
+﻿using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Common.Utilities;
+using CubedApi.Api.Data;
+using CubedApi.Api.Models.Entities;
 using CubedApi.RepositoryInterface;
-using CubedApi.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 namespace CubedApi.Api.Commands.Matches
 {
-    public static class MatchCommands
+    public class MatchCommands
     {
-        private static readonly IRepository<Match> matchRepository;
-        private static readonly IRepository<SingleMatchInformation> singleMatchRepository;
+        private readonly SquidLeagueContext _context;
 
-        static MatchCommands()
+        public MatchCommands(SquidLeagueContext context)
         {
-            matchRepository = RepositoryFactory.GetSwissMatchRepository(RepoFactory.Enum.RepositoryTypes.Database);
-            singleMatchRepository = RepositoryFactory.GetSingleMatchRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
         }
 
-        public static IEnumerable<Match> GetAllSwissMatches()
+        public List<Match> GetAllSwissMatches()
         {
-            var matches = matchRepository.GetItems();
+            var matches = this._context.Matches;
             if (matches.Count() == 0)
             {
                 throw new NoDataException();
             }
 
-            return matches;
+            return matches.ToList();
         }
 
-        public static SingleMatchInformation GetMatchInformationById(int id)
+        public Tuple<Match, List<Game>> GetMatchInformationById(int id)
         {
+            throw new NotImplementedException();
+
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var matchData = singleMatchRepository.GetItem(id);
+            var matchData = this._context.Matches;
 
             if (matchData.IsNull())
             {

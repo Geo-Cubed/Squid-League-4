@@ -1,39 +1,40 @@
 ﻿using CubedApi.Api.Common.CustomExceptions;
-using CubedApi.Database.Repositories.Extentions;
-using CubedApi.Models.DatabaseTables;
-using CubedApi.RepoFactory;
-using CubedApi.RepositoryInterface;
 using CubedApi.Api.Common.Utilities;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
+using CubedApi.Api.Data;
+using System;
+using CubedApi.Api.Models.Entities;
 
 namespace CubedApi.Api.Commands.Casters
 {
-    public static class CasterCommands
+    public class CasterCommands
     {
-        private static readonly IRepository<CasterProfile> casterRepository;
+        private readonly SquidLeagueContext _context;
 
-        static CasterCommands()
+        public CasterCommands(SquidLeagueContext context)
         {
-            casterRepository = RepositoryFactory.GetCasterRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
         }
 
         /// <summary>
         /// Gets all active casters.
         /// </summary>
         /// <returns>A list of all casters.</returns>
-        public static IEnumerable<CasterProfile> GetAllCasters()
+        public List<CasterProfile> GetAllCasters()
         {
-            var casters = casterRepository.GetItems();
+            var casters = this._context.CasterProfiles.Where(c => c.IsActive ?? false);
             if (casters.Count() == 0 || casters.IsNull())
             {
                 throw new NoDataException();
             }
 
-            return casters;
+            return casters.ToList();
         }
 
 
@@ -42,14 +43,14 @@ namespace CubedApi.Api.Commands.Casters
         /// </summary>
         /// <param name="id">The id of the caster.</param>
         /// <returns>The caster with the related id.</returns>
-        public static CasterProfile GetCasterById(int id)
+        public CasterProfile GetCasterById(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var caster = casterRepository.GetItem(id);
+            var caster = this._context.CasterProfiles.FirstOrDefault(c => c.Id == id && (c.IsActive ?? false));
             if (caster.IsNull())
             {
                 throw new NoDataException();
@@ -63,20 +64,23 @@ namespace CubedApi.Api.Commands.Casters
         /// </summary>
         /// <param name="id">The id of the match.</param>
         /// <returns>The caster for the specific match.</returns>
-        public static CasterProfile GetCasterByMatchId(int id)
+        public List<CasterProfile> GetCastersByMatchId(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var caster = casterRepository.GetCasterByMatchId(id);
-            if (caster.IsNull())
+            var casters = this._context.CasterProfiles.Where(c => 
+                (c.MatchCasterProfiles.Where(m => m.Id == id).Any()
+                || c.MatchSecondaryCasterProfiles.Where(m => m.Id == id).Any())
+                && (c.IsActive ?? false));
+            if (!casters.Any())
             {
                 throw new NoDataException();
             }
 
-            return caster;
+            return casters.ToList();
         }
     }
 }

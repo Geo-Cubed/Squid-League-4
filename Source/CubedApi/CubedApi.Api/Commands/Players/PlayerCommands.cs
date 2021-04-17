@@ -1,38 +1,40 @@
-﻿using CubedApi.CustomExceptions;
-using CubedApi.Database.Repositories.Extentions;
-using CubedApi.Models.DatabaseTables;
-using CubedApi.RepoFactory;
-using CubedApi.RepositoryInterface;
-using CubedApi.Utilities;
+﻿using CubedApi.Api.Data;
+using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Common.Utilities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using CubedApi.Api.Models.Entities;
 
 namespace CubedApi.Api.Commands.Players
 {
-    public static class PlayerCommands
+    public class PlayerCommands
     {
-        private static IRepository<Player> playerRepository;
+        private readonly SquidLeagueContext _context;
 
-        static PlayerCommands()
+        public PlayerCommands(SquidLeagueContext context)
         {
-            playerRepository = RepositoryFactory.GetPlayerRepository(RepoFactory.Enum.RepositoryTypes.Database);
+            if (context == null)
+            {
+                throw new ArgumentException("Cannot have a null db context.");
+            }
+
+            this._context = context;
         }
 
         /// <summary>
         /// Gets all players in the database that are active.
         /// </summary>
         /// <returns>A list of active players in the database.</returns>
-        public static IEnumerable<Player> GetAllPlayers()
+        public List<Player> GetAllPlayers()
         {
-            var players = playerRepository.GetItems();
+            var players = this._context.Players.Where(p => p.IsActive ?? false);
             if (players.Count() == 0 || players.IsNull())
             {
                 throw new NoDataException("No active players.");
             }
 
-            return players;
+            return players.ToList();
         } 
 
         /// <summary>
@@ -40,14 +42,14 @@ namespace CubedApi.Api.Commands.Players
         /// </summary>
         /// <param name="id">The interger id of the player.</param>
         /// <returns>The player profile of the player.</returns>
-        public static Player GetPlayerById(int id)
+        public Player GetPlayerById(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var player = playerRepository.GetItem(id);
+            var player = this._context.Players.FirstOrDefault(p => p.Id == id && (p.IsActive ?? false));
             if (player.IsNull())
             {
                 throw new DataIsNullException();
@@ -61,20 +63,20 @@ namespace CubedApi.Api.Commands.Players
         /// </summary>
         /// <param name="id">The id of the team.</param>
         /// <returns>A list of active players.</returns>
-        public static  IEnumerable<Player> GetPlayersByTeamId(int id)
+        public List<Player> GetPlayersByTeamId(int id)
         {
             if (id.IsInvalid())
             {
                 throw new InvalidIdException();
             }
 
-            var players = playerRepository.GetPlayersByTeamId(id);
+            var players = this._context.Players.Where(p => p.TeamId == id && (p.IsActive ?? false));
             if (players.Count() == 0 || players.IsNull())
             {
                 throw new NoDataException();
             }
 
-            return players;
+            return players.ToList();
         }
     }
 }

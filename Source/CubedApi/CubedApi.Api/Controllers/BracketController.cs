@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CubedApi.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +11,18 @@ namespace CubedApi.Api.Controllers
     [ApiController]
     public class BracketController : ControllerBase
     {
+        private readonly SquidLeagueContext _context;
+
+        public BracketController(SquidLeagueContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
+        }
+
         // GET: api/<BracketController>
         [HttpGet]
         public IEnumerable<string> Get()
