@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CubedApi.Utilities
+﻿namespace CubedApi.Api.Common.Utilities
 {
     public static class Gaurd
     {

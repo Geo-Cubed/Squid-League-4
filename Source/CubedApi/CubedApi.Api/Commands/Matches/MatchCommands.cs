@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-namespace CubedApi.BLL.Matches
+namespace CubedApi.Api.Commands.Matches
 {
     public static class MatchCommands
     {
-        private static readonly string connectionStr;
         private static readonly IRepository<Match> matchRepository;
         private static readonly IRepository<SingleMatchInformation> singleMatchRepository;
 

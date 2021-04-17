@@ -8,11 +8,10 @@ using System.Text;
 using CubedApi.CustomExceptions;
 using System.Linq;
 
-namespace CubedApi.BLL.HelpfulPeople
+namespace CubedApi.Api.Commands.HelpfulPeople
 {
     public static class HelpfulPeopleCommands
     {
-        private static readonly string connectionStr;
         private static readonly IRepository<specialThanks> helpfulPeopleRepository;
 
         static HelpfulPeopleCommands()

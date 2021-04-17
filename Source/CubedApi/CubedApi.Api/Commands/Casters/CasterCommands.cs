@@ -1,20 +1,19 @@
-﻿using CubedApi.CustomExceptions;
+﻿using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Database.Repositories.Extentions;
 using CubedApi.Models.DatabaseTables;
 using CubedApi.RepoFactory;
 using CubedApi.RepositoryInterface;
-using CubedApi.Utilities;
+using CubedApi.Api.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CubedApi.BLL.Casters
+namespace CubedApi.Api.Commands.Casters
 {
     public static class CasterCommands
     {
-        private static readonly string connectionStr;
         private static readonly IRepository<CasterProfile> casterRepository;
 
         static CasterCommands()

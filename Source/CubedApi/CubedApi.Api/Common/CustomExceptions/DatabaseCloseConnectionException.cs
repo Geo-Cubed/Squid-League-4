@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CubedApi.CustomExceptions
+namespace CubedApi.Api.Common.CustomExceptions
 {
     public class DatabaseCloseConnectionException : Exception
     {

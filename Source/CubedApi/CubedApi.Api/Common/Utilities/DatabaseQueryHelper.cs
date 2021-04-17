@@ -1,9 +1,6 @@
-﻿using CubedApi.Utilities.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CubedApi.Api.Common.Utilities.Enums;
 
-namespace CubedApi.Utilities
+namespace CubedApi.Api.Common.Utilities
 {
     public static class DatabaseQueryHelper
     {

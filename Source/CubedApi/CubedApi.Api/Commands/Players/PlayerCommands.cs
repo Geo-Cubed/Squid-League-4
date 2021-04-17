@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace CubedApi.BLL.Players
+namespace CubedApi.Api.Commands.Players
 {
     public static class PlayerCommands
     {
-        private static string connectionStr;
         private static IRepository<Player> playerRepository;
 
         static PlayerCommands()

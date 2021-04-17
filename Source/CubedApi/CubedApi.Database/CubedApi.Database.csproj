@@ -14,11 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CubedApi.CustomExceptions\CubedApi.CustomExceptions.csproj" />
     <ProjectReference Include="..\CubedApi.DatabaseInterface\CubedApi.DatabaseInterface.csproj" />
     <ProjectReference Include="..\CubedApi.Models\CubedApi.Models.csproj" />
     <ProjectReference Include="..\CubedApi.RepositoryInterface\CubedApi.RepositoryInterface.csproj" />
-    <ProjectReference Include="..\CubedApi.Utilities\CubedApi.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

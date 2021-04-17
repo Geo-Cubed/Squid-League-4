@@ -11,11 +11,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CubedApi.BLL.Teams
+namespace CubedApi.Api.Commands.Teams
 {
     public static class TeamCommands
     {
-        private static readonly string connectionStr;
         private static readonly IRepository<Team> teamRepository;
         private static readonly IRepository<TeamPlayers> teamProfileRepository;
 
