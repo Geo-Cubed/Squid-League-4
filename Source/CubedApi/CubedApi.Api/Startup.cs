@@ -30,7 +30,7 @@ namespace CubedApi.Api
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers();
 
-            services.AddDbContext<SquidLeagueContext>();
+            services.AddDbContext<SquidLeagueContext>(options => options.UseMySQL(Configuration["ConnectionStrings:squidLeagueDb"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
