@@ -16,12 +16,7 @@ namespace CubedApi.Api.Commands.Teams
 
         public TeamCommands(SquidLeagueContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Cannot have a null db context.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Cannot have a null db context.");
         }
 
         /// <summary>
@@ -31,7 +26,7 @@ namespace CubedApi.Api.Commands.Teams
         public List<Team> GetAllTeams()
         {
             var teams = this._context.Teams.Where(t => t.IsActive ?? false);
-            if (teams.Count() == 0 || teams.IsNull())
+            if (!teams.Any())
             {
                 throw new NoDataException();
             }
@@ -88,7 +83,7 @@ namespace CubedApi.Api.Commands.Teams
         public List<Tuple<Team, List<Player>>> GetTeamProfiles()
         {
             var teams = this._context.Teams.Where(t => t.IsActive ?? false);
-            if (teams.Count() == 0)
+            if (!teams.Any())
             {
                 throw new NoDataException();
             }

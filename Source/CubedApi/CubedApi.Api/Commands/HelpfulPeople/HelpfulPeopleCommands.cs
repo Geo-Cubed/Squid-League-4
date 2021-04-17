@@ -13,23 +13,18 @@ namespace CubedApi.Api.Commands.HelpfulPeople
 
         public HelpfulPeopleCommands(SquidLeagueContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Context cannot be null.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
         }
 
         public List<HelpfulPerson> GetAllHelpfulPeople()
         {
             var data = this._context.HelpfulPeople;
-            if (data.Count() == 0)
+            if (!data.Any())
             {
                 throw new NoDataException();
             }
 
-            return data;
+            return data.ToList();
         }
     }
 }

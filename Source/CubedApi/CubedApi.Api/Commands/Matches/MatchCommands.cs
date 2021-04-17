@@ -2,12 +2,9 @@
 using CubedApi.Api.Common.Utilities;
 using CubedApi.Api.Data;
 using CubedApi.Api.Models.Entities;
-using CubedApi.RepositoryInterface;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace CubedApi.Api.Commands.Matches
 {
@@ -17,18 +14,13 @@ namespace CubedApi.Api.Commands.Matches
 
         public MatchCommands(SquidLeagueContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Context cannot be null.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
         }
 
         public List<Match> GetAllSwissMatches()
         {
             var matches = this._context.Matches;
-            if (matches.Count() == 0)
+            if (!matches.Any())
             {
                 throw new NoDataException();
             }
@@ -52,7 +44,7 @@ namespace CubedApi.Api.Commands.Matches
                 throw new DataIsNullException();
             }
 
-            return matchData;
+            return null;
         }
     }
 }
