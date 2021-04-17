@@ -7,5 +7,6 @@ namespace CubedApi.Api.Models.DTOs
 {
     public class PlayerDto
     {
+        // TODO: Use AutoMapper.
     }
 }
