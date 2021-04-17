@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{2E99EFEF-E3DB-48E3-A4FD-0BE04F1E068D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CubedApi.Api", "CubedApi.Api\CubedApi.Api.csproj", "{6924C75E-953E-4EA3-B515-F568BD8C09F9}"
 EndProject
 Global
@@ -20,9 +18,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{6924C75E-953E-4EA3-B515-F568BD8C09F9} = {2E99EFEF-E3DB-48E3-A4FD-0BE04F1E068D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {435FAF01-F2AA-46FA-B8A5-BA6FD2A9A2D6}
