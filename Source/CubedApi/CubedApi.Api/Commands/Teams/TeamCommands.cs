@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Models.Linkers;
 
 namespace CubedApi.Api.Commands.Teams
 {
@@ -23,7 +25,7 @@ namespace CubedApi.Api.Commands.Teams
         /// Gets all active teams
         /// </summary>
         /// <returns>All active teams in the database</returns>
-        public List<Team> GetAllTeams()
+        public List<TeamDto> GetAllTeams()
         {
             var teams = this._context.Teams.Where(t => t.IsActive ?? false);
             if (!teams.Any())
@@ -31,7 +33,7 @@ namespace CubedApi.Api.Commands.Teams
                 throw new NoDataException();
             }
 
-            return teams.ToList();
+            return teams.Select(t => EntityDtoConverter.TeamEntityToDto(t)).ToList();
         }
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">The id of the team to fetch</param>
         /// <returns>The team with the id</returns>
-        public Team GetTeamById(int id)
+        public TeamDto GetTeamById(int id)
         {
             if (id.IsInvalid())
             {
@@ -52,7 +54,7 @@ namespace CubedApi.Api.Commands.Teams
                 throw new DataIsNullException();
             }
 
-            return team;
+            return EntityDtoConverter.TeamEntityToDto(team);
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">id of the player to get the team of</param>
         /// <returns>the team the player is on</returns>
-        public Team GetTeamByPlayerId(int id)
+        public TeamDto GetTeamByPlayerId(int id)
         {
             if (id.IsInvalid())
             {
@@ -73,28 +75,32 @@ namespace CubedApi.Api.Commands.Teams
                 throw new DataIsNullException();
             }
 
-            return team;
+            return EntityDtoConverter.TeamEntityToDto(team);
         }
 
         /// <summary>
         /// gets all the teams with the players on it
         /// </summary>
         /// <returns>a list of teams with players</returns>
-        public List<Tuple<Team, List<Player>>> GetTeamProfiles()
+        public List<TeamProfile> GetTeamProfiles()
         {
-            var teams = this._context.Teams.Where(t => t.IsActive ?? false);
+            var teams = this._context.Teams.Where(t => t.IsActive ?? false).ToList();
             if (!teams.Any())
             {
                 throw new NoDataException();
             }
 
-            var teamPlayers = new List<Tuple<Team, List<Player>>>();
+            var teamPlayers = new List<TeamProfile>();
             foreach (var team in teams)
             {
-                var players = this._context.Players.Where(p => (int)p.TeamId == team.Id && (p.IsActive ?? false));
+                var players = this._context.Players.Where(p => (int)p.TeamId == team.Id && (p.IsActive ?? false)).ToList();
                 if (players.Any())
                 {
-                    teamPlayers.Add(new Tuple<Team, List<Player>>(team, players.ToList()));
+                    teamPlayers.Add(new TeamProfile()
+                    {
+                        team = EntityDtoConverter.TeamEntityToDto(team),
+                        players = players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList()
+                    });
                 }
             }
             return teamPlayers;

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using CubedApi.Api.Data;
 using CubedApi.Api.Commands.Casters;
-using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Models.DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,7 +30,7 @@ namespace CubedApi.Api.Controllers
 
         // GET: _apis/<CastersController>
         [HttpGet]
-        public ActionResult<List<CasterProfile>> Get()
+        public ActionResult<List<CasterProfileDto>> Get()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace CubedApi.Api.Controllers
 
         // GET _apis/<CastersController>/5
         [HttpGet("{id}")]
-        public ActionResult<CasterProfile> Get(int id)
+        public ActionResult<CasterProfileDto> Get(int id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace CubedApi.Api.Controllers
 
         // GET _apis/<CasterController>/match/5
         [HttpGet("match/{id}")]
-        public ActionResult<List<CasterProfile>> GetByMatchId(int id)
+        public ActionResult<List<CasterProfileDto>> GetByMatchId(int id)
         {
             try
             {

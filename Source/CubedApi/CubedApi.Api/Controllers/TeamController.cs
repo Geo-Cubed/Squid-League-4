@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using CubedApi.Api.Commands.Teams;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Data;
-using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Models.Linkers;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,7 +31,7 @@ namespace CubedApi.Api.Controllers
 
         // GET: api/<TeamController> => get all active teams
         [HttpGet]
-        public ActionResult<List<Team>> Get()
+        public ActionResult<List<TeamDto>> Get()
         {
             try
             {
@@ -48,7 +49,7 @@ namespace CubedApi.Api.Controllers
 
         // GET api/<TeamController>/5 => Get team with id of 5 (must be active) 
         [HttpGet("{id}")]
-        public ActionResult<Team> Get(int id)
+        public ActionResult<TeamDto> Get(int id)
         {
             try
             {
@@ -66,7 +67,7 @@ namespace CubedApi.Api.Controllers
 
         // GET _apis/<TeamController>/player/5 => Get the team of the player with id 5 (must be active)
         [HttpGet("player/{id}")]
-        public ActionResult<Team> GetTeamByPlayerId(int id)
+        public ActionResult<TeamDto> GetTeamByPlayerId(int id)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace CubedApi.Api.Controllers
         }
 
         [HttpGet("profile")]
-        public ActionResult<List<Tuple<Team, List<Player>>>> GetTeamProfiles()
+        public ActionResult<List<TeamProfile>> GetTeamProfiles()
         {
             try
             {
@@ -93,7 +94,7 @@ namespace CubedApi.Api.Controllers
             {
                 return NotFound();
             }
-            catch 
+            catch
             {
                 return BadRequest();
             }

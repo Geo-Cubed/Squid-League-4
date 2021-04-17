@@ -5,6 +5,7 @@ using System.Linq;
 using CubedApi.Api.Data;
 using System;
 using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
 
 namespace CubedApi.Api.Commands.Casters
 {
@@ -26,7 +27,7 @@ namespace CubedApi.Api.Commands.Casters
         /// Gets all active casters.
         /// </summary>
         /// <returns>A list of all casters.</returns>
-        public List<CasterProfile> GetAllCasters()
+        public List<CasterProfileDto> GetAllCasters()
         {
             var casters = this._context.CasterProfiles.Where(c => c.IsActive ?? false);
             if (casters.Count() == 0 || casters.IsNull())
@@ -34,7 +35,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return casters.ToList();
+            return casters.Select(c => EntityDtoConverter.CasterProfileEntityToDto(c)).ToList();
         }
 
 
@@ -43,7 +44,7 @@ namespace CubedApi.Api.Commands.Casters
         /// </summary>
         /// <param name="id">The id of the caster.</param>
         /// <returns>The caster with the related id.</returns>
-        public CasterProfile GetCasterById(int id)
+        public CasterProfileDto GetCasterById(int id)
         {
             if (id.IsInvalid())
             {
@@ -56,7 +57,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return caster;
+            return EntityDtoConverter.CasterProfileEntityToDto(caster);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace CubedApi.Api.Commands.Casters
         /// </summary>
         /// <param name="id">The id of the match.</param>
         /// <returns>The caster for the specific match.</returns>
-        public List<CasterProfile> GetCastersByMatchId(int id)
+        public List<CasterProfileDto> GetCastersByMatchId(int id)
         {
             if (id.IsInvalid())
             {
@@ -80,7 +81,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return casters.ToList();
+            return casters.Select(c => EntityDtoConverter.CasterProfileEntityToDto(c)).ToList();
         }
     }
 }

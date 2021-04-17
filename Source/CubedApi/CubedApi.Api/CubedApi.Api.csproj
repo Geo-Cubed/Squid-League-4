@@ -10,13 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Common\CustomExceptions\" />
-    <Folder Include="Common\Utilities\" />
-    <Folder Include="Models\EntityLinkers\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Automapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,7 +1,8 @@
 ﻿using CubedApi.Api.Commands.Matches;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Data;
-using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Models.Linkers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,14 +31,14 @@ namespace CubedApi.Api.Controllers
 
         // GET: _apis/<MatchController>
         [HttpGet]
-        public ActionResult<List<Match>> GetAllMatches()
+        public ActionResult<List<MatchDto>> GetAllMatches()
         {
             throw new NotImplementedException();
         }
 
         // GET: _apis/<MatchController>/swiss
         [HttpGet("swiss")]
-        public ActionResult<List<Match>> GetSwissMatches()
+        public ActionResult<List<MatchDto>> GetSwissMatches()
         {
             try
             {
@@ -55,7 +56,7 @@ namespace CubedApi.Api.Controllers
 
         // GET api/<MatchController>/5
         [HttpGet("{id}")]
-        public ActionResult<Tuple<Match, List<Game>>> Get(int id)
+        public ActionResult<MatchProfile> Get(int id)
         {
             try
             {

@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CubedApi.Api.Models.DTOs
+﻿namespace CubedApi.Api.Models.DTOs
 {
     public class PlayerDto
     {
-        // TODO: Use AutoMapper.
+        public int Id { get; set; }
+
+        public string InGameName { get; set; }
+
+        public string SzRank { get; set; }
+
+        public string RmRank { get; set; }
+
+        public string TcRank { get; set; }
+
+        public string CbRank { get; set; }
+
+        public int? TeamId { get; set; }
     }
 }

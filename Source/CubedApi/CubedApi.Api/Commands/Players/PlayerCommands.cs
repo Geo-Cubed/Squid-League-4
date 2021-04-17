@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
 
 namespace CubedApi.Api.Commands.Players
 {
@@ -26,7 +27,7 @@ namespace CubedApi.Api.Commands.Players
         /// Gets all players in the database that are active.
         /// </summary>
         /// <returns>A list of active players in the database.</returns>
-        public List<Player> GetAllPlayers()
+        public List<PlayerDto> GetAllPlayers()
         {
             var players = this._context.Players.Where(p => p.IsActive ?? false);
             if (players.Count() == 0 || players.IsNull())
@@ -34,7 +35,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new NoDataException("No active players.");
             }
 
-            return players.ToList();
+            return players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList();
         } 
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace CubedApi.Api.Commands.Players
         /// </summary>
         /// <param name="id">The interger id of the player.</param>
         /// <returns>The player profile of the player.</returns>
-        public Player GetPlayerById(int id)
+        public PlayerDto GetPlayerById(int id)
         {
             if (id.IsInvalid())
             {
@@ -55,7 +56,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new DataIsNullException();
             }
 
-            return player;
+            return EntityDtoConverter.PlayerEntityToDto(player);
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace CubedApi.Api.Commands.Players
         /// </summary>
         /// <param name="id">The id of the team.</param>
         /// <returns>A list of active players.</returns>
-        public List<Player> GetPlayersByTeamId(int id)
+        public List<PlayerDto> GetPlayersByTeamId(int id)
         {
             if (id.IsInvalid())
             {
@@ -76,7 +77,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new NoDataException();
             }
 
-            return players.ToList();
+            return players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CubedApi.Api.Commands.Players;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Data;
-using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,7 +30,7 @@ namespace CubedApi.Api.Controllers
 
         // GET: api/<PlayerController> => get all players
         [HttpGet]
-        public ActionResult<List<Player>> Get()
+        public ActionResult<List<PlayerDto>> Get()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace CubedApi.Api.Controllers
 
         // GET api/<PlayerController>/5 => get player with id of 5
         [HttpGet("{id}")]
-        public ActionResult<Player> Get(int id)
+        public ActionResult<PlayerDto> Get(int id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace CubedApi.Api.Controllers
 
         // GET _apis/<PlayerController>/team/5 => get all players on team 5
         [HttpGet("team/{id}")]
-        public ActionResult<IEnumerable<Player>> GetTeamPlayers(int id)
+        public ActionResult<List<PlayerDto>> GetTeamPlayers(int id)
         {
             try
             {

@@ -1,7 +1,7 @@
 ﻿using CubedApi.Api.Commands.HelpfulPeople;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Data;
-using CubedApi.Api.Models.Entities;
+using CubedApi.Api.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace CubedApi.Api.Controllers
 
         // GET: _apis/<HelpfulPeopleController>
         [HttpGet]
-        public ActionResult<List<HelpfulPerson>> Get()
+        public ActionResult<List<HelpfulPersonDto>> Get()
         {
             try
             {
