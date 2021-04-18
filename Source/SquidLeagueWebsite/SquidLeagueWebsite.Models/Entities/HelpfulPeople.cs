@@ -1,6 +1,6 @@
-﻿namespace CubedApi.Api.Models.DTOs
+﻿namespace SquidLeagueWebsite.Models.Entities
 {
-    public class HelpfulPersonDto
+    public class HelpfulPeople
     {
         public string UserName { get; set; }
 

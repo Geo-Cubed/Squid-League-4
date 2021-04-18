@@ -1,8 +1,8 @@
 ﻿@page "/teams"
 
 @using SquidLeagueWebsite.UI.Data
-@using SquidLeagueWebsite.Utilities
-
+@using SquidLeagueWebsite.UI.Common.Utilities
+@using SquidLeagueWebsite.Models.Entities
 @inject TeamService teamService
 
 <div id="title">Teams</div>
@@ -16,7 +16,7 @@
 
         @foreach (var tTeam in teams)
         {
-            <option value="@tTeam.Id">@tTeam.TeamName</option>
+            <option value="@tTeam.Team.Id">@tTeam.Team.TeamName</option>
         }
     </select>
 </div>
@@ -36,7 +36,7 @@ else
             <div class="teamContainer">
                 <img src="/Images/Droplets/topWave.svg" class="topImg">
                 <div class="teamHeadder">
-                    <h2>@selectedTeam.TeamName</h2>
+                    <h2>@selectedTeam.Team.TeamName</h2>
                     <h3>@string.Format("Current record: {0}W {1}L", selectedTeam.TeamWins, selectedTeam.TeamLosses)</h3>
                 </div>
             </div>
@@ -53,7 +53,7 @@ else
         else if (selectedTeamPlayers.Count() == 0)
         {
             <div class="textContent">
-                <h3>@string.Format("{0} has no players yet", selectedTeam.TeamName)</h3>
+                <h3>@string.Format("{0} has no players yet", selectedTeam.Team.TeamName)</h3>
             </div>
         }
         else
@@ -73,9 +73,9 @@ else
                                     <p>@player.Role</p>
                                     <h3>Weapons</h3>
                                     <p>
-                                        <img src="@player.Weapon1Path" height="50px" width="50px">
-                                        <img src="@player.Weapon2Path" height="50px" width="50px">
-                                        <img src="@player.Weapon3Path" heigth="50px" width="50px">
+                                        <img src="" height="50px" width="50px">
+                                        <img src="" height="50px" width="50px">
+                                        <img src="" heigth="50px" width="50px">
                                     </p>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@ else
     else if (matches.Count() == 0)
     {
         <div class="textContent">
-            <h3>@string.Format("{0} has not played any matches yet", selectedTeam.TeamName)</h3>
+            <h3>@string.Format("{0} has not played any matches yet", selectedTeam.Team.TeamName)</h3>
         </div>
     }
     else
@@ -127,7 +127,7 @@ else
     {
         get
         {
-            return this.teams.Where(t => t.Id == this.id).FirstOrDefault();
+            return this.teams.Where(t => t.Team.Id == this.id).FirstOrDefault();
         }
     }
 

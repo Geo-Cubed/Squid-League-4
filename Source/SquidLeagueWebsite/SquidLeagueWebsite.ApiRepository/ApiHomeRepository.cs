@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SquidLeagueWebsite.Models;
+using SquidLeagueWebsite.Models.Entities;
 using SquidLeagueWebsite.RepositoryInterface;
 using System;
 using System.Collections.Generic;

@@ -17,7 +17,5 @@ namespace CubedApi.Api.Models.DTOs
         public string CbRank { get; set; }
 
         public int? TeamId { get; set; }
-
-        public List<WeaponDto> CommonWeapons { get; set; }
     }
 }

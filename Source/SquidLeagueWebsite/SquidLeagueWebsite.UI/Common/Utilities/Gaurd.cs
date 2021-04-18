@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SquidLeagueWebsite.Utilities
+namespace SquidLeagueWebsite.UI.Common.Utilities
 {
     public static class Gaurd
     {

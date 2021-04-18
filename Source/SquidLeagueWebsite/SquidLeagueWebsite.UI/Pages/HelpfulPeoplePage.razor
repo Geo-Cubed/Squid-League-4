@@ -1,8 +1,8 @@
 ﻿@page "/helpfulPeople"
 
-@using SquidLeagueWebsite.Models
+@using SquidLeagueWebsite.Models.Entities
 @using SquidLeagueWebsite.UI.Data
-@using SquidLeagueWebsite.Utilities
+@using SquidLeagueWebsite.UI.Common.Utilities
 @inject HelpfulPeopleService peopleService
 
 <link href="~/css/helpfulPeople.css" rel="stylesheet" />
@@ -28,13 +28,13 @@ else
                 @foreach (var person in personList)
                 {
                     <div class="card">
-                        <img class="cardImg" src="@person.PicturePath">
+                        <img class="cardImg" src="@person.ProfilePictureLink">
                         <div class="helpfulPeopleContainer">
                             <h5><b>@person.UserName</b></h5>
                             <p>@person.Description</p>
-                            @if (person.Twitter != string.Empty)
+                            @if (!string.IsNullOrEmpty(person.TwitterLink))
                             {
-                                <a href="@person.Twitter" target="_blank">
+                                <a href="@person.TwitterLink" target="_blank">
                                     <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" height=40px width=40px>
                                 </a>
                             }

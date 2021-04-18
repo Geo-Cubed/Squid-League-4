@@ -1,19 +1,16 @@
-﻿using System;
+﻿using SquidLeagueWebsite.Models.Entities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SquidLeagueWebsite.Models
 {
     public class TeamPlayers
     {
-        public int? Id { get; set; }
-
-        public string TeamName { get; set; }
-
-        public int TeamWins { get; set; }
-
-        public int TeamLosses { get; set; }
+        public Team Team { get; set; }
 
         public IEnumerable<Player> Players { get; set; }
+
+        public int TeamWins { get; set; } = 0;
+
+        public int TeamLosses { get; set; } = 0;
     }
 }

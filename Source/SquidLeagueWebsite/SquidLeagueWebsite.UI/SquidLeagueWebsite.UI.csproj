@@ -251,13 +251,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SquidLeagueWebsite.Models\SquidLeagueWebsite.Models.csproj" />
-    <ProjectReference Include="..\SquidLeagueWebsite.RepoFactory\SquidLeagueWebsite.RepoFactory.csproj" />
-    <ProjectReference Include="..\SquidLeagueWebsite.RepositoryInterface\SquidLeagueWebsite.RepositoryInterface.csproj" />
-    <ProjectReference Include="..\SquidLeagueWebsite.Utilities\SquidLeagueWebsite.Utilities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\duckling.ico" />
     <None Include="wwwroot\Images\Droplets\droplets1.png" />
     <None Include="wwwroot\Images\Droplets\droplets2.png" />
@@ -491,6 +484,16 @@
     <None Include="wwwroot\Images\Splatoon\Weapons\Splatling\Nautilus47.png" />
     <None Include="wwwroot\Images\Splatoon\Weapons\Splatling\Nautilus79.png" />
     <None Include="wwwroot\Images\Splatoon\Weapons\Splatling\ZinkMiniSplatling.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Utilities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SquidLeagueWebsite.Models\SquidLeagueWebsite.Models.csproj" />
+    <ProjectReference Include="..\SquidLeagueWebsite.RepoFactory\SquidLeagueWebsite.RepoFactory.csproj" />
+    <ProjectReference Include="..\SquidLeagueWebsite.RepositoryInterface\SquidLeagueWebsite.RepositoryInterface.csproj" />
   </ItemGroup>
 
 </Project>

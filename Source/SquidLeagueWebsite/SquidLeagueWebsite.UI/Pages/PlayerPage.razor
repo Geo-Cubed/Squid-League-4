@@ -1,6 +1,6 @@
 ﻿@page "/players"
 
-@using SquidLeagueWebsite.Models
+@using SquidLeagueWebsite.Models.Entities
 @using SquidLeagueWebsite.UI.Data
 @inject PlayerService playerService
 
@@ -16,7 +16,7 @@
 
         @foreach (var tPlayer in players)
         {
-            <option value=@string.Format("{0}", tPlayer.Id)>@string.Format("{0}{1}", tPlayer.InGameName, (tPlayer.TeamName == "No Team") ? string.Empty : " - " + tPlayer.TeamName)</option>
+            <option value=@string.Format("{0}", tPlayer.Id)>@string.Format("{0}{1}", tPlayer.InGameName, (string.IsNullOrEmpty(tPlayer.TeamName)) ? string.Empty : " - " + tPlayer.TeamName)</option>
         }
     </select>
 </div>
@@ -40,11 +40,23 @@ else
             <p>TC: <b>@selectedPlayer.TcRank</b> CB: <b>@selectedPlayer.CbRank</b></p>
             <h3>Role</h3>
             <p>@selectedPlayer.Role</p>
-            <h3>Weapons</h3>
             <p>
-                <img src="@selectedPlayer.Weapon1Path" height="50px" width="50px">
-                <img src="@selectedPlayer.Weapon2Path" height="50px" width="50px">
-                <img src="@selectedPlayer.Weapon3Path" heigth=50px width=50px>
+                @if (selectedPlayer.CommonWeapons == null)
+                {
+                    <h3>Common Weapons</h3>
+                    <p>Loading...</p>
+                }
+                else if (selectedPlayer.CommonWeapons.Count() > 0)
+                {
+                    <h3>Common Weapons</h3>
+                    for (int i = 0; i < 3; ++i)
+                    {
+                        if (selectedPlayer.CommonWeapons.Count >= (i + 1))
+                        {
+                            <img src="@selectedPlayer.CommonWeapons.ElementAt(i).PicturePath" height="50px" width="50px"/>
+                        }
+                    }
+                }
             </p>
         </div>
     </div>
@@ -88,7 +100,7 @@ else
 
     public Player selectedPlayer
     {
-        get 
+        get
         {
             return this.players.Where(p => p.Id == this.id).FirstOrDefault();
         }
@@ -96,18 +108,27 @@ else
 
     private IEnumerable<Player> players;
 
-    private IEnumerable<PlayerMatch> matches;
+    private IEnumerable<PlayerGame> matches;
 
     protected override async Task OnInitializedAsync()
     {
         this.id = 0;
         this.players = playerService.GetAllPlayers();
+        var teams = playerService.GetAllTeams();
+        foreach (var player in this.players)
+        {
+            if (player.TeamId != null)
+            {
+                player.TeamName = teams.FirstOrDefault(t => t.Id == player.TeamId).TeamName;
+            }
+        }
     }
 
     protected void OnPlayerSelect(ChangeEventArgs e)
     {
         this.matches = null;
         this.id = int.Parse(e.Value.ToString());
-        //TODO: Load the players matches.
+        this.selectedPlayer.CommonWeapons = playerService.GetPlayerWeapons(this.id).ToList();
+        this.matches = playerService.GetPlayerMatches(this.id).ToList();
     }
 }

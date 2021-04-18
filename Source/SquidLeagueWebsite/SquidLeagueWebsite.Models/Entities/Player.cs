@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
-namespace SquidLeagueWebsite.Models
+namespace SquidLeagueWebsite.Models.Entities
 {
     public class Player
     {
@@ -24,10 +24,6 @@ namespace SquidLeagueWebsite.Models
 
         public string Role { get; set; }
 
-        public string Weapon1Path { get; set; }
-
-        public string Weapon2Path { get; set; }
-
-        public string Weapon3Path { get; set; }
+        public List<Weapon> CommonWeapons { get; set; }
     }
 }

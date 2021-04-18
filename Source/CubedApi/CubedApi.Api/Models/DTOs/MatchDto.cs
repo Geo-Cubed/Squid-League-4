@@ -12,7 +12,7 @@ namespace CubedApi.Api.Models.DTOs
 
         public int? HomeTeamScore { get; set; }
 
-        public int? AWayTeamScore { get; set; }
+        public int? AwayTeamScore { get; set; }
 
         public int? CasterProfileId { get; set; }
 

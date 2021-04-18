@@ -27,7 +27,9 @@ namespace CubedApi.Api.Commands.Players
         /// <returns>A list of active players in the database.</returns>
         public List<PlayerDto> GetAllPlayers()
         {
-            var players = this._context.Players.Where(p => p.IsActive ?? false);
+            var players = this._context.Players
+                .Where(p => p.IsActive ?? false)
+                .ToList();
             if (players.Count() == 0 || players.IsNull())
             {
                 throw new NoDataException("No active players.");
@@ -69,13 +71,37 @@ namespace CubedApi.Api.Commands.Players
                 throw new InvalidIdException();
             }
 
-            var players = this._context.Players.Where(p => p.TeamId == id && (p.IsActive ?? false));
-            if (players.Count() == 0 || players.IsNull())
+            var players = this._context.Players
+                .Where(p => p.TeamId == id && (p.IsActive ?? false))
+                .ToList();
+            if (!players.Any())
             {
                 throw new NoDataException();
             }
 
             return players.Select(p => this._mapper.PlayerEntityToDto(p)).ToList();
+        }
+
+        public List<WeaponDto> GetCommonWeaponsForPlayer(int id)
+        {
+            if (id.IsInvalid())
+            {
+                throw new InvalidIdException();
+            }
+
+            var player = this._context.Players.FirstOrDefault(p => p.Id == id && (p.IsActive ?? false));
+            if (player.IsNull())
+            {
+                throw new InvalidIdException();
+            }
+
+            var weapons = player.GetCommonWeapons(this._context).Select(w => this._mapper.WeaponEntityToDto(w)).ToList();
+            if (!weapons.Any())
+            {
+                throw new NoDataException();
+            }
+
+            return weapons;
         }
     }
 }

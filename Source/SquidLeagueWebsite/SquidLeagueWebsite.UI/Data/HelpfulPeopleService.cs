@@ -1,10 +1,7 @@
-﻿using SquidLeagueWebsite.Models;
+﻿using SquidLeagueWebsite.Models.Entities;
 using SquidLeagueWebsite.RepoFactory;
 using SquidLeagueWebsite.RepositoryInterface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SquidLeagueWebsite.UI.Data
 {

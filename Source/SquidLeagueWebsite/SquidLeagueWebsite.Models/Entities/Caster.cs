@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SquidLeagueWebsite.Models
+﻿namespace SquidLeagueWebsite.Models.Entities
 {
     public class Caster
     {

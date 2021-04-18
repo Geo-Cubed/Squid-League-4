@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SquidLeagueWebsite.ApiRepository\SquidLeagueWebsite.ApiRepository.csproj" />
-    <ProjectReference Include="..\SquidLeagueWebsite.Models\SquidLeagueWebsite.Models.csproj" />
     <ProjectReference Include="..\SquidLeagueWebsite.RepositoryInterface\SquidLeagueWebsite.RepositoryInterface.csproj" />
   </ItemGroup>
 

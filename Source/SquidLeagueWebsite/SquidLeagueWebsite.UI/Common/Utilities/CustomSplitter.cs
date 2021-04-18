@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SquidLeagueWebsite.Utilities
+namespace SquidLeagueWebsite.UI.Common.Utilities
 {
     public static class CustomSplitter
     {

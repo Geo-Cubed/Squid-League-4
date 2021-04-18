@@ -1,7 +1,9 @@
 ﻿using SquidLeagueWebsite.ApiRepository;
 using SquidLeagueWebsite.Models;
+using SquidLeagueWebsite.Models.Entities;
 using SquidLeagueWebsite.RepositoryInterface;
 using System;
+using System.Collections.Generic;
 
 namespace SquidLeagueWebsite.RepoFactory
 {
@@ -82,6 +84,38 @@ namespace SquidLeagueWebsite.RepoFactory
                     break;
                 default:
                     throw new ArgumentException("Invalid helpful people repository type");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<Team> GetSingleTeamRepository(string type)
+        {
+            IRepository<Team> repo = null;
+
+            switch (type)
+            {
+                case "API":
+                    repo = new ApiTeamEntityRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid single team repository type");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<List<Weapon>> GetPlayerCommonWeaponRepository(string type)
+        {
+            IRepository<List<Weapon>> repo = null;
+
+            switch (type)
+            {
+                case "API":
+                    repo = new ApiCommonWeaponsRepo();
+                    break;
+                default:
+                    throw new ArgumentException("Invlaid common weapons repository type");
             }
 
             return repo;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SquidLeagueWebsite.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,12 +7,12 @@ namespace SquidLeagueWebsite.Models
 {
     public class UpcommingMatch
     {
-        public string HomeTeamName { get; set; }
+        public Match Match { get; set; }
 
-        public string AwayTeamName { get; set; }
+        public Team HomeTeam { get; set; }
 
-        public DateTime MatchDate { get; set; }
+        public Team AwayTeam { get; set; }
 
-        public string StreamLink { get; set; }
+        public Caster Caster { get; set; }
     }
 }

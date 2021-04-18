@@ -1,4 +1,4 @@
-﻿using SquidLeagueWebsite.Models;
+﻿using SquidLeagueWebsite.Models.Entities;
 using SquidLeagueWebsite.RepoFactory;
 using SquidLeagueWebsite.RepositoryInterface;
 using System.Collections.Generic;

@@ -12,6 +12,7 @@ namespace CubedApi.Api.Common.Utilities
         public static List<Weapon> GetCommonWeapons(this Player player, SquidLeagueContext context)
         {
             return context.Weapons
+                .ToList()
                 .Join(
                     context.WeaponPlayeds,
                     weapon => weapon.Id,

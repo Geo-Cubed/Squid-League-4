@@ -73,6 +73,23 @@ namespace CubedApi.Api.Controllers
             }
         }
 
+        [HttpGet("upcomming")]
+        public ActionResult<List<MatchDto>> GetUpcommingMatches()
+        {
+            try
+            {
+                return this._matchCommands.GetUpcommingMatches();
+            }
+            catch (NoDataException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         // POST api/<MatchController>
         [HttpPost]
         public void Post([FromBody] string value)

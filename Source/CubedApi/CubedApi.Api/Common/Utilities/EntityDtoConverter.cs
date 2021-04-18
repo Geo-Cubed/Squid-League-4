@@ -23,14 +23,7 @@ namespace CubedApi.Api.Common.Utilities
             this._context = context;
 
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Player, PlayerDto>()
-                    .ForMember(
-                        p => p.CommonWeapons, 
-                        opt => opt.MapFrom(p => 
-                            p.GetCommonWeapons(this._context)
-                            .Select(w => this.WeaponEntityToDto(w))
-                        )
-                    );
+                cfg.CreateMap<Player, PlayerDto>();
                 cfg.CreateMap<BracketKnockout, BracketKnockoutDto>();
                 cfg.CreateMap<BracketSwiss, BracketSwissDto>();
                 cfg.CreateMap<CasterProfile, CasterProfileDto>();

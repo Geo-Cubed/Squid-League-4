@@ -6,6 +6,7 @@ using CubedApi.Api.Models.DTOs;
 using CubedApi.Api.Models.Linkers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace CubedApi.Api.Commands.Matches
@@ -50,6 +51,26 @@ namespace CubedApi.Api.Commands.Matches
             }
 
             return null;
+        }
+
+        public List<MatchDto> GetUpcommingMatches()
+        {
+            var matches = this._context.Matches
+                .Where(m => m.MatchDate != null)
+                .Select(m => this._mapper.MatchEntityToDto(m))
+                .ToList();
+
+            matches = matches.Where(m =>
+                (DateTime)m.MatchDate > DateTime.UtcNow.Date
+                && (DateTime)m.MatchDate <= DateTime.UtcNow.AddDays(8).AddSeconds(-1))
+                .ToList();
+
+            if (!matches.Any())
+            {
+                throw new NoDataException();
+            }
+
+            return matches;
         }
     }
 }
