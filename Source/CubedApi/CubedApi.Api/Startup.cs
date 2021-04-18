@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CubedApi.Api.Common.Utilities;
+using CubedApi.Api.Common.Utilities.Interfaces;
 using CubedApi.Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,7 @@ namespace CubedApi.Api
             services.AddControllers();
 
             services.AddDbContext<SquidLeagueContext>(options => options.UseMySQL(Configuration["ConnectionStrings:squidLeagueDb"]));
+            services.AddScoped<IMapping, EntityDtoConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

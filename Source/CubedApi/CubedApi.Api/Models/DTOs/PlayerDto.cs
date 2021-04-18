@@ -1,4 +1,6 @@
-﻿namespace CubedApi.Api.Models.DTOs
+﻿using System.Collections.Generic;
+
+namespace CubedApi.Api.Models.DTOs
 {
     public class PlayerDto
     {
@@ -15,5 +17,7 @@
         public string CbRank { get; set; }
 
         public int? TeamId { get; set; }
+
+        public List<WeaponDto> CommonWeapons { get; set; }
     }
 }

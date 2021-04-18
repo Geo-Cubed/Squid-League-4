@@ -5,6 +5,7 @@ using CubedApi.Api.Data;
 using CubedApi.Api.Commands.Casters;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Common.Utilities.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,15 +18,15 @@ namespace CubedApi.Api.Controllers
         private readonly SquidLeagueContext _context;
         private readonly CasterCommands _casterCommands;
 
-        public CasterController(SquidLeagueContext context)
+        public CasterController(SquidLeagueContext context, IMapping mapper)
         {
-            if (context == null)
+            if (mapper == null)
             {
-                throw new ArgumentException("Context cannot be null.");
+                throw new ArgumentException("Mapper cannot be null.");
             }
 
-            this._context = context;
-            this._casterCommands = new CasterCommands(this._context);
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._casterCommands = new CasterCommands(this._context, mapper);
         }
 
         // GET: _apis/<CastersController>

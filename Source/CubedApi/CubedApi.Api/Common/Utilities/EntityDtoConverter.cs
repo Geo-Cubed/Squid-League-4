@@ -1,21 +1,36 @@
 ﻿using AutoMapper;
+using CubedApi.Api.Common.Utilities.Interfaces;
+using CubedApi.Api.Data;
 using CubedApi.Api.Models.DTOs;
 using CubedApi.Api.Models.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CubedApi.Api.Common.Utilities
 {
-    public static class EntityDtoConverter
+    public class EntityDtoConverter : IMapping
     {
-        private static IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly SquidLeagueContext _context;
 
-        static EntityDtoConverter()
+        public EntityDtoConverter(SquidLeagueContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentException("Context cannot be null.");
+            }
+
+            this._context = context;
+
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Player, PlayerDto>();
+                cfg.CreateMap<Player, PlayerDto>()
+                    .ForMember(
+                        p => p.CommonWeapons, 
+                        opt => opt.MapFrom(p => 
+                            p.GetCommonWeapons(this._context)
+                            .Select(w => this.WeaponEntityToDto(w))
+                        )
+                    );
                 cfg.CreateMap<BracketKnockout, BracketKnockoutDto>();
                 cfg.CreateMap<BracketSwiss, BracketSwissDto>();
                 cfg.CreateMap<CasterProfile, CasterProfileDto>();
@@ -33,87 +48,87 @@ namespace CubedApi.Api.Common.Utilities
                 cfg.CreateMap<WeaponSub, WeaponSubDto>();
             });
 
-            _mapper = config.CreateMapper();
+            this._mapper = config.CreateMapper();
         }
 
-        public static PlayerDto PlayerEntityToDto(Player player)
+        public PlayerDto PlayerEntityToDto(Player player)
         {
-            return _mapper.Map<Player, PlayerDto>(player);
+            return this._mapper.Map<Player, PlayerDto>(player);
         }
 
-        public static BracketKnockoutDto BracketKnockoutEntityToDto(BracketKnockout bracket)
+        public BracketKnockoutDto BracketKnockoutEntityToDto(BracketKnockout bracket)
         {
-            return _mapper.Map<BracketKnockout, BracketKnockoutDto>(bracket);
+            return this._mapper.Map<BracketKnockout, BracketKnockoutDto>(bracket);
         }
 
-        public static BracketSwissDto BracketSwissEntityToDto(BracketSwiss bracket)
+        public BracketSwissDto BracketSwissEntityToDto(BracketSwiss bracket)
         {
-            return _mapper.Map<BracketSwiss, BracketSwissDto>(bracket);
+            return this._mapper.Map<BracketSwiss, BracketSwissDto>(bracket);
         }
 
-        public static CasterProfileDto CasterProfileEntityToDto(CasterProfile caster)
+        public CasterProfileDto CasterProfileEntityToDto(CasterProfile caster)
         {
-            return _mapper.Map<CasterProfile, CasterProfileDto>(caster);
+            return this._mapper.Map<CasterProfile, CasterProfileDto>(caster);
         }
 
-        public static GameDto GameEntityToDto(Game game)
+        public GameDto GameEntityToDto(Game game)
         {
-            return _mapper.Map<Game, GameDto>(game);
+            return this._mapper.Map<Game, GameDto>(game);
         }
 
-        public static GameMapDto GameMapEntityToDto(GameMap gameMap)
+        public GameMapDto GameMapEntityToDto(GameMap gameMap)
         {
-            return _mapper.Map<GameMap, GameMapDto>(gameMap);
+            return this._mapper.Map<GameMap, GameMapDto>(gameMap);
         }
 
-        public static GameModeDto GameModeEntityToDto(GameMode gameMode)
+        public GameModeDto GameModeEntityToDto(GameMode gameMode)
         {
-            return _mapper.Map<GameMode, GameModeDto>(gameMode);
+            return this._mapper.Map<GameMode, GameModeDto>(gameMode);
         }
 
-        public static GameSettingDto GameSettingEntityToDto(GameSetting gameSetting)
+        public GameSettingDto GameSettingEntityToDto(GameSetting gameSetting)
         {
-            return _mapper.Map<GameSetting, GameSettingDto>(gameSetting);
+            return this._mapper.Map<GameSetting, GameSettingDto>(gameSetting);
         }
 
-        public static HelpfulPersonDto HelpfulPersonToDto(HelpfulPerson person)
+        public HelpfulPersonDto HelpfulPersonToDto(HelpfulPerson person)
         {
-            return _mapper.Map<HelpfulPerson, HelpfulPersonDto>(person);
+            return this._mapper.Map<HelpfulPerson, HelpfulPersonDto>(person);
         }
 
-        public static MatchDto MatchEntityToDto(Match match)
+        public MatchDto MatchEntityToDto(Match match)
         {
-            return _mapper.Map<Match, MatchDto>(match);
+            return this._mapper.Map<Match, MatchDto>(match);
         }
 
-        public static SystemSwitchDto SystemSwitchEntityToDto(SystemSwitch sysSwitch)
+        public SystemSwitchDto SystemSwitchEntityToDto(SystemSwitch sysSwitch)
         {
-            return _mapper.Map<SystemSwitch, SystemSwitchDto>(sysSwitch);
+            return this._mapper.Map<SystemSwitch, SystemSwitchDto>(sysSwitch);
         }
 
-        public static TeamDto TeamEntityToDto(Team team)
+        public TeamDto TeamEntityToDto(Team team)
         {
-            return _mapper.Map<Team, TeamDto>(team);
+            return this._mapper.Map<Team, TeamDto>(team);
         }
 
-        public static WeaponDto WeaponEntityToDto(Weapon weapon)
+        public WeaponDto WeaponEntityToDto(Weapon weapon)
         {
-            return _mapper.Map<Weapon, WeaponDto>(weapon);
+            return this._mapper.Map<Weapon, WeaponDto>(weapon);
         }
 
-        public static WeaponPlayedDto WeaponPlayedEntityToDto(WeaponPlayed weapon)
+        public WeaponPlayedDto WeaponPlayedEntityToDto(WeaponPlayed weapon)
         {
-            return _mapper.Map<WeaponPlayed, WeaponPlayedDto>(weapon);
+            return this._mapper.Map<WeaponPlayed, WeaponPlayedDto>(weapon);
         }
 
-        public static WeaponSpecialDto WeaponSpecialEntityToDto(WeaponSpecial weapon)
+        public WeaponSpecialDto WeaponSpecialEntityToDto(WeaponSpecial weapon)
         {
-            return _mapper.Map<WeaponSpecial, WeaponSpecialDto>(weapon);
+            return this._mapper.Map<WeaponSpecial, WeaponSpecialDto>(weapon);
         }
 
-        public static WeaponSubDto WeaponSubEntityToDto(WeaponSub weapon)
+        public WeaponSubDto WeaponSubEntityToDto(WeaponSub weapon)
         {
-            return _mapper.Map<WeaponSub, WeaponSubDto>(weapon);
+            return this._mapper.Map<WeaponSub, WeaponSubDto>(weapon);
         }
     }
 }

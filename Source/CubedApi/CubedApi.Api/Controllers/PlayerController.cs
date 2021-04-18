@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CubedApi.Api.Commands.Players;
 using CubedApi.Api.Common.CustomExceptions;
+using CubedApi.Api.Common.Utilities.Interfaces;
 using CubedApi.Api.Data;
 using CubedApi.Api.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,15 @@ namespace CubedApi.Api.Controllers
         private readonly SquidLeagueContext _context;
         private readonly PlayerCommands _playerCommands;
 
-        public PlayerController(SquidLeagueContext context)
+        public PlayerController(SquidLeagueContext context, IMapping mapper)
         {
-            if (context == null)
+            if (mapper == null)
             {
-                throw new ArgumentException("Cannot have a null context.");
+                throw new ArgumentException("Mapper cannot be null.");
             }
 
-            this._context = context;
-            this._playerCommands = new PlayerCommands(this._context);
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._playerCommands = new PlayerCommands(this._context, mapper);
         }
 
         // GET: api/<PlayerController> => get all players

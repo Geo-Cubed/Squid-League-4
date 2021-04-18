@@ -4,23 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using CubedApi.Api.Data;
 using System;
-using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Common.Utilities.Interfaces;
 
 namespace CubedApi.Api.Commands.Casters
 {
     public class CasterCommands
     {
         private readonly SquidLeagueContext _context;
-
-        public CasterCommands(SquidLeagueContext context)
+        private readonly IMapping _mapper;
+        public CasterCommands(SquidLeagueContext context, IMapping mapping)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Context cannot be null.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._mapper = mapping ?? throw new ArgumentException("Mapping cannot be null.");
         }
 
         /// <summary>
@@ -35,7 +31,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return casters.Select(c => EntityDtoConverter.CasterProfileEntityToDto(c)).ToList();
+            return casters.Select(c => this._mapper.CasterProfileEntityToDto(c)).ToList();
         }
 
 
@@ -57,7 +53,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return EntityDtoConverter.CasterProfileEntityToDto(caster);
+            return this._mapper.CasterProfileEntityToDto(caster);
         }
 
         /// <summary>
@@ -81,7 +77,7 @@ namespace CubedApi.Api.Commands.Casters
                 throw new NoDataException();
             }
 
-            return casters.Select(c => EntityDtoConverter.CasterProfileEntityToDto(c)).ToList();
+            return casters.Select(c => this._mapper.CasterProfileEntityToDto(c)).ToList();
         }
     }
 }

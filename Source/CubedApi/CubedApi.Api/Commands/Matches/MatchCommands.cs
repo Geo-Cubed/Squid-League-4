@@ -1,8 +1,8 @@
 ﻿using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Common.Utilities;
+using CubedApi.Api.Common.Utilities.Interfaces;
 using CubedApi.Api.Data;
 using CubedApi.Api.Models.DTOs;
-using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Models.Linkers;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,12 @@ namespace CubedApi.Api.Commands.Matches
     public class MatchCommands
     {
         private readonly SquidLeagueContext _context;
+        private readonly IMapping _mapper;
 
-        public MatchCommands(SquidLeagueContext context)
+        public MatchCommands(SquidLeagueContext context, IMapping mapper)
         {
             this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._mapper = mapper ?? throw new ArgumentException("Mapper cannot be null.");
         }
 
         public List<MatchDto> GetAllSwissMatches()
@@ -27,7 +29,7 @@ namespace CubedApi.Api.Commands.Matches
                 throw new NoDataException();
             }
 
-            return matches.Select(m => EntityDtoConverter.MatchEntityToDto(m)).ToList();
+            return matches.Select(m => this._mapper.MatchEntityToDto(m)).ToList();
         }
 
         public MatchProfile GetMatchInformationById(int id)

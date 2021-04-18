@@ -6,21 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Common.Utilities.Interfaces;
 
 namespace CubedApi.Api.Commands.Players
 {
     public class PlayerCommands
     {
         private readonly SquidLeagueContext _context;
+        private readonly IMapping _mapper;
 
-        public PlayerCommands(SquidLeagueContext context)
+        public PlayerCommands(SquidLeagueContext context, IMapping mapper)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Cannot have a null db context.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._mapper = mapper ?? throw new ArgumentException("Mapper cannot be null.");
         }
 
         /// <summary>
@@ -35,7 +33,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new NoDataException("No active players.");
             }
 
-            return players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList();
+            return players.Select(p => this._mapper.PlayerEntityToDto(p)).ToList();
         } 
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new DataIsNullException();
             }
 
-            return EntityDtoConverter.PlayerEntityToDto(player);
+            return this._mapper.PlayerEntityToDto(player);
         }
 
         /// <summary>
@@ -77,7 +75,7 @@ namespace CubedApi.Api.Commands.Players
                 throw new NoDataException();
             }
 
-            return players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList();
+            return players.Select(p => this._mapper.PlayerEntityToDto(p)).ToList();
         }
     }
 }

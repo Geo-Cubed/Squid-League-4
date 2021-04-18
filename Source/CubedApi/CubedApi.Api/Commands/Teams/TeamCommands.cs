@@ -9,16 +9,19 @@ using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Models.DTOs;
 using CubedApi.Api.Models.Linkers;
+using CubedApi.Api.Common.Utilities.Interfaces;
 
 namespace CubedApi.Api.Commands.Teams
 {
     public class TeamCommands
     {
         private readonly SquidLeagueContext _context;
+        private readonly IMapping _mapper;
 
-        public TeamCommands(SquidLeagueContext context)
+        public TeamCommands(SquidLeagueContext context, IMapping mapper)
         {
             this._context = context ?? throw new ArgumentException("Cannot have a null db context.");
+            this._mapper = mapper ?? throw new ArgumentException("Cannot have a null mapper.");
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace CubedApi.Api.Commands.Teams
                 throw new NoDataException();
             }
 
-            return teams.Select(t => EntityDtoConverter.TeamEntityToDto(t)).ToList();
+            return teams.Select(t => this._mapper.TeamEntityToDto(t)).ToList();
         }
 
         /// <summary>
@@ -54,7 +57,7 @@ namespace CubedApi.Api.Commands.Teams
                 throw new DataIsNullException();
             }
 
-            return EntityDtoConverter.TeamEntityToDto(team);
+            return this._mapper.TeamEntityToDto(team);
         }
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace CubedApi.Api.Commands.Teams
                 throw new DataIsNullException();
             }
 
-            return EntityDtoConverter.TeamEntityToDto(team);
+            return this._mapper.TeamEntityToDto(team);
         }
 
         /// <summary>
@@ -98,8 +101,8 @@ namespace CubedApi.Api.Commands.Teams
                 {
                     teamPlayers.Add(new TeamProfile()
                     {
-                        team = EntityDtoConverter.TeamEntityToDto(team),
-                        players = players.Select(p => EntityDtoConverter.PlayerEntityToDto(p)).ToList()
+                        team = this._mapper.TeamEntityToDto(team),
+                        players = players.Select(p => this._mapper.PlayerEntityToDto(p)).ToList()
                     });
                 }
             }

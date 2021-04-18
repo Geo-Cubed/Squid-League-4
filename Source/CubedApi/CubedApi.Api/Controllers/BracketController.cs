@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CubedApi.Api.Common.Utilities.Interfaces;
 using CubedApi.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,15 +13,12 @@ namespace CubedApi.Api.Controllers
     public class BracketController : ControllerBase
     {
         private readonly SquidLeagueContext _context;
+        private readonly IMapping _mapper;
 
-        public BracketController(SquidLeagueContext context)
+        public BracketController(SquidLeagueContext context, IMapping mapper)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("Context cannot be null.");
-            }
-
-            this._context = context;
+            this._context = context ?? throw new ArgumentException("Context cannot be null.");
+            this._mapper = mapper ?? throw new ArgumentException("Mapper cannot be null.");
         }
 
         // GET: api/<BracketController>
