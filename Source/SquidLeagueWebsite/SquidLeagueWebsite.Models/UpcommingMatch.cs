@@ -12,7 +12,5 @@ namespace SquidLeagueWebsite.Models
         public Team HomeTeam { get; set; }
 
         public Team AwayTeam { get; set; }
-
-        public Caster Caster { get; set; }
     }
 }

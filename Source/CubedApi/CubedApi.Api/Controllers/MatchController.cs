@@ -74,7 +74,7 @@ namespace CubedApi.Api.Controllers
         }
 
         [HttpGet("upcomming")]
-        public ActionResult<List<MatchDto>> GetUpcommingMatches()
+        public ActionResult<List<UpcommingMatch>> GetUpcommingMatches()
         {
             try
             {

@@ -53,24 +53,43 @@ namespace CubedApi.Api.Commands.Matches
             return null;
         }
 
-        public List<MatchDto> GetUpcommingMatches()
+        public List<UpcommingMatch> GetUpcommingMatches()
         {
             var matches = this._context.Matches
                 .Where(m => m.MatchDate != null)
                 .Select(m => this._mapper.MatchEntityToDto(m))
                 .ToList();
 
-            matches = matches.Where(m =>
-                (DateTime)m.MatchDate > DateTime.UtcNow.Date
-                && (DateTime)m.MatchDate <= DateTime.UtcNow.AddDays(8).AddSeconds(-1))
+            var upcomming = matches
+                .Join(
+                    this._context.Teams,
+                    match => match.HomeTeamId,
+                    team => team.Id,
+                    (match, team) => new { match, team }
+                )
+                .Join(
+                    this._context.Teams,
+                    combined => combined.match.AwayTeamId,
+                    awayTeam => awayTeam.Id,
+                    (combined, awayTeam) => new UpcommingMatch() 
+                        {
+                            Match = combined.match,
+                            HomeTeam = this._mapper.TeamEntityToDto(combined.team), 
+                            AwayTeam = this._mapper.TeamEntityToDto(awayTeam)
+                        }
+                )
+                .Where(m =>
+                    (DateTime)m.Match.MatchDate > DateTime.UtcNow.Date
+                    && (DateTime)m.Match.MatchDate <= DateTime.UtcNow.AddDays(8).AddSeconds(-1)
+                )
                 .ToList();
 
-            if (!matches.Any())
+            if (!upcomming.Any())
             {
                 throw new NoDataException();
             }
 
-            return matches;
+            return upcomming.ToList();
         }
     }
 }

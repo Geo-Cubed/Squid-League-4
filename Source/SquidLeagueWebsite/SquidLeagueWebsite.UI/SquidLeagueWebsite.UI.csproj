@@ -487,10 +487,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Utilities\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SquidLeagueWebsite.Models\SquidLeagueWebsite.Models.csproj" />
     <ProjectReference Include="..\SquidLeagueWebsite.RepoFactory\SquidLeagueWebsite.RepoFactory.csproj" />
     <ProjectReference Include="..\SquidLeagueWebsite.RepositoryInterface\SquidLeagueWebsite.RepositoryInterface.csproj" />

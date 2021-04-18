@@ -9,9 +9,9 @@ namespace SquidLeagueWebsite.RepoFactory
 {
     public static class RepositoryFactory
     {
-        public static IRepository<Match> GetHomeRepository(string type)
+        public static IRepository<UpcommingMatch> GetHomeRepository(string type)
         {
-            IRepository<Match> repo = null;
+            IRepository<UpcommingMatch> repo = null;
 
             switch (type)
             {

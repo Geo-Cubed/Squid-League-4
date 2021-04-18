@@ -84,10 +84,10 @@ else
             {
                 <div class="match">
                     <div class="playerCard">
-                        <img src="@match.WeaponPath" title="@match.WeaponName" height="50px" width="50px">
-                        <img src="@match.ModePath" title="@match.ModeName" height="50px" width="50px">
-                        <img src="@match.MapPath" title="@match.MapName" heght="50px" width="100px">
-                        <p><b>@match.PlayerTeam</b>@string.Format(" {0} - {1} {2}", match.PlayerTeamScore, match.EnemyTeamScore, match.EnemyTeam)</p>
+                        <img src="@match.Game.GameSetting.Map.PicturePath" title="@match.Game.GameSetting.Map.MapName" height="50px" width="50px">
+                        <img src="@match.Game.GameSetting.Mode.PicturePath" title="@match.Game.GameSetting.Mode.ModeName" height="50px" width="50px">
+                        <img src="@match.WeaponPlayed.PicturePath" title="@match.WeaponPlayed.WeaponName" heght="50px" width="100px">
+                        <p><b></b>@string.Format(" {0} - {1} {2}", match.Game.HomeTeamScore, match.Game.AwayTeamScore, "other team?")</p>
                     </div>
                 </div>
             }

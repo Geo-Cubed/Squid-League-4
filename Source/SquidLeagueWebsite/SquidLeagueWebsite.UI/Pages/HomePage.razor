@@ -2,8 +2,8 @@
 @page "/home"
 
 @using SquidLeagueWebsite.UI.Common.Utilities
+@using SquidLeagueWebsite.UI.Common.Helpers
 @using SquidLeagueWebsite.UI.Data
-@using SquidLeagueWebsite.Models.Entities
 @inject HomeService homeService
 
 @*<PageTitle Title="Squid League - Home"></PageTitle>*@
@@ -22,18 +22,21 @@ else if (Matches.Count() == 0)
 }
 else
 {
-    foreach (var dayOfMatches in Matches.Where(y => y.MatchDate != null).GroupBy(x => ((DateTime)x.MatchDate).ToShortDateString()))
+    foreach (var dayOfMatches in Matches.Where(y => y.Match.MatchDate != null).GroupBy(x => ((DateTime)x.Match.MatchDate).ToShortDateString()))
     {
-        <center><h3>@string.Format("{0}", ((DateTime)dayOfMatches.ElementAt(0).MatchDate).ToShortDateString())</h3></center>
+        <center><h3>@string.Format("{0}", ((DateTime)dayOfMatches.ElementAt(0).Match.MatchDate).ToShortDateString())</h3></center>
         foreach (var match in dayOfMatches)
         {
             <div class="upcommingMatchCardContainer">
                 <div class="upcommingMatchCard">
-                    <h4>@string.Format("{0} vs. {1}", match.HomeTeam, match.AwayTeam)</h4>
-                    <p>@string.Format("{0} GMT on", ((DateTime)match.MatchDate).ToLocalTime().ToShortTimeString())</p>
-                    <a href=@string.Format("{0}", match.MatchVodLink) target="_blank">
-                        <img src=@string.Format("Images/brandLogos/{0}.svg", match.MatchVodType) height=40px width=40px>
-                    </a>
+                    <h4>@string.Format("{0} vs. {1}", match.HomeTeam.TeamName, match.AwayTeam.TeamName)</h4>
+                    <p>@string.Format("{0} GMT on", ((DateTime)match.Match.MatchDate).ToLocalTime().ToShortTimeString())</p>
+                    @if (!string.IsNullOrEmpty(match.Match.MatchVodLink))
+                    {
+                        <a href=@string.Format("{0}", match.Match.MatchVodLink) target="_blank">
+                            <img src=@string.Format("Images/brandLogos/{0}.svg", VodType.GetVodLinkType(match.Match.MatchVodLink)) height=40px width=40px>
+                        </a>
+                    }
                 </div>
             </div>
         }
@@ -41,22 +44,10 @@ else
 }
 
 @code {
-    private IEnumerable<Match> Matches;
+    private IEnumerable<UpcommingMatch> Matches;
 
     protected override async Task OnInitializedAsync()
     {
-        Matches = new List<Match>() {
-            new Match() { HomeTeam = "Broken", AwayTeam = "Mess", MatchDate = null, MatchVodLink = "https://twitch.tv/spid1", MatchVodType="twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow, MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow, MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow.AddDays(1), MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow.AddDays(1), MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow.AddDays(2), MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow.AddDays(4), MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" },
-            new Match() { HomeTeam = "Ducklings", AwayTeam = "Some Randos", MatchDate = DateTime.UtcNow.AddDays(4), MatchVodLink = "https://twitch.tv/spid1", MatchVodType = "twitch" }
-        };
-        return;
-        //TODO: Load recent matches.
-        Matches = homeService.GetUpcommingMatches();
+        Matches = homeService.GetUpcommingMatches().OrderBy(x => x.Match.MatchDate);
     }
 }
