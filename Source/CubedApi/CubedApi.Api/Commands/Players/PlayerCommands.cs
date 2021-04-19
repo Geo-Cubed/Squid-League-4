@@ -7,6 +7,7 @@ using System.Linq;
 using CubedApi.Api.Models.Entities;
 using CubedApi.Api.Models.DTOs;
 using CubedApi.Api.Common.Utilities.Interfaces;
+using CubedApi.Api.Models.Linkers;
 
 namespace CubedApi.Api.Commands.Players
 {
@@ -102,6 +103,88 @@ namespace CubedApi.Api.Commands.Players
             }
 
             return weapons;
+        }
+
+        public List<PlayerGame> GetPlayerGames(int id)
+        {
+            if (id.IsInvalid())
+            {
+                throw new InvalidIdException();
+            }
+
+            var player = this._context.Players.FirstOrDefault(p => p.Id == id && (p.IsActive ?? false));
+            if (player.IsNull())
+            {
+                throw new InvalidIdException();
+            }
+
+            var playerWeapons = this._context.WeaponPlayeds
+                .Where(wp => wp.PlayerId == player.Id)
+                .Join(
+                    this._context.Weapons,
+                    wepPlayed => wepPlayed.WeaponId,
+                    wep => wep.Id,
+                    (wepPlayed, wep) => new { wepPlayed, wep }
+                )
+                .Join(
+                    this._context.Games,
+                    combined => combined.wepPlayed.GameId,
+                    game => game.Id,
+                    (combined, game) => new { combined.wep, combined.wepPlayed, game }
+                )
+                .Join(
+                    this._context.GameSettings,
+                    combined => combined.game.GameSettingId,
+                    gameSetting => gameSetting.Id,
+                    (combined, gameSetting) => new { combined.game, combined.wep, combined.wepPlayed, gameSetting }
+                )
+                .Join(
+                    this._context.GameMaps,
+                    combined => combined.gameSetting.GameMapId,
+                    map => map.Id,
+                    (combined, map) => new { combined.game, combined.wep, combined.wepPlayed, combined.gameSetting, map }
+                )
+                .Join(
+                    this._context.GameModes,
+                    combined => combined.gameSetting.GameModeId,
+                    mode => mode.Id,
+                    (combined, mode) => new { combined.game, combined.wep, combined.wepPlayed, combined.gameSetting, combined.map, mode }
+                )
+                .Join(
+                    this._context.Matches,
+                    combined => combined.game.MatchId,
+                    match => match.Id,
+                    (combined, match) => new { combined.game, combined.wep, combined.wepPlayed, combined.gameSetting, combined.map, combined.mode, match }
+                )
+                .Join(
+                    this._context.Teams,
+                    combined => combined.match.HomeTeamId,
+                    homeTeam => homeTeam.Id,
+                    (combined, homeTeam) => new { combined.game, combined.wep, combined.wepPlayed, combined.gameSetting, combined.map, combined.mode, combined.match, homeTeam } 
+                )
+                .Join(
+                    this._context.Teams,
+                    combined => combined.match.AwayTeamId,
+                    awayTeam => awayTeam.Id,
+                    (combined, awayTeam) => new PlayerGame() 
+                    {
+                        Game = this._mapper.GameEntityToDto(combined.game),
+                        Map = this._mapper.GameMapEntityToDto(combined.map),
+                        Mode = this._mapper.GameModeEntityToDto(combined.mode),
+                        HomeTeam = this._mapper.TeamEntityToDto(combined.homeTeam),
+                        AwayTeam = this._mapper.TeamEntityToDto(awayTeam),
+                        Weapon = this._mapper.WeaponEntityToDto(combined.wep),
+                        IsHomeTeam = combined.wepPlayed.IsHomeTeam
+                    }
+                )
+                .ToList();
+
+            if (!playerWeapons.Any())
+            {
+                throw new NoDataException();
+            }
+
+            return playerWeapons;
         }
     }
 }

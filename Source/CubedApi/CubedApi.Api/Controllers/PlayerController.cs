@@ -5,6 +5,7 @@ using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Common.Utilities.Interfaces;
 using CubedApi.Api.Data;
 using CubedApi.Api.Models.DTOs;
+using CubedApi.Api.Models.Linkers;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -72,6 +73,23 @@ namespace CubedApi.Api.Controllers
             try
             {
                 return this._playerCommands.GetPlayersByTeamId(id);
+            }
+            catch (NoDataException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("game/{id}")]
+        public ActionResult<List<PlayerGame>> GetplayerGames(int id)
+        {
+            try
+            {
+                return this._playerCommands.GetPlayerGames(id);
             }
             catch (NoDataException)
             {
