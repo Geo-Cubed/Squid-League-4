@@ -16,7 +16,6 @@ namespace CubedApi.Api.Data
         public SquidLeagueContext(DbContextOptions<SquidLeagueContext> options)
             : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public virtual DbSet<Audit> Audits { get; set; }

@@ -32,7 +32,9 @@ namespace CubedApi.Api
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers();
 
-            services.AddDbContext<SquidLeagueContext>(options => options.UseMySQL(Configuration["ConnectionStrings:squidLeagueDb"]));
+            services.AddDbContext<SquidLeagueContext>(options => 
+                options.UseMySQL(Configuration["ConnectionStrings:squidLeagueDb"])
+                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             services.AddScoped<IMapping, EntityDtoConverter>();
         }
 
