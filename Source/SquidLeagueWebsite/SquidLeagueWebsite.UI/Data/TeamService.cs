@@ -17,9 +17,9 @@ namespace SquidLeagueWebsite.UI.Data
             repo = RepositoryFactory.GetTeamRepository("API");
         }
 
-        public IEnumerable<TeamPlayers> GetAllTeams()
+        public List<TeamPlayers> GetAllTeams()
         {
-            return this.repo.GetItems();
+            return this.repo.GetItems().ToList();
         }
     }
 }

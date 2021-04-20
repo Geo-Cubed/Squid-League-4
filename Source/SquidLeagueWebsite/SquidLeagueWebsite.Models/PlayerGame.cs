@@ -17,7 +17,7 @@ namespace SquidLeagueWebsite.Models
 
         public Team AwayTeam { get; set; }
 
-        public Weapon WeaponPlayed { get; set; }
+        public Weapon Weapon { get; set; }
 
         public bool IsHomeTeam { get; set; }
     }

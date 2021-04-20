@@ -14,6 +14,6 @@
 
         public string Discord { get; set; }
 
-        public string PictureProfilePath { get; set; }
+        public string ProfilePicturePath { get; set; }
     }
 }

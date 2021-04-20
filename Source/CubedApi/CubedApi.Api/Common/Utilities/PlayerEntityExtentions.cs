@@ -37,7 +37,7 @@ namespace CubedApi.Api.Common.Utilities
                         Count = group.Count()
                     }
                 )
-                .OrderBy(weps => weps.Count)
+                .OrderByDescending(weps => weps.Count)
                 .Take(3)
                 .Select(wep => wep.Weapon)
                 .ToList();

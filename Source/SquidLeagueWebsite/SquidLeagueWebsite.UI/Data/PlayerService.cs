@@ -11,12 +11,14 @@ namespace SquidLeagueWebsite.UI.Data
         private IRepository<Player> repo;
         private IRepository<Team> teamRepo;
         private IRepository<List<Weapon>> weaponRepo;
+        private IRepository<List<PlayerGame>> playerGameRepo;
 
         public PlayerService()
         {
             this.repo = RepositoryFactory.GetPlayerRepository("API");
             this.teamRepo = RepositoryFactory.GetSingleTeamRepository("API");
             this.weaponRepo = RepositoryFactory.GetPlayerCommonWeaponRepository("API");
+            this.playerGameRepo = RepositoryFactory.GetPlayerGameRepository("API");
         }
 
         public IEnumerable<Player> GetAllPlayers()
@@ -41,8 +43,7 @@ namespace SquidLeagueWebsite.UI.Data
 
         public IEnumerable<PlayerGame> GetPlayerMatches(int id)
         {
-            // TODO: Get player game models.
-            return null;
+            return this.playerGameRepo.GetItem(id);
         }
     }
 }

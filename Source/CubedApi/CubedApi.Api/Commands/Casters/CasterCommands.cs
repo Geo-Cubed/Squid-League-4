@@ -25,7 +25,7 @@ namespace CubedApi.Api.Commands.Casters
         /// <returns>A list of all casters.</returns>
         public List<CasterProfileDto> GetAllCasters()
         {
-            var casters = this._context.CasterProfiles.Where(c => c.IsActive ?? false);
+            var casters = this._context.CasterProfiles.Where(c => c.IsActive ?? false).ToList();
             if (casters.Count() == 0 || casters.IsNull())
             {
                 throw new NoDataException();

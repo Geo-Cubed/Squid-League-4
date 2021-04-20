@@ -84,10 +84,18 @@ else
             {
                 <div class="match">
                     <div class="playerCard">
-                        <img src="@match.Map.PicturePath" title="@match.Map.MapName" height="50px" width="50px">
+                        <img src="@match.Map.PicturePath" title="@match.Map.MapName" height="90px" width="160px">
                         <img src="@match.Mode.PicturePath" title="@match.Mode.ModeName" height="50px" width="50px">
-                        <img src="@match.WeaponPlayed.PicturePath" title="@match.WeaponPlayed.WeaponName" heght="50px" width="100px">
-                        <p><b></b>@string.Format(" {0} - {1} {2}", match.Game.HomeTeamScore, match.Game.AwayTeamScore, "other team?")</p>
+                        <img src="@match.Weapon.PicturePath" title="@match.Weapon.WeaponName" heght="50px" width="100px">
+                        @if (match.IsHomeTeam)
+                        {
+                            // TODO: Make a helper to create the match score strings.
+                            @string.Format("{0} - {1} {2}", match.Game.HomeTeamScore, match.Game.AwayTeamScore, match.AwayTeam.TeamName)
+                        }
+                        else
+                        {
+                            @string.Format("{0} - {1} {2}", match.Game.AwayTeamScore, match.Game.HomeTeamScore, match.HomeTeam.TeamName)
+                        }
                     </div>
                 </div>
             }
@@ -106,14 +114,14 @@ else
         }
     }
 
-    private IEnumerable<Player> players;
+    private List<Player> players;
 
-    private IEnumerable<PlayerGame> matches;
+    private List<PlayerGame> matches;
 
     protected override async Task OnInitializedAsync()
     {
         this.id = 0;
-        this.players = playerService.GetAllPlayers();
+        this.players = playerService.GetAllPlayers().ToList();
         var teams = playerService.GetAllTeams();
         foreach (var player in this.players)
         {

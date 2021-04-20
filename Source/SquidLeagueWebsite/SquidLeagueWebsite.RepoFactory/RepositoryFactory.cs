@@ -120,5 +120,22 @@ namespace SquidLeagueWebsite.RepoFactory
 
             return repo;
         }
+
+        public static IRepository<List<PlayerGame>> GetPlayerGameRepository(string type)
+        {
+            IRepository<List<PlayerGame>> repo = null;
+
+
+            switch (type)
+            {
+                case "API":
+                    repo = new ApiPlayerGameRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid player game repository");
+            }
+
+            return repo;
+        }
     }
 }

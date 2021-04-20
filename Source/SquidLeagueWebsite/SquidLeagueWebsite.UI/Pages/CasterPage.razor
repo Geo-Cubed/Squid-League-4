@@ -76,17 +76,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.casters = new List<Caster>()
-        {
-            new Caster() { Id = 1, CasterName = "Conro", Discord = "Conro#0001", Twitter = "https://twitter.com/Conro_UK", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1267438295941820418/OqS0LxB9_400x400.jpg"},
-            new Caster() { Id = 2, CasterName = "McFootie", Discord = "McFootie#0001", Twitter = "https://twitter.com/McF00tie", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1247618735021658112/D3w6W7Vd_400x400.jpg" },
-            new Caster() { Id = 3, CasterName = "Rachelski", Discord = "Rachelski#0001", Twitter = "https://twitter.com/Rachelskiiiiiii", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1312064057579638784/7ZOpnQZg_400x400.jpg" },
-            new Caster() { Id = 4, CasterName = "Geo-Cubed", Discord = "Geo Cubed#4853", Twitter = "https://twitter.com/Geo_Cubed", Twitch = "https://twitch.com/GeoCubed", YouTube = "https://youtube.com/Geosting", ProfilePicturePath = "https://pbs.twimg.com/profile_images/1235141371952009217/u1XMfJsG_400x400.jpg"}
-        };
-
-        this.SplitUpList();
-        return;
-
         this.casters = casterService.GetAllCasters();
         this.SplitUpList();
     }

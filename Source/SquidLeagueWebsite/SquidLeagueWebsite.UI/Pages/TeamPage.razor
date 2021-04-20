@@ -4,6 +4,7 @@
 @using SquidLeagueWebsite.UI.Common.Utilities
 @using SquidLeagueWebsite.Models.Entities
 @inject TeamService teamService
+@inject PlayerService playerService
 
 <div id="title">Teams</div>
 
@@ -71,12 +72,22 @@ else
                                     <p>SZ: <b>@player.SzRank</b> RM: <b>@player.RmRank</b> TC: <b>@player.TcRank</b> CB: <b>@player.CbRank</b></p>
                                     <h3>Role</h3>
                                     <p>@player.Role</p>
-                                    <h3>Weapons</h3>
-                                    <p>
-                                        <img src="" height="50px" width="50px">
-                                        <img src="" height="50px" width="50px">
-                                        <img src="" heigth="50px" width="50px">
-                                    </p>
+                                    @if (player.CommonWeapons == null)
+                                    {
+                                        <h3>Weapons</h3>
+                                        <p>Loading...</p>
+                                    }
+                                    else if (player.CommonWeapons.Count() > 0)
+                                    {
+                                        <h3>Common Weapons</h3>
+                                        for (int i = 0; i < 3; ++i)
+                                        {
+                                            if (player.CommonWeapons.Count >= (i + 1))
+                                            {
+                                                <img src="@player.CommonWeapons.ElementAt(i).PicturePath" height="50px" width="50px" />
+                                            }
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -121,7 +132,7 @@ else
 @code {
     private int id;
 
-    private IEnumerable<TeamPlayers> teams;
+    private List<TeamPlayers> teams;
 
     public TeamPlayers selectedTeam
     {
@@ -131,15 +142,24 @@ else
         }
     }
 
-    private IEnumerable<TeamMatches> matches;
+    private List<TeamMatches> matches;
 
-    private IEnumerable<IEnumerable<Player>> selectedTeamPlayers;
+    private List<List<Player>> selectedTeamPlayers;
 
     protected override async Task OnInitializedAsync()
     {
         this.id = 0;
         this.teams = teamService.GetAllTeams();
-        return;
+        await Task.Run(() => 
+        {
+            foreach (var team in this.teams)
+            {
+                foreach (var player in team.Players)
+                {
+                    player.CommonWeapons = playerService.GetPlayerWeapons((int)player.Id).ToList();
+                }
+            }
+        });
     }
 
     protected void OnTeamSelect(ChangeEventArgs e)
