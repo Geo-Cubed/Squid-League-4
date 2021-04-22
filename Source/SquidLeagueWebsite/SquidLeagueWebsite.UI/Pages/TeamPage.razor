@@ -121,7 +121,7 @@ else
                 <div class="teamMatchCardContainer">
                     <div class="teamMatchCard">
                         <p><h3>NOT DONE YET</h3></p>
-                        <p><h3>@string.Format("{0} {1} - {2} {3}", 1, 2, 3, 4)</h3></p>
+                        <p><h3>@string.Format("{0} {1} - {2} {3}", match.HomeTeamName, match.HomeTeamScore, match.AwayTeamScore, match.AwayTeamName)</h3></p>
                     </div>
                 </div>
             }
@@ -167,7 +167,7 @@ else
         this.matches = null;
         this.id = int.Parse(e.Value.ToString());
         this.SplitUpPlayers();
-        //TODO: Load the players matches.
+        this.matches = teamService.GetTeamMatches(this.id);
     }
 
     protected void SplitUpPlayers()

@@ -11,15 +11,22 @@ namespace SquidLeagueWebsite.UI.Data
     public class TeamService
     {
         IRepository<TeamPlayers> repo;
+        IRepository<List<TeamMatches>> matchesRepo;
 
         public TeamService()
         {
             repo = RepositoryFactory.GetTeamRepository("API");
+            matchesRepo = RepositoryFactory.GetTeamMatchesRepository("API");
         }
 
         public List<TeamPlayers> GetAllTeams()
         {
             return this.repo.GetItems().ToList();
+        }
+
+        public List<TeamMatches> GetTeamMatches(int id)
+        {
+            return this.matchesRepo.GetItem(id);
         }
     }
 }

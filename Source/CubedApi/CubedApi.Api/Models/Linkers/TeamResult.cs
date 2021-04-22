@@ -1,6 +1,6 @@
-﻿namespace SquidLeagueWebsite.Models
+﻿namespace CubedApi.Api.Models.Linkers
 {
-    public class TeamMatches
+    public class TeamResult
     {
         public int MatchId { get; set; }
 

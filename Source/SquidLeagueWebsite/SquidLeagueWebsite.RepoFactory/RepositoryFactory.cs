@@ -124,8 +124,6 @@ namespace SquidLeagueWebsite.RepoFactory
         public static IRepository<List<PlayerGame>> GetPlayerGameRepository(string type)
         {
             IRepository<List<PlayerGame>> repo = null;
-
-
             switch (type)
             {
                 case "API":
@@ -133,6 +131,21 @@ namespace SquidLeagueWebsite.RepoFactory
                     break;
                 default:
                     throw new ArgumentException("Invalid player game repository");
+            }
+
+            return repo;
+        }
+
+        public static IRepository<List<TeamMatches>> GetTeamMatchesRepository(string type)
+        {
+            IRepository<List<TeamMatches>> repo = null;
+            switch (type)
+            {
+                case "API":
+                    repo = new ApiTeamMatchesRepository();
+                    break;
+                default:
+                    throw new ArgumentException("Invalid team match repository");
             }
 
             return repo;

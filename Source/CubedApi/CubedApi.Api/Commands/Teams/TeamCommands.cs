@@ -10,6 +10,7 @@ using CubedApi.Api.Common.CustomExceptions;
 using CubedApi.Api.Models.DTOs;
 using CubedApi.Api.Models.Linkers;
 using CubedApi.Api.Common.Utilities.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CubedApi.Api.Commands.Teams
 {
@@ -28,7 +29,7 @@ namespace CubedApi.Api.Commands.Teams
         /// Gets all active teams
         /// </summary>
         /// <returns>All active teams in the database</returns>
-        public List<TeamDto> GetAllTeams()
+        internal List<TeamDto> GetAllTeams()
         {
             var teams = this._context.Teams.Where(t => t.IsActive ?? false);
             if (!teams.Any())
@@ -44,7 +45,7 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">The id of the team to fetch</param>
         /// <returns>The team with the id</returns>
-        public TeamDto GetTeamById(int id)
+        internal TeamDto GetTeamById(int id)
         {
             if (id.IsInvalid())
             {
@@ -65,7 +66,7 @@ namespace CubedApi.Api.Commands.Teams
         /// </summary>
         /// <param name="id">id of the player to get the team of</param>
         /// <returns>the team the player is on</returns>
-        public TeamDto GetTeamByPlayerId(int id)
+        internal TeamDto GetTeamByPlayerId(int id)
         {
             if (id.IsInvalid())
             {
@@ -85,7 +86,7 @@ namespace CubedApi.Api.Commands.Teams
         /// gets all the teams with the players on it
         /// </summary>
         /// <returns>a list of teams with players</returns>
-        public List<TeamProfile> GetTeamProfiles()
+        internal List<TeamProfile> GetTeamProfiles()
         {
             var teams = this._context.Teams.Where(t => t.IsActive ?? false).ToList();
             if (!teams.Any())
@@ -107,6 +108,50 @@ namespace CubedApi.Api.Commands.Teams
                 }
             }
             return teamPlayers;
+        }
+
+        internal List<TeamResult> GetTeamResults(int id)
+        {
+            if (id.IsInvalid())
+            {
+                throw new InvalidIdException();
+            }
+
+            var matches = this._context.Matches
+                .Join(
+                    this._context.Teams,
+                    match => match.HomeTeamId,
+                    homeTeam => homeTeam.Id,
+                    (match, homeTeam) => new { match, homeTeam }
+                )
+                .Join(
+                    this._context.Teams,
+                    combined => combined.match.AwayTeamId,
+                    awayTeam => awayTeam.Id,
+                    (combined, awayTeam) => new { combined.match, combined.homeTeam, awayTeam }
+                )
+                .Where(x => 
+                    (x.awayTeam.Id == id || x.homeTeam.Id == id) 
+                    && (x.match.HomeTeamScore + x.match.AwayTeamScore > 0)
+                )
+                .OrderByDescending(x => x.match.MatchDate)
+                .Select(x => 
+                    new TeamResult() 
+                    { 
+                        MatchId = x.match.Id,
+                        HomeTeamScore = (int)x.match.HomeTeamScore,
+                        HomeTeamName = x.homeTeam.TeamName,
+                        AwayTeamScore = (int)x.match.AwayTeamScore,
+                        AwayTeamName = x.awayTeam.TeamName
+                    }    
+                )
+                .ToList();
+            if (!matches.Any())
+            {
+                throw new NoDataException();
+            }
+
+            return matches;
         }
     }
 }

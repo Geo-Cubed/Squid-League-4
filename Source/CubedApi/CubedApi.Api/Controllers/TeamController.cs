@@ -101,6 +101,23 @@ namespace CubedApi.Api.Controllers
             }
         }
 
+        [HttpGet("results/{id}")]
+        public ActionResult<List<TeamResult>> GetTeamResults(int id)
+        {
+            try
+            {
+                return this._teamCommands.GetTeamResults(id);
+            }
+            catch(NoDataException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         // POST api/<TeamController>
         [HttpPost]
         public void Post([FromBody] string value)
