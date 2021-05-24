@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>George Paddon (GeoCubed)</Authors>
+    <Company />
+    <Product>Squid League 4 CubedAPI</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Build\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeoCubed.SquidLeague4.Application\GeoCubed.SquidLeague4.Application.csproj" />
+    <ProjectReference Include="..\GeoCubed.SquidLeague4.Identity\GeoCubed.SquidLeague4.Identity.csproj" />
+    <ProjectReference Include="..\GeoCubed.SquidLeague4.Persistence\GeoCubed.SquidLeague4.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+﻿@page "/helpfulpeople"
+
+<div class="container">
+    <div class="text-center">
+        <h2 class="text-center">Special Thanks </h2>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center">
+        @foreach (var person in this.AllHelpfulPeople)
+        {
+            <div class="card m-2" style="width: 15rem;">
+                <img class="card-img-top img-fluid cardImg" src="@person.ProfilePictureLink" />
+                <div class="card-body">
+                    <h3 class="card-title text-center">@person.UserName</h3>
+                    <h6 class="card-subtitle text-muted text-center">@person.Role</h6>
+                    <p class="card-text text-center">@person.Description</p>
+                    <div class="card-text text-center">
+                        @if (!string.IsNullOrEmpty(person.TwitterLink))
+                        {
+                            <a href="@person.TwitterLink" target="_blank">
+                                <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" style="width:40px;height:40px;">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

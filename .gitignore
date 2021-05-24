@@ -1,4 +1,7 @@
 /config.json
+*.nswag
+*.dll
+*.gz
 
 # found this online at https://gist.github.com/kmorcinek/2710267 works better than writing my own
 

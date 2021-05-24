@@ -1,0 +1,66 @@
+﻿@page "/teams"
+@using GeoCubed.SquidLeague4.Website.Common.Helpers;
+
+<div class="text-center">
+    <h1 class="mb-3 mt-1">Teams</h1>
+
+    <select class="form-control mb-3" @onchange="OnTeamSelect">
+        @if (ActiveTeams != null)
+        {
+            @if (this.SelectedTeam == null)
+            {
+                <option value="-1">Select Team:</option>
+            }
+
+            @foreach (var team in ActiveTeams)
+            {
+                <option value="@team.Id">@team.TeamName</option>
+            }
+        }
+    </select>
+
+    @if (this.SelectedTeam != null)
+    {
+        <div class="d-block">
+            <h2 class="text-center">@this.SelectedTeam.TeamName</h2>
+            <h3 class="text-center">x wins - y losses</h3>
+            <h4 class="text-center">Players</h4>
+            @if (this.SelectedTeam.Players == null || this.SelectedTeam.Players.Count == 0)
+            {
+                <h4 class="text-center">@string.Format("{0} Currently has no players", this.SelectedTeam.TeamName)</h4>
+            }
+                
+            <div class="d-flex flex-wrap justify-content-center">
+                @foreach (var player in this.SelectedTeam.Players)
+                {
+                    <div class="card m-2" style="width:18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@player.InGameName</h5>
+                            <p><h6 class="card-subtitle text-center">Ranks</h6></p>
+                            <p class="card-text text-center">SZ: <b>@player.SzRank</b> RM: <b>@player.RmRank</b></p>
+                            <p class="card-text text-center">TC: <b>@player.TcRank</b> CB: <b>@player.CbRank</b></p>
+                            <p>
+                                @if (player.Weapons.Any())
+                                {
+                                    <h6 class="card-subtitle text-center">Common Weapons</h6>
+                                    @foreach (var weapon in player.Weapons)
+                                    {
+                                        <img src="@weapon.PicturePath" alt="@weapon.WeaponName" title="@weapon.WeaponName" style="height:50px;width:50px;" />
+                                    }
+                                }
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (this.TeamGames.Any())
+            {
+                <h4 class="text-center">Matches</h4>
+                @*TODO: Team Matches*@
+
+            } 
+        </div>
+    } 
+</div>
+

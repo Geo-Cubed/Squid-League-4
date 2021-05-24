@@ -1,0 +1,41 @@
+﻿@page "/casters"
+
+<div class="container">
+    <div class="text-center">
+        <h1 class="text-center">Casters</h1>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center">
+        @foreach (var caster in this.AllCasters)
+        {
+            <div class="card m-2" style="width:15rem;">
+                <img class="card-img-top img-fluid cardImg" src="@caster.ProfilePicturePath" />
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-2">@caster.CasterName</h3>
+                    <h6 class="card-subtitle text-muted text-center mb-2">@caster.Discord</h6>
+                    <div class="card-text text-center">
+                        @if (!string.IsNullOrEmpty(caster.Twitter))
+                        {
+                            <a href="@caster.Twitter" target="_blank">
+                                <img src="Images/brandLogos/Twitter/Twitter Logos/Twitter_Logo_Blue/Twitter_Logo_Blue.svg" style="width:40px;height:40px;">
+                            </a>
+                        }
+
+                        @if (!string.IsNullOrEmpty(caster.Twitch))
+                        {
+                            <a href="@caster.Twitch" target="_blank">
+                                <img src="Images/brandLogos/twitch.svg" style="width:30px;height:30px;">
+                            </a>
+                        }
+
+                        @if (!string.IsNullOrEmpty(caster.YouTube))
+                        {
+                            <a class="ml-1 mr-1" href="@caster.YouTube" target="_blank">
+                                <img src="Images/brandLogos/Youtube/social/1024px/red/youtube_social_icon_red.png" style="height:25px;">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

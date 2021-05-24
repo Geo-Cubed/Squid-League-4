@@ -1,0 +1,27 @@
+Standard Pages
+home - DONE
+404
+teams - MATCHES AND PLAYER WEAPONS
+casters - DONE
+matches
+bracket
+	> Swiss - DONE
+	> Upper Bracket
+	> Lower Bracket
+stats
+useful information
+helpful people - DONE
+
+Admin Pages
+login
+casters
+game settings
+helpful people
+maps
+matches
+players
+results
+settings
+system switches
+teams
+weapons

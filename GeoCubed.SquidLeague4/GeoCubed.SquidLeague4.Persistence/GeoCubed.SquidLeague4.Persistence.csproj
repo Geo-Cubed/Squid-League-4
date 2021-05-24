@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>George Paddon (GeoCubed)</Authors>
+    <Company />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Build\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.10" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\GeoCubed.SquidLeague4.Application\GeoCubed.SquidLeague4.Application.csproj" />
+  </ItemGroup>
+
+</Project>

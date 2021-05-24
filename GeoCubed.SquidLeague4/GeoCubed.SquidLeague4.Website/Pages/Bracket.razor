@@ -1,0 +1,31 @@
+﻿@page "/bracket"
+
+@using GeoCubed.SquidLeague4.Website.Models.Enums
+@using GeoCubed.SquidLeague4.Website.Pages.Brackets
+
+<div class="text-center">
+    <h1>Bracket</h1>
+
+    <select class="form-control mb-3" @onchange="OnBracketSelect">
+        <option value="@((int)BracketFormats.Swiss)">Swiss Stage</option>
+        <option value="@((int)BracketFormats.Upper)">Upper Bracket</option>
+        <option value="@((int)BracketFormats.Lower)">Lower Bracket</option>
+    </select>
+
+    <!-- Switches in the correct selected bracket -->
+    @switch (this.SelectedFormat)
+    {
+        case BracketFormats.Swiss:
+            <SwissBracket></SwissBracket>
+            break;
+        case BracketFormats.Lower:
+            <LowerBracket></LowerBracket>
+            break;
+        case BracketFormats.Upper:
+            <UpperBracket></UpperBracket>
+            break;
+        default:
+            <h3>Something went wrong :(</h3>
+            break;
+    }
+</div>

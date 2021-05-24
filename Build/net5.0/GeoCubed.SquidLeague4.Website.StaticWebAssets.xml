@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="E:\Squid League 4\Squid-League-4\Build\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="E:\Squid League 4\Squid-League-4\GeoCubed.SquidLeague4\GeoCubed.SquidLeague4.Website\obj\Debug\net5.0\scopedcss\bundle\" />
+</StaticWebAssets>

@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon>wwwroot\duckling.ico</ApplicationIcon>
+    <Authors>George Paddon (GeoCubed)</Authors>
+    <Company />
+    <Product>Squid League 4 Website</Product>
+    <PackageIcon>duckling.ico</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Build\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Admin\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Admin\AdminRoot.razor" />
+    <None Include="Pages\Bracket.razor" />
+    <None Include="Pages\Brackets\LowerBracket.razor" />
+    <None Include="Pages\Brackets\SwissBracket.razor" />
+    <None Include="Pages\Brackets\UpperBracket.razor" />
+    <None Include="Pages\Casters.razor" />
+    <None Include="Pages\HelpfulPeople.razor" />
+    <None Include="Pages\Statistics.razor" />
+    <None Include="Pages\Teams.razor" />
+    <None Include="Pages\UsefulInformation.razor" />
+    <None Include="wwwroot\duckling.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
