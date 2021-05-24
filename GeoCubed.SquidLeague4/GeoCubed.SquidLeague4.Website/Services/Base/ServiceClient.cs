@@ -128,21 +128,21 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> ByMatchIdAsync(int? matchId);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> GamesByMatchIdAsync(int? matchId);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> ByMatchIdAsync(int? matchId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> GamesByMatchIdAsync(int? matchId, System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> ByTeamIdAsync(int? teamId);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> GamesByTeamIdAsync(int? teamId);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> ByTeamIdAsync(int? teamId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> GamesByTeamIdAsync(int? teamId, System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -182,12 +182,12 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<HelpfulPersonVm> ByIdAsync(int? id);
+        System.Threading.Tasks.Task<HelpfulPersonVm> HelpfulPersonByIdAsync(int? id);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<HelpfulPersonVm> ByIdAsync(int? id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<HelpfulPersonVm> HelpfulPersonByIdAsync(int? id, System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1519,15 +1519,15 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> ByMatchIdAsync(int? matchId)
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> GamesByMatchIdAsync(int? matchId)
         {
-            return ByMatchIdAsync(matchId, System.Threading.CancellationToken.None);
+            return GamesByMatchIdAsync(matchId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> ByMatchIdAsync(int? matchId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchGameVm>> GamesByMatchIdAsync(int? matchId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/Game/bymatchid?");
@@ -1608,15 +1608,15 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> ByTeamIdAsync(int? teamId)
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> GamesByTeamIdAsync(int? teamId)
         {
-            return ByTeamIdAsync(teamId, System.Threading.CancellationToken.None);
+            return GamesByTeamIdAsync(teamId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> ByTeamIdAsync(int? teamId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<TeamGameVm>> GamesByTeamIdAsync(int? teamId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/Game/byteamid?");
@@ -2075,15 +2075,15 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<HelpfulPersonVm> ByIdAsync(int? id)
+        public System.Threading.Tasks.Task<HelpfulPersonVm> HelpfulPersonByIdAsync(int? id)
         {
-            return ByIdAsync(id, System.Threading.CancellationToken.None);
+            return HelpfulPersonByIdAsync(id, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<HelpfulPersonVm> ByIdAsync(int? id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<HelpfulPersonVm> HelpfulPersonByIdAsync(int? id, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/HelpfulPerson/byid?");

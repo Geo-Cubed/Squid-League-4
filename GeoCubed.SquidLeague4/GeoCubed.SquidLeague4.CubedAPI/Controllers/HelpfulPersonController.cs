@@ -36,7 +36,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return Ok(people);
         }
 
-        [HttpGet("byid", Name = "ById")]
+        [HttpGet("byid", Name = "HelpfulPersonById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 

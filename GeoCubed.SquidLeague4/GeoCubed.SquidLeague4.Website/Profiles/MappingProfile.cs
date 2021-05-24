@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Website.Common.Helpers;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 
@@ -41,6 +42,14 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
 
             CreateMap<SwissMatchDetailVm, SwissMatchDetailsViewModel>();
             CreateMap<SwissMatchDto, MatchDetailsDto>();
+
+            CreateMap<GameViewModel, GameVm>().ReverseMap();
+            CreateMap<GameViewModel, CreateGameCommand>().ReverseMap();
+            CreateMap<GameViewModel, UpdateGameCommand>().ReverseMap();
+            CreateMap<TeamGameViewModel, TeamGameVm>().ReverseMap();
+            CreateMap<TeamPlayerViewModel, PlayerWeaponDto>().ReverseMap();
+            CreateMap<PlayerWeaponViewModel, PlayerWeaponDto>().ReverseMap();
+            CreateMap<GameSettingViewModel, GameSettingsDto>().ReverseMap();
         }
     }
 }

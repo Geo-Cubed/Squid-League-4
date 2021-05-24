@@ -12,11 +12,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         [Inject]
         public ITeamDataService TeamDataService { get; set; }
 
+        [Inject]
+        public IGameDataService GameDataService { get; set; }
+
         public IEnumerable<TeamDetailViewModel> ActiveTeams { get; set; }
             = new List<TeamDetailViewModel>();
 
-        public IEnumerable<TeamGames> TeamGames { get; set; }
-            = new List<TeamGames>();
+        public IEnumerable<TeamGameViewModel> TeamGames { get; set; }
+            = new List<TeamGameViewModel>();
 
         public int SelectedTeamId { get; set; }
 
@@ -34,14 +37,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             this.ActiveTeams = await this.TeamDataService.GetAllTeamsWithPlayers();
         }
 
-        protected void OnTeamSelect(ChangeEventArgs e)
+        protected async Task OnTeamSelectAsync(ChangeEventArgs e)
         {
             // Flush team games so that it doesn't display another teams games while loading.
-            this.TeamGames = new List<TeamGames>();
+            this.TeamGames = new List<TeamGameViewModel>();
             this.SelectedTeamId = int.Parse(e.Value.ToString());
 
-            // Load team games...
-            // TODO: Create games controller.
+            // Load team games
+            this.TeamGames = await this.GameDataService.GetGamesByTeamId(this.SelectedTeamId);
         }
     }
 }

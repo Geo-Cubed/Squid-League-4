@@ -2,13 +2,9 @@
 
 namespace GeoCubed.SquidLeague4.Website.ViewModels.Teams
 {
-    public class TeamGames
+    public class TeamGameViewModel
     {
         public int MatchId { get; set; }
-
-        public List<PlayerWeaponViewModel> HomeTeamPlayerWeapons { get; set; }
-
-        public List<PlayerWeaponViewModel> AwayTeamPlayerWeapons { get; set; }
 
         public string HomeTeam { get; set; }
 
@@ -18,6 +14,9 @@ namespace GeoCubed.SquidLeague4.Website.ViewModels.Teams
 
         public double AwayTeamScore { get; set; }
         
-        // TODO: Game settings - map and mode with images.
+        public GameSettingViewModel GameSetting { get; set; }
+
+        public ICollection<PlayerWeaponViewModel> Players { get; set; }
+            = new List<PlayerWeaponViewModel>();
     }
 }

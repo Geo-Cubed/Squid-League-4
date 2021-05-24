@@ -4,7 +4,7 @@
 <div class="text-center">
     <h1 class="mb-3 mt-1">Teams</h1>
 
-    <select class="form-control mb-3" @onchange="OnTeamSelect">
+    <select class="form-control mb-3" @onchange="OnTeamSelectAsync">
         @if (ActiveTeams != null)
         {
             @if (this.SelectedTeam == null)
@@ -58,7 +58,23 @@
             {
                 <h4 class="text-center">Matches</h4>
                 @*TODO: Team Matches*@
-
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    @foreach (var game in this.TeamGames)
+                    {
+                        <div class="card m-2" style="width:25rem;">
+                            <div class="card-header d-flex flex-row">
+                                <h5 class="card-title align-content-start">@string.Format("{0} : {1}", game.HomeTeam, game.HomeTeamScore)</h5>
+                                <div class="flex-grow-1"></div>
+                                <h5 class="card-title align-content-end">@string.Format("{0} : {1}", game.AwayTeamScore, game.AwayTeam)</h5>
+                            </div>
+                            <div class="card-body d-flex flex-row">
+                                <div class="card-text">Players</div>
+                                <div class="card-text">Game Settings</div>
+                                <div class="card-text">Players</div>
+                            </div>
+                        </div>
+                    }
+                </div>
             } 
         </div>
     } 

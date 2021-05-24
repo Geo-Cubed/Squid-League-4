@@ -36,7 +36,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return Ok(allGames);
         }
 
-        [HttpGet("bymatchid", Name = "ByMatchId")]
+        [HttpGet("bymatchid", Name = "GamesByMatchId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<MatchGameVm>>> GetGamesByMatchId(int matchId)
@@ -45,7 +45,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return Ok(games);
         }
 
-        [HttpGet("byteamid", Name = "ByTeamId")]
+        [HttpGet("byteamid", Name = "GamesByTeamId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<TeamGameVm>>> GetGamesByTeamId(int teamId)
