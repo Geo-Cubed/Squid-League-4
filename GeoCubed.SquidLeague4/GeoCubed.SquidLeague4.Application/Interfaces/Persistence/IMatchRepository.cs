@@ -12,6 +12,8 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
 
         Task<Match> GetMatchById(int id);
 
+        Task<IReadOnlyList<Match>> GetTeamPlayedMatches(int teamId);
+
         Task<bool> DoesMatchExist(int id);
     }
 }

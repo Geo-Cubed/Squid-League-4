@@ -12,6 +12,7 @@ using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHe
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
@@ -23,6 +24,7 @@ using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList;
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using GeoCubed.SquidLeague4.Domain.Entities;
+using System.Linq;
 
 namespace GeoCubed.SquidLeague4.Application.Profiles
 {
@@ -41,7 +43,20 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Team, CreateTeamCommand>().ReverseMap();
             CreateMap<Team, TeamCommandDto>();
             CreateMap<Team, UpdateTeamCommand>().ReverseMap();
-            CreateMap<Team, TeamWithPlayersVm>();
+            CreateMap<Team, TeamWithPlayersVm>()
+                .ForMember(m => m.Wins, opt => opt.MapFrom(x => 
+                    x.MatchAwayTeams.Where(m => m.Winner == "away").Count() 
+                    + x.MatchHomeTeams.Where(m => m.Winner == "home").Count()
+                ))
+                .ForMember(m => m.Losses, opt =>  opt.MapFrom(x =>
+                    x.MatchAwayTeams.Where(m => m.Winner == "home").Count()
+                    + x.MatchHomeTeams.Where(m => m.Winner == "away").Count()
+                ));
+            CreateMap<Match, TeamPlayedMatchVm>()
+                .ForMember(m => m.MatchId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(m => m.HomeTeam, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
+                .ForMember(m => m.AwayTeam, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
+
             CreateMap<Player, PlayerDto>();
             CreateMap<Weapon, CommonWeaponDto>();
 

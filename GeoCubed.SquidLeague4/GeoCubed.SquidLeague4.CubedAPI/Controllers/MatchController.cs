@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.DeleteMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchById;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
@@ -58,6 +59,15 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             var matches = await this._mediator.Send(new GetUpcommingMatchesListQuery());
             return Ok(matches);
         }
+
+        [HttpGet("teamplayed", Name = "GetTeamPlayedMatches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<TeamPlayedMatchVm>>> GetTeamPlayedMatches(int teamId)
+        {
+            var matches = await this._mediator.Send(new GetTeamPlayedMatchesQuery() { TeamId = teamId });
+            return Ok(matches);
+        }
+
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPost(Name = "AddMatch")]

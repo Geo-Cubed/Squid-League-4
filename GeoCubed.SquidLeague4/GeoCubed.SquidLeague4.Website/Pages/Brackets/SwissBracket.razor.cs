@@ -37,8 +37,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
                 standings.Add(new SwissStandingsViewModel()
                 {
                     TeamName = team,
-                    Wins = matches.Where(x => (x.HomeTeam == team && x.HomeTeamScore == 5) || (x.AwayTeam == team && x.AwayTeamScore == 5)).Count(),
-                    Losses = matches.Where(x => (x.HomeTeam == team && x.AwayTeamScore == 5) || (x.AwayTeam == team && x.HomeTeamScore == 5)).Count(),
+                    Wins = matches.Where(x => (x.HomeTeam == team && x.Winner == "home") || (x.AwayTeam == team && x.Winner == "away")).Count(),
+                    Losses = matches.Where(x => (x.HomeTeam == team && x.Winner == "away") || (x.AwayTeam == team && x.Winner == "home")).Count(),
                     Points = matches.Where(x => x.HomeTeam == team).Sum(x => x.HomeTeamScore) + matches.Where(x => x.AwayTeam == team).Sum(x => x.AwayTeamScore)
                 });
             }

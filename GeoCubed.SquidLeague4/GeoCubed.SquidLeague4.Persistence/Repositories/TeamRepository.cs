@@ -24,6 +24,8 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             var teams = this._dbContext.Teams
                 .Where(t => (bool)t.IsActive)
                 .Include(t => t.Players)
+                .Include(t => t.MatchAwayTeams)
+                .Include(t => t.MatchHomeTeams)
                 .ToList();
             return Task.FromResult((IReadOnlyList<Team>)teams);
         }

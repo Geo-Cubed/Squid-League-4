@@ -54,12 +54,12 @@
                 }
             </div>
 
-            @if (this.TeamGames.Any())
+            @if (this.TeamMatches.Any())
             {
                 <h4 class="text-center">Matches</h4>
                 @*TODO: Team Matches*@
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    @foreach (var game in this.TeamGames)
+                    @foreach (var game in this.TeamMatches)
                     {
                         <div class="card m-2" style="width:25rem;">
                             <div class="card-header d-flex flex-row">

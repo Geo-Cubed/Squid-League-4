@@ -40,6 +40,16 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(match);
         }
 
+        public Task<IReadOnlyList<Match>> GetTeamPlayedMatches(int teamId)
+        {
+            var matches = this._dbContext.Matches
+                .Where(m => (m.HomeTeamId == teamId || m.AwayTeamId == teamId) && m.Winner != "none")
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam).ToList();
+
+            return Task.FromResult((IReadOnlyList<Match>)matches);
+        }
+
         public Task<IReadOnlyList<Match>> GetUpcommingMatchesAsync()
         {
             var endDate = DateTime.UtcNow.AddDays(7).Date;

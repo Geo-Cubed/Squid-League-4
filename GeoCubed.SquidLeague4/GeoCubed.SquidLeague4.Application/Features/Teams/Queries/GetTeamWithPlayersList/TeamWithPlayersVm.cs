@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList
 {
@@ -11,6 +7,10 @@ namespace GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPl
         public int Id { get; set; }
 
         public string TeamName { get; set; }
+
+        public int Wins { get; set; }
+
+        public int Losses { get; set; }
 
         public List<PlayerDto> Players { get; set; }
     }

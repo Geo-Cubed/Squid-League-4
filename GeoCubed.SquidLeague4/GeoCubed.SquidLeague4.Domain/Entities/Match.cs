@@ -18,6 +18,8 @@ namespace GeoCubed.SquidLeague4.Domain.Entities
 
         public int AwayTeamId { get; set; }
 
+        public string Winner { get; set; }
+
         public int? HomeTeamScore { get; set; }
 
         public int? AwayTeamScore { get; set; }

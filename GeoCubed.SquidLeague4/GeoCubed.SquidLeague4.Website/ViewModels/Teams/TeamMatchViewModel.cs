@@ -1,7 +1,9 @@
-﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches
+﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.Teams
 {
-    public class MatchDetailsDto
+    public class TeamMatchViewModel
     {
+        public int MatchId { get; set; }
+
         public string HomeTeam { get; set; }
 
         public string AwayTeam { get; set; }

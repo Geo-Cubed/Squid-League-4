@@ -57,6 +57,10 @@ namespace GeoCubed.SquidLeague4.Persistence.Configuration
                 .HasColumnName("secondary_caster_profile_id")
                 .HasComment("Id of the secondary caster");
 
+            builder.Property(e => e.Winner)
+                .HasColumnType("enum('home', 'away', 'none')")
+                .HasColumnName("winner");
+
             builder.HasOne(d => d.AwayTeam)
                 .WithMany(p => p.MatchAwayTeams)
                 .HasForeignKey(d => d.AwayTeamId)

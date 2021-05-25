@@ -9,5 +9,7 @@
         public string AwayTeam { get; set; }
 
         public int AwayTeamScore { get; set; }
+
+        public string Winner { get; set; }
     }
 }
