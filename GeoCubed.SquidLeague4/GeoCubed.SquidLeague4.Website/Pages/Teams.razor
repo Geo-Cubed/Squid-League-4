@@ -23,7 +23,7 @@
     {
         <div class="d-block">
             <h2 class="text-center">@this.SelectedTeam.TeamName</h2>
-            <h3 class="text-center">x wins - y losses</h3>
+            <h3 class="text-center">@string.Format("{0} wins - {1} losses", this.SelectedTeam.Wins, this.SelectedTeam.Losses)</h3>
             <h4 class="text-center">Players</h4>
             @if (this.SelectedTeam.Players == null || this.SelectedTeam.Players.Count == 0)
             {
