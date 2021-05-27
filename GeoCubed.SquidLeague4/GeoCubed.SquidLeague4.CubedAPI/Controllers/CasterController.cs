@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.DeleteCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.UpdateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterById;
+using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterList;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
@@ -31,6 +32,15 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var request = new GetCasterListQuery();
             var casters = await this._mediator.Send(request);
+            return Ok(casters);
+        }
+
+        [Authorize(Roles = Roles.Moderator + "," + Roles.Admin)]
+        [HttpGet("adminall", Name = "GetAllCastersForAdmin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<CasterAdminVm>>> GetAllCastersForAdmin()
+        {
+            var casters = await this._mediator.Send(new GetCasterForAdminQuery());
             return Ok(casters);
         }
 

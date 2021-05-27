@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.CreateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.UpdateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterById;
+using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Games.Commands.CreateGame;
 using GeoCubed.SquidLeague4.Application.Features.Games.Commands.UpdateGame;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetAllGames;
@@ -66,6 +67,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<HelpfulPerson, UpdateHelpfulPersonCommand>().ReverseMap();
 
             CreateMap<CasterProfile, CasterVm>();
+            CreateMap<CasterProfile, CasterAdminVm>();
             CreateMap<CasterProfile, CreateCasterCommand>().ReverseMap();
             CreateMap<CasterProfile, CasterCommandDto>();
             CreateMap<CasterProfile, UpdateCasterCommand>().ReverseMap();

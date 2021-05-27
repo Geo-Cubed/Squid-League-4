@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Website.Common.Helpers;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 
@@ -29,6 +30,7 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<CasterVm, CasterDetailViewModel>().ReverseMap();
             CreateMap<CasterDetailViewModel, UpdateCasterCommand>().ReverseMap();
             CreateMap<CasterDetailViewModel, CreateCasterCommand>().ReverseMap();
+            CreateMap<CasterAdminVm, AdminCasterViewModel>();
 
             CreateMap<HelpfulPersonVm, HelpfulPersonDetailViewModel>().ReverseMap();
             CreateMap<HelpfulPersonDetailViewModel, UpdateHelpfulPersonCommand>().ReverseMap();

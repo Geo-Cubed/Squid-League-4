@@ -69,16 +69,10 @@ namespace GeoCubed.SquidLeague4.CubedAPI
                 });
             });
 
-            var websites = new List<string>();
-            this.Configuration.GetSection("AllowedWebsites").Bind(websites);
-            services.AddCors(options =>
+            services.AddCors(options => options.AddPolicy(name: AllowWebsiteAccess, builder => 
             {
-                options.AddPolicy(name: AllowWebsiteAccess,
-                    builder =>
-                    {
-                        builder.WithOrigins(websites.ToArray());
-                    });
-            });
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

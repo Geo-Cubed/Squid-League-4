@@ -42,9 +42,17 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
-        public Task<bool> Register(string username, string password)
+        public async Task<bool> Register(string username, string password)
         {
-            throw new NotImplementedException();
+            RegistrationRequest registrationRequest = new RegistrationRequest() { UserName = username, Password = password };
+            var response = await _client.RegisterAsync(registrationRequest);
+
+            if (!string.IsNullOrEmpty(response.UserId))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

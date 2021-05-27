@@ -3,6 +3,8 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,6 +52,15 @@ namespace GeoCubed.SquidLeague4.Website.Services
         {
             var allCasters = await this._client.GetAllCastersAsync();
             var mappedCasters = this._mapper.Map<ICollection<CasterDetailViewModel>>(allCasters);
+            return mappedCasters.ToList();
+        }
+
+        public async Task<List<AdminCasterViewModel>> GetAllCastersAdmin()
+        {
+            await this.AddBearerToken();
+
+            var casters = await this._client.GetAllCastersForAdminAsync();
+            var mappedCasters = this._mapper.Map<ICollection<AdminCasterViewModel>>(casters);
             return mappedCasters.ToList();
         }
 

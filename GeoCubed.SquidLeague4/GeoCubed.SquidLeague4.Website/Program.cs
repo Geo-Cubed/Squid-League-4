@@ -21,7 +21,9 @@ namespace GeoCubed.SquidLeague4.Website
 
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddBlazoredLocalStorage();
+
             builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost/geocubed/"));
 
@@ -32,7 +34,6 @@ namespace GeoCubed.SquidLeague4.Website
             builder.Services.AddScoped<IMatchDataService, MatchDataService>();
             builder.Services.AddScoped<ISwissDataService, SwissDataService>();
             builder.Services.AddScoped<IGameDataService, GameDataService>();
-            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             await builder.Build().RunAsync();

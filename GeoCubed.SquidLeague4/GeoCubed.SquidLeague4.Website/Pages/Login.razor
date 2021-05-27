@@ -1,4 +1,32 @@
 ﻿@page "/login"
 
-<h3>login</h3>
+<div class="d-flex flex-wrap justify-content-center">
+    <div class="card m-2">
+        <div class="card-header">
+            <h3>Admin Login</h3>
+        </div>
+        <div class="card-body">
+            <div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="oi oi-person"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="username" @bind-value="this.LoginViewModel.Username"/>
+                </div>
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="oi oi-key"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="password" @bind-value="this.LoginViewModel.Password"/>
+                </div>
+                <div class="form-group">
+                    <button class="btn float-left" @onclick="LoginAsync">Login</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <span>@this.Message</span>
+        </div>
+    </div>
+</div>
 
