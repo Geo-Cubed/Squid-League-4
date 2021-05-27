@@ -27,6 +27,15 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return Ok(await this._authenticationService.AuthenticateAsync(request));
         }
 
+        [Authorize]
+        [HttpGet("checkvalid", Name = "CheckValidToken")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult CheckValidToken()
+        {
+            return NoContent();
+        }
+
         [Authorize(Roles = Roles.Admin)]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

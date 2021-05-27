@@ -57,20 +57,19 @@
             @if (this.TeamMatches.Any())
             {
                 <h4 class="text-center">Matches</h4>
-                @*TODO: Team Matches*@
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    @foreach (var game in this.TeamMatches)
+                    @foreach (var match in this.TeamMatches)
                     {
-                        <div class="card m-2" style="width:25rem;">
-                            <div class="card-header d-flex flex-row">
-                                <h5 class="card-title align-content-start">@string.Format("{0} : {1}", game.HomeTeam, game.HomeTeamScore)</h5>
-                                <div class="flex-grow-1"></div>
-                                <h5 class="card-title align-content-end">@string.Format("{0} : {1}", game.AwayTeamScore, game.AwayTeam)</h5>
-                            </div>
-                            <div class="card-body d-flex flex-row">
-                                <div class="card-text">Players</div>
-                                <div class="card-text">Game Settings</div>
-                                <div class="card-text">Players</div>
+                        <div class="card m-2" style="min-width:200px">
+                            <div class="card-body">
+                                <div class="d-flex flex-row pb-2">
+                                    <div class="flex-grow-1 pr-2">@match.HomeTeam</div>
+                                    <div class="border-left pl-2">@match.HomeTeamScore</div>
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <div class="flex-grow-1 pr-2">@match.AwayTeam</div>
+                                    <div class="border-left pl-2">@match.AwayTeamScore</div>
+                                </div>
                             </div>
                         </div>
                     }

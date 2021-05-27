@@ -44,7 +44,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             this.SelectedTeamId = int.Parse(e.Value.ToString());
 
             // Load team games
-            this.TeamMatches = await this.MatchDataService.;
+            this.TeamMatches = await this.MatchDataService.GetTemMatches(this.SelectedTeamId);
         }
     }
 }

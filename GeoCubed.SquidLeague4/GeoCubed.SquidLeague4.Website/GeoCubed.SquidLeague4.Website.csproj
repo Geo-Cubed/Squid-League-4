@@ -17,6 +17,7 @@
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
@@ -29,13 +30,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Admin\AdminCasters.razor" />
+    <None Include="Pages\Admin\AdminGameSettings.razor" />
+    <None Include="Pages\Admin\AdminHelpfulPeople.razor" />
+    <None Include="Pages\Admin\AdminMatches.razor" />
+    <None Include="Pages\Admin\AdminMatchResults.razor" />
+    <None Include="Pages\Admin\AdminPlayers.razor" />
     <None Include="Pages\Admin\AdminRoot.razor" />
+    <None Include="Pages\Admin\AdminSystemSwitches.razor" />
+    <None Include="Pages\Admin\AdminTeams.razor" />
     <None Include="Pages\Bracket.razor" />
     <None Include="Pages\Brackets\LowerBracket.razor" />
     <None Include="Pages\Brackets\SwissBracket.razor" />
     <None Include="Pages\Brackets\UpperBracket.razor" />
     <None Include="Pages\Casters.razor" />
     <None Include="Pages\HelpfulPeople.razor" />
+    <None Include="Pages\Login.razor" />
     <None Include="Pages\Statistics.razor" />
     <None Include="Pages\Teams.razor" />
     <None Include="Pages\UsefulInformation.razor" />

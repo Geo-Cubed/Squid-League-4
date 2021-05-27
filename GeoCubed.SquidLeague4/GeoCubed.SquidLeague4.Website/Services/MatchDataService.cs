@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,6 +59,13 @@ namespace GeoCubed.SquidLeague4.Website.Services
             var selectedMatch = await this._client.GetMatchByIdAsync(id);
             var mappedMatch = this._mapper.Map<MatchDetailViewModel>(selectedMatch);
             return mappedMatch;
+        }
+
+        public async Task<List<TeamMatchViewModel>> GetTemMatches(int teamId)
+        {
+            var matches = await this._client.GetTeamPlayedMatchesAsync(teamId);
+            var mappedMatches = this._mapper.Map<ICollection<TeamMatchViewModel>>(matches);
+            return mappedMatches.ToList();
         }
 
         public async Task<List<UpcommingMatchViewModel>> GetUpcommingMatches()

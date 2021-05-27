@@ -54,13 +54,6 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedGames.ToList();
         }
 
-        public async Task<List<TeamGameViewModel>> GetGamesByTeamId(int teamId)
-        {
-            var allGames = await this._client.GamesByTeamIdAsync(teamId);
-            var mappedGames = this._mapper.Map<ICollection<TeamGameViewModel>>(allGames);
-            return mappedGames.ToList();
-        }
-
         public async Task<ApiResponse<int>> UpdateGame(GameViewModel gameViewModel)
         {
             try

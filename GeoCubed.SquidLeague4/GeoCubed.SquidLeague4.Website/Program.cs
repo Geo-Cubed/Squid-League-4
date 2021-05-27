@@ -1,7 +1,9 @@
 using Blazored.LocalStorage;
+using GeoCubed.SquidLeague4.Website.Auth;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services;
 using GeoCubed.SquidLeague4.Website.Services.Base;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +21,7 @@ namespace GeoCubed.SquidLeague4.Website
 
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddAuthorizationCore();
 
             builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost/geocubed/"));
 
@@ -29,6 +32,8 @@ namespace GeoCubed.SquidLeague4.Website
             builder.Services.AddScoped<IMatchDataService, MatchDataService>();
             builder.Services.AddScoped<ISwissDataService, SwissDataService>();
             builder.Services.AddScoped<IGameDataService, GameDataService>();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             await builder.Build().RunAsync();
         }
