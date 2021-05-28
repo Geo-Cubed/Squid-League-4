@@ -1,4 +1,4 @@
-Standard Pages
+--Standard Pages--
 home - DONE
 404
 teams - DONE
@@ -12,16 +12,22 @@ stats
 useful information
 helpful people - DONE
 
-Admin Pages
+--Admin Pages--
 login
-casters - DONE Bar buttons clickavle while disabled and is active checkbox doesn't initialise to correct value
+casters - DONE Bar is active checkbox doesn't initialise to correct value
 game settings
-helpful people
+helpful people - DONE
 maps
 matches
-players
+players - DONE Bar is active checkbox doesn't initialize to correct value
 results
 settings
 system switches
-teams
+teams - DONE Bar is active checkbox doesn't initialize to correct value
 weapons
+
+TODO:
+go back to login when not authorized
+fix left panel when admin options are listed
+remove un used api functions
+sort out namespaces and models for website

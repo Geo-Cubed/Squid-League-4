@@ -2,8 +2,120 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminTeams</h3>
+<div class="text-center">
+    <h3>Team Management</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddTeam">
+            <span class="oi oi-plus"></span> Add Team
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedTeamId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedTeamId > 0) OpenEditTeam(); })">
+            <span class="oi oi-pencil"></span> Edit Team
+        </button>
+        <button class="btn btn-primary @((this.selectedTeamId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedTeamId > 0) OpenDeleteTeam(); })">
+            <span class="oi oi-trash"></span> Delete Team
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of teams</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var team in this.allTeams.OrderBy(p => p.TeamName))
+                {
+                    <tr class="@((this.selectedTeamId == team.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedTeamId = team.Id)">
+                        <td scope="row">@team.Id</td>
+                        <td>@team.TeamName</td>
+                        <td>
+                            @if (team.IsActive)
+                            {
+                                <span class="oi oi-check"></span>
+                            }
+                            else
+                            {
+                                <span class="oi oi-x"></span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="addModal">
+    <Title>Add</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.TeamName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Is Active</label>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" @bind-value="this.model.IsActive" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddTeam">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editModal">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Id" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.TeamName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Is Active</label>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" @bind-value="this.model.IsActive" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditTeam">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span><em>@string.Format("Are you sure you want to delete '{0}'?", this.model.TeamName)</em></span>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteTeam">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>

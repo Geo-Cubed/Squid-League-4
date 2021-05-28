@@ -9,10 +9,10 @@
         <button type="button" class="btn btn-primary" @onclick="OpenAddCaster">
             <span class="oi oi-plus"></span> Add Caster
         </button>
-        <button class="btn btn-primary ml-2 mr-2 @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="OpenEditCaster">
+        <button class="btn btn-primary ml-2 mr-2 @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.SelectedCasterId > 0) OpenEditCaster(); })">
             <span class="oi oi-pencil"></span> Edit Caster
         </button>
-        <button class="btn btn-primary @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="OpenDeleteCaster">
+        <button class="btn btn-primary @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.SelectedCasterId > 0) OpenDeleteCaster(); })">
             <span class="oi oi-trash"></span> Delete Caster
         </button>
     </div>
@@ -175,7 +175,7 @@
 <Modal @ref="DeleteModal">
     <Title>Delete</Title>
     <Body>
-        <span><em>@string.Format("Are you sure you want to delete [{0}]", this.Model.CasterName)</em></span>
+        <span><em>@string.Format("Are you sure you want to delete '{0}'?", this.Model.CasterName)</em></span>
         <h6 class="text-danger">@this.Message</h6>
     </Body>
     <Footer>

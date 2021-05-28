@@ -26,9 +26,10 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             this._mediator = mediator ?? throw new ArgumentException("Cannot have a null mediator for the team controller.");
         }
 
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpGet("all", Name = "GetAllTeams")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<TeamVm>>> GetAllTeams()
+        public async Task<ActionResult<List<TeamAdminVm>>> GetAllTeams()
         {
             var teams = await this._mediator.Send(new GetTeamListQuery());
             return teams;

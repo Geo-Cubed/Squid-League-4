@@ -15,19 +15,17 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
         {
             // CreateMap<a, b>();
             CreateMap<PlayerDetailVM, PlayerDetailViewModel>().ReverseMap();
-            CreateMap<PlayerDetailVM, AdminPlayerViewModel>()
-                .ForMember(m => m.TeamId, opt => opt.MapFrom(x => x.Team.Id))
-                .ReverseMap();
-            CreateMap<PlayerDetailViewModel, UpdatePlayerCommand>().ReverseMap();
-            CreateMap<PlayerDetailViewModel, CreatePlayerCommand>().ReverseMap();
-            CreateMap<TeamDto, TeamDetailViewModel>().ReverseMap();
+            CreateMap<PlayerDetailVM, AdminPlayerViewModel>().ReverseMap();
+            CreateMap<AdminPlayerViewModel, UpdatePlayerCommand>().ReverseMap();
+            CreateMap<AdminPlayerViewModel, CreatePlayerCommand>().ReverseMap();
             CreateMap<PlayerDto, PlayerDetailViewModel>().ReverseMap();
 
             CreateMap<TeamVm, TeamDetailViewModel>().ReverseMap();
+            CreateMap<TeamAdminVm, AdminTeamViewModel>().ReverseMap();
             CreateMap<PlayerDto, TeamPlayerViewModel>().ReverseMap();
             CreateMap<CommonWeaponDto, CommonWeaponViewModel>().ReverseMap();
-            CreateMap<TeamDetailViewModel, UpdateTeamCommand>().ReverseMap();
-            CreateMap<TeamDetailViewModel, CreateTeamCommand>().ReverseMap();
+            CreateMap<AdminTeamViewModel, UpdateTeamCommand>().ReverseMap();
+            CreateMap<AdminTeamViewModel, CreateTeamCommand>().ReverseMap();
             CreateMap<TeamWithPlayersVm, TeamDetailViewModel>().ReverseMap();
 
             CreateMap<CasterVm, CasterDetailViewModel>().ReverseMap();
@@ -36,8 +34,9 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<CasterAdminVm, AdminCasterViewModel>();
 
             CreateMap<HelpfulPersonVm, HelpfulPersonDetailViewModel>().ReverseMap();
-            CreateMap<HelpfulPersonDetailViewModel, UpdateHelpfulPersonCommand>().ReverseMap();
-            CreateMap<HelpfulPersonDetailViewModel, CreateHelpfulPersonCommand>().ReverseMap();
+            CreateMap<HelpfulPersonAdminVm, AdminHelpfulPeopleViewModel>().ReverseMap();
+            CreateMap<AdminHelpfulPeopleViewModel, UpdateHelpfulPersonCommand>().ReverseMap();
+            CreateMap<AdminHelpfulPeopleViewModel, CreateHelpfulPersonCommand>().ReverseMap();
 
             CreateMap<MatchDetailVm, MatchDetailViewModel>().ReverseMap();
             CreateMap<MatchDetailViewModel, UpdateMatchCommand>().ReverseMap();

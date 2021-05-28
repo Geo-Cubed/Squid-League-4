@@ -14,8 +14,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         [Inject]
         private IPlayerDataService playerDataService { get; set; }
 
+        [Inject]
+        private ITeamDataService teamDataService { get; set; }
+
         protected IEnumerable<AdminPlayerViewModel> allPlayers { get; set; }
             = new List<AdminPlayerViewModel>();
+
+        protected IEnumerable<AdminTeamViewModel> allTeams { get; set; }
+            = new List<AdminTeamViewModel>();
 
         protected int selectedPlayerId { get; set; } = 0;
 
@@ -27,39 +33,104 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected Modal deleteModal { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected string message { get; set; }
+
+        protected override async Task OnInitializedAsync()
         {
             this.model = new AdminPlayerViewModel();
+            var teams = new List<AdminTeamViewModel>() 
+            { 
+                new AdminTeamViewModel() 
+                { 
+                    Id = -1, 
+                    TeamName = "No Team", 
+                    IsActive = false 
+                }
+            };
+
+            teams.AddRange(await this.teamDataService.GetAllTeams());
+            this.allTeams = teams;
             this.allPlayers = await this.playerDataService.GetAllPlayers();
         }
 
         protected void OpenAddPlayer() 
-        { 
+        {
+            this.message = string.Empty;
+            this.model = new AdminPlayerViewModel();
+            this.addModal.Open();
         }
 
         protected async Task AddPlayer()
         {
-
+            this.message = string.Empty;
+            var response = await this.playerDataService.CreatePlayer(this.model);
+            if (response.Success)
+            {
+                this.addModal.Close();
+                this.model = new AdminPlayerViewModel();
+                this.allPlayers = await this.playerDataService.GetAllPlayers();
+            }
+            else
+            {
+                this.message = response.ValidationErrors;
+            }
         }        
         
         protected void OpenEditPlayer() 
-        { 
+        {
+            this.message = string.Empty;
+            var playerToEdit = this.allPlayers.FirstOrDefault(x => x.Id == this.selectedPlayerId);
+            this.model = new AdminPlayerViewModel()
+            {
+                Id = playerToEdit.Id,
+                InGameName = playerToEdit.InGameName,
+                SzRank = playerToEdit.SzRank,
+                TcRank = playerToEdit.TcRank,
+                RmRank = playerToEdit.RmRank,
+                CbRank = playerToEdit.CbRank,
+                TeamId = playerToEdit.TeamId,
+                IsActive = playerToEdit.IsActive
+            };
+
+            this.editModal.Open();
         }
 
         protected async Task EditPlayer()
         {
-
+            this.message = string.Empty;
+            var response = await this.playerDataService.UpdatePlayer(this.model);
+            if (response.Success)
+            {
+                this.editModal.Close();
+                this.model = new AdminPlayerViewModel();
+                this.allPlayers = await this.playerDataService.GetAllPlayers();
+            }
+            else
+            {
+                this.message = response.ValidationErrors;
+            }
         }        
         
         protected void OpenDeletePlayer() 
-        { 
+        {
+            this.message = string.Empty;
+            this.model = new AdminPlayerViewModel() { InGameName = this.allPlayers.FirstOrDefault(c => c.Id == this.selectedPlayerId).InGameName };
+            this.deleteModal.Open();
         }
 
         protected async Task DeletePlayer()
         {
-
+            this.message = string.Empty;
+            var response = await this.playerDataService.DeletePlayer(this.selectedPlayerId);
+            if (response.Success)
+            {
+                this.deleteModal.Close();
+                this.allPlayers = await this.playerDataService.GetAllPlayers();
+            }
+            else
+            {
+                this.message = response.Message;
+            }
         }
-
-
     }
 }

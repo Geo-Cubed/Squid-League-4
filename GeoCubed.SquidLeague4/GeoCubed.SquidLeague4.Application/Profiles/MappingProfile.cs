@@ -11,6 +11,7 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.CreateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
+using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
@@ -22,6 +23,7 @@ using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesLi
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.CreateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.UpdateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
+using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList;
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using GeoCubed.SquidLeague4.Domain.Entities;
@@ -41,6 +43,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Player, UpdatePlayerCommand>().ReverseMap();
 
             CreateMap<Team, TeamVm>();
+            CreateMap<Team, TeamAdminVm>();
             CreateMap<Team, CreateTeamCommand>().ReverseMap();
             CreateMap<Team, TeamCommandDto>();
             CreateMap<Team, UpdateTeamCommand>().ReverseMap();
@@ -62,6 +65,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Weapon, CommonWeaponDto>();
 
             CreateMap<HelpfulPerson, HelpfulPersonVm>();
+            CreateMap<HelpfulPerson, HelpfulPersonAdminVm>();
             CreateMap<HelpfulPerson, CreateHelpfulPersonCommand>().ReverseMap();
             CreateMap<HelpfulPerson, HelpfulPersonDto>();
             CreateMap<HelpfulPerson, UpdateHelpfulPersonCommand>().ReverseMap();

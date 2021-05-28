@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GeoCubed.SquidLeague4.Application.Common.Helpers;
-using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using MediatR;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList
 {
-    public class GetTeamListQueryHandler : IRequestHandler<GetTeamListQuery, List<TeamVm>>
+    public class GetTeamListQueryHandler : IRequestHandler<GetTeamListQuery, List<TeamAdminVm>>
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IMapper _mapper;
@@ -23,10 +22,10 @@ namespace GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList
                 throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(teamRepository.GetType(), this.GetType()));
         }
 
-        public async Task<List<TeamVm>> Handle(GetTeamListQuery request, CancellationToken cancellationToken)
+        public async Task<List<TeamAdminVm>> Handle(GetTeamListQuery request, CancellationToken cancellationToken)
         {
             var teams = await this._teamRepository.GetAllAsync();
-            return this._mapper.Map<List<TeamVm>>(teams);
+            return this._mapper.Map<List<TeamAdminVm>>(teams);
         }
     }
 }

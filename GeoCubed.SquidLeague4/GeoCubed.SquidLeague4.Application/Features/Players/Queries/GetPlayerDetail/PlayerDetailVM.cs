@@ -14,6 +14,8 @@
 
         public string CbRank { get; set; }
 
-        public TeamDto Team { get; set; }       
+        public int? TeamId { get; set; }       
+
+        public bool IsActive { get; set; }
     }
 }

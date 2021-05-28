@@ -2,6 +2,7 @@
 using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreateTeam(TeamDetailViewModel teamDetail)
+        public async Task<ApiResponse<int>> CreateTeam(AdminTeamViewModel teamDetail)
         {
             try
             {
+                await this.AddBearerToken();
                 var createTeamCommand = this._mapper.Map<CreateTeamCommand>(teamDetail);
                 var newId = await this._client.AddTeamAsync(createTeamCommand);
                 return new ApiResponse<int>() { Data = newId.Team.Id, Success = true };
@@ -37,6 +39,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
         {
             try
             {
+                await this.AddBearerToken();
                 await this._client.DeleteTeamAsync(id);
                 return new ApiResponse<int>() { Success = true };
             }
@@ -46,10 +49,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
-        public async Task<List<TeamDetailViewModel>> GetAllTeams()
+        public async Task<List<AdminTeamViewModel>> GetAllTeams()
         {
+            await this.AddBearerToken();
             var allTeams = await this._client.GetAllTeamsAsync();
-            var mappedTeams = this._mapper.Map<ICollection<TeamDetailViewModel>>(allTeams);
+            var mappedTeams = this._mapper.Map<ICollection<AdminTeamViewModel>>(allTeams);
             return mappedTeams.ToList();
         }
 
@@ -67,10 +71,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedTeam;
         }
 
-        public async Task<ApiResponse<int>> UpdateTeam(TeamDetailViewModel teamDetail)
+        public async Task<ApiResponse<int>> UpdateTeam(AdminTeamViewModel teamDetail)
         {
             try
             {
+                await this.AddBearerToken();
                 var updateTeamCommand = this._mapper.Map<UpdateTeamCommand>(teamDetail);
                 await this._client.UpdateTeamAsync(updateTeamCommand);
                 return new ApiResponse<int> { Success = true };

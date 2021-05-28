@@ -20,10 +20,15 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreatePlayer(PlayerDetailViewModel playerDetailViewModel)
+        public async Task<ApiResponse<int>> CreatePlayer(AdminPlayerViewModel playerDetailViewModel)
         {
             try
             {
+                if (playerDetailViewModel.TeamId <= 0)
+                {
+                    playerDetailViewModel.TeamId = null;
+                }
+
                 await this.AddBearerToken();
                 var createPlayerCommand = this._mapper.Map<CreatePlayerCommand>(playerDetailViewModel);
                 var newId = await this._client.AddPlayerAsync(createPlayerCommand);
@@ -65,10 +70,15 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedPlayer;
         }
 
-        public async Task<ApiResponse<int>> UpdatePlayer(PlayerDetailViewModel playerDetailViewModel)
+        public async Task<ApiResponse<int>> UpdatePlayer(AdminPlayerViewModel playerDetailViewModel)
         {
             try
             {
+                if (playerDetailViewModel.TeamId <= 0)
+                {
+                    playerDetailViewModel.TeamId = null;
+                }
+
                 await this.AddBearerToken();
                 var updatePlayerCommand = this._mapper.Map<UpdatePlayerCommand>(playerDetailViewModel);
                 await this._client.UpdatePlayerAsync(updatePlayerCommand);

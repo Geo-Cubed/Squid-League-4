@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreateHelpfulPerson(HelpfulPersonDetailViewModel helpfulPersonDetailViewModel)
+        public async Task<ApiResponse<int>> CreateHelpfulPerson(AdminHelpfulPeopleViewModel helpfulPersonDetailViewModel)
         {
             try
             {
+                await this.AddBearerToken();
                 var createHelpfulPersonCommand = this._mapper.Map <CreateHelpfulPersonCommand>(helpfulPersonDetailViewModel);
                 var newId = await this._client.AddHelpfulPersonAsync(createHelpfulPersonCommand);
                 return new ApiResponse<int>() { Data = newId.HelpfulPerson.Id, Success = true };
@@ -54,10 +56,19 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedPeople.ToList();
         }
 
-        public async Task<ApiResponse<int>> UpdateHelpfulPerson(HelpfulPersonDetailViewModel helpfulPersonDetailViewModel)
+        public async Task<List<AdminHelpfulPeopleViewModel>> GetHelpfulPeopleForAdmin()
+        {
+            await this.AddBearerToken();
+            var allPeople = await this._client.GetHelpfulPeopleForAdminAsync();
+            var mappedPeople = this._mapper.Map<ICollection<AdminHelpfulPeopleViewModel>>(allPeople);
+            return mappedPeople.ToList();
+        }
+
+        public async Task<ApiResponse<int>> UpdateHelpfulPerson(AdminHelpfulPeopleViewModel helpfulPersonDetailViewModel)
         {
             try
             {
+                await this.AddBearerToken();
                 var updatePersonCommand = this._mapper.Map<UpdateHelpfulPersonCommand>(helpfulPersonDetailViewModel);
                 await this._client.UpdateHelpfulPersonAsync(updatePersonCommand);
                 return new ApiResponse<int> { Success = true };

@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.DeleteHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
+using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonList;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
@@ -52,6 +53,17 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpGet("personforadmin", Name = "GetHelpfulPeopleForAdmin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<List<HelpfulPersonAdminVm>>> GetHelpfulPeopleForAdmin()
+        {
+            var people = await this._mediator.Send(new GetHelpfulPersonForAdminQuery());
+            return Ok(people);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
