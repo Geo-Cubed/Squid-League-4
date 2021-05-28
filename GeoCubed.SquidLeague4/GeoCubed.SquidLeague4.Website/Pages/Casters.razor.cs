@@ -1,5 +1,6 @@
 ﻿using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;

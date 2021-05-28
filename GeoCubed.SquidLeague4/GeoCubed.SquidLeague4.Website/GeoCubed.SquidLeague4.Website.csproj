@@ -49,6 +49,7 @@
     <None Include="Pages\Statistics.razor" />
     <None Include="Pages\Teams.razor" />
     <None Include="Pages\UsefulInformation.razor" />
+    <None Include="Shared\Modal.razor" />
     <None Include="wwwroot\duckling.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

@@ -1,7 +1,7 @@
 Standard Pages
 home - DONE
 404
-teams - MATCHES AND PLAYER WEAPONS
+teams - DONE
 casters - DONE
 matches
 bracket
@@ -14,7 +14,7 @@ helpful people - DONE
 
 Admin Pages
 login
-casters
+casters - DONE Bar buttons clickavle while disabled and is active checkbox doesn't initialise to correct value
 game settings
 helpful people
 maps

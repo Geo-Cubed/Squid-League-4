@@ -21,10 +21,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreateCaster(CasterDetailViewModel casterDetailViewModel)
+        public async Task<ApiResponse<int>> CreateCaster(AdminCasterViewModel casterDetailViewModel)
         {
             try
             {
+                await this.AddBearerToken();
                 var createCasterCommand = this._mapper.Map<CreateCasterCommand>(casterDetailViewModel);
                 var newId = await this._client.AddCasterAsync(createCasterCommand);
                 return new ApiResponse<int>() { Data = newId.Caster.Id, Success = true };
@@ -39,6 +40,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
         {
             try
             {
+                await this.AddBearerToken();
                 await this._client.DeleteCasterAsync(id);
                 return new ApiResponse<int>() { Success = true };
             }
@@ -71,10 +73,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedPlayer;
         }
 
-        public async Task<ApiResponse<int>> UpdateCaster(CasterDetailViewModel casterDetailViewModel)
+        public async Task<ApiResponse<int>> UpdateCaster(AdminCasterViewModel casterDetailViewModel)
         {
             try
             {
+                await this.AddBearerToken();
                 var updateCasterCommand = this._mapper.Map<UpdateCasterCommand>(casterDetailViewModel);
                 await this._client.UpdateCasterAsync(updateCasterCommand);
                 return new ApiResponse<int> { Success = true };

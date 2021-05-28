@@ -15,6 +15,9 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
         {
             // CreateMap<a, b>();
             CreateMap<PlayerDetailVM, PlayerDetailViewModel>().ReverseMap();
+            CreateMap<PlayerDetailVM, AdminPlayerViewModel>()
+                .ForMember(m => m.TeamId, opt => opt.MapFrom(x => x.Team.Id))
+                .ReverseMap();
             CreateMap<PlayerDetailViewModel, UpdatePlayerCommand>().ReverseMap();
             CreateMap<PlayerDetailViewModel, CreatePlayerCommand>().ReverseMap();
             CreateMap<TeamDto, TeamDetailViewModel>().ReverseMap();
@@ -28,8 +31,8 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<TeamWithPlayersVm, TeamDetailViewModel>().ReverseMap();
 
             CreateMap<CasterVm, CasterDetailViewModel>().ReverseMap();
-            CreateMap<CasterDetailViewModel, UpdateCasterCommand>().ReverseMap();
-            CreateMap<CasterDetailViewModel, CreateCasterCommand>().ReverseMap();
+            CreateMap<AdminCasterViewModel, UpdateCasterCommand>().ReverseMap();
+            CreateMap<AdminCasterViewModel, CreateCasterCommand>().ReverseMap();
             CreateMap<CasterAdminVm, AdminCasterViewModel>();
 
             CreateMap<HelpfulPersonVm, HelpfulPersonDetailViewModel>().ReverseMap();

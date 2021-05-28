@@ -2,8 +2,60 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminPlayers</h3>
+<div class="text-center">
+    <h3>Player Management</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddPlayer">
+            <span class="oi oi-plus"></span> Add Caster
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedPlayerId > 0) ? string.Empty : "disabled")" @onclick="OpenEditPlayer">
+            <span class="oi oi-pencil"></span> Edit Caster
+        </button>
+        <button class="btn btn-primary @((this.selectedPlayerId > 0) ? string.Empty : "disabled")" @onclick="OpenDeletePlayer">
+            <span class="oi oi-trash"></span> Delete Caster
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of casters</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">SZ</th>
+                    <th scope="col">TC</th>
+                    <th scope="col">RM</th>
+                    <th scope="col">CB</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var player in this.allPlayers.OrderBy(p => p.InGameName))
+                {
+                    <tr class="@((this.selectedPlayerId == player.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedPlayerId = player.Id)">
+                        <td scope="row">@player.Id</td>
+                        <td>@player.InGameName</td>
+                        <td>@player.SzRank</td>
+                        <td>@player.TcRank</td>
+                        <td>@player.RmRank</td>
+                        <td>@player.CbRank</td>
+                        <td>@player.TeamId</td>
+                        <td>
+                            @if (player.IsActive)
+                            {
+                                <span class="oi oi-check"></span>
+                            }
+                            else
+                            {
+                                <span class="oi oi-x"></span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

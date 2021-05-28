@@ -40,6 +40,10 @@ a, .btn-link {
     border-radius: 25px 25px 0px 0px;
 }
 
+.highlight{
+    background-color: grey;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

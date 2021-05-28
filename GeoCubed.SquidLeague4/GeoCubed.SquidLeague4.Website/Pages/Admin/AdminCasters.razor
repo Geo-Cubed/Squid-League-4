@@ -2,8 +2,184 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminCasters</h3>
+<div class="text-center">
+    <h3>Caster Management</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddCaster">
+            <span class="oi oi-plus"></span> Add Caster
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="OpenEditCaster">
+            <span class="oi oi-pencil"></span> Edit Caster
+        </button>
+        <button class="btn btn-primary @((this.SelectedCasterId > 0) ? string.Empty : "disabled")" @onclick="OpenDeleteCaster">
+            <span class="oi oi-trash"></span> Delete Caster
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of casters</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Discord</th>
+                    <th scope="col">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var caster in this.allCasters.OrderBy(c => c.CasterName))
+                {
+                    <tr class="@((this.SelectedCasterId == caster.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.SelectedCasterId = caster.Id)">
+                        <td scope="row">@caster.Id</td>
+                        <td>@caster.CasterName</td>
+                        <td>@caster.Discord</td>
+                        <td>
+                            @if (caster.IsActive)
+                            {
+                                <span class="oi oi-check"></span>
+                            }
+                            else
+                            {
+                                <span class="oi oi-x"></span>
+                            }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="AddModal">
+    <Title>Add Caster</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.CasterName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Discord</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Discord" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Twitter</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Twitter" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Twitch</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Twitch" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">YouTube</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.YouTube" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Picture Link</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.ProfilePicturePath" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Is Active</label>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" @bind="this.Model.IsActive" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="text-danger">@this.Message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddCaster">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.AddModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="EditModal">
+    <Title>Add Caster</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Id" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.CasterName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Discord</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Discord" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Twitter</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Twitter" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Twitch</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.Twitch" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">YouTube</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.YouTube" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Picture Link</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.Model.ProfilePicturePath" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Is Active</label>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" @bind-value="this.Model.IsActive" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="text-danger">@this.Message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditCaster">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.EditModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="DeleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span><em>@string.Format("Are you sure you want to delete [{0}]", this.Model.CasterName)</em></span>
+        <h6 class="text-danger">@this.Message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteCaster">Ok</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.DeleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
