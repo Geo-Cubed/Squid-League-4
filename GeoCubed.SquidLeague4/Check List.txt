@@ -28,5 +28,5 @@ go back to login when not authorized
 fix left panel when admin options are listed
 remove un used api functions
 sort out namespaces and models for website
-go through the controllers and make sure the responses are ok (remove the resposne from delete)
+go through the controllers and make sure the responses are ok (remove the response from delete) (add might need a bad request resposne)
 remove null checks on dependenct injection things in core

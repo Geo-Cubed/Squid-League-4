@@ -1,4 +1,7 @@
-﻿using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
+﻿using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.CreateGameSetting;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.DeleteGameSetting;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +32,58 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var gameSettings = await this._mediator.Send(new GetGameSettingsForAdminQuery());
             return Ok(gameSettings);
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpPost(Name = "AddGameSetting")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<CreateGameSettingCommandResponse>> AddGameSetting([FromBody] CreateGameSettingCommand createGameSettingCommand)
+        {
+            var response = await this._mediator.Send(createGameSettingCommand);
+            if (response.Success)
+            {
+                Ok(response);
+            }
+
+            return BadRequest(response);
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpPut(Name = "UpdateGameSetting")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> UpdateGameSetting([FromBody] UpdateGameSettingCommand updateGameSettingCommand)
+        {
+            var response = await this._mediator.Send(updateGameSettingCommand);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpDelete("{id}", Name = "DeleteGameSetting")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> DeleteGameSetting(int id)
+        {
+            var request = new DeleteGameSettingCommand() { Id = id };
+            var response = await this._mediator.Send(request);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }
