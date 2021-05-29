@@ -2,8 +2,107 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminSystemSwitches</h3>
+<div class="text-center">
+    <h3>System Switches</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddSwitch">
+            <span class="oi oi-plus"></span> Add System Switch
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedSwitchId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedSwitchId > 0) OpenEditSwitch(); })">
+            <span class="oi oi-pencil"></span> Edit System Switch
+        </button>
+        <button class="btn btn-primary @((this.selectedSwitchId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedSwitchId > 0) OpenDeleteSwitch(); })">
+            <span class="oi oi-trash"></span> Delete System Switch
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of system switches</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sysSwitch in this.allSwitches.OrderBy(s => s.Name))
+                {
+                    <tr class="@((this.selectedSwitchId == sysSwitch.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedSwitchId = sysSwitch.Id)">
+                        <td scope="row">@sysSwitch.Id</td>
+                        <td>@sysSwitch.Name</td>
+                        <td>@sysSwitch.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="addModal">
+    <Title>Add</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Value</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Value" />
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddSwitch">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editModal">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Id" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Value</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Value" />
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditSwitch">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span><em>@string.Format("Are you sure you want to delete '{0}'?", this.model.Name)</em></span>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteSwitch">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>

@@ -35,6 +35,7 @@ namespace GeoCubed.SquidLeague4.Website
             builder.Services.AddScoped<ISwissDataService, SwissDataService>();
             builder.Services.AddScoped<IGameDataService, GameDataService>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<ISystemSwitchDataService, SystemSwitchDataService>();
 
             await builder.Build().RunAsync();
         }

@@ -24,6 +24,7 @@ namespace GeoCubed.SquidLeague4.Persistence
             services.AddScoped<ISwissMatchRepository, SwissMatchRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGameSettingRepository, GameSettingRepository>();
+            services.AddScoped<ISystemSwitchRepository, SystemSwitchRepository>();
 
             return services;
         }

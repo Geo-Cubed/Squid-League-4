@@ -20,6 +20,9 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.CreateSwitch;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.UpdateSwitch;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Queries.GetAllSwitchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.CreateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.UpdateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
@@ -115,6 +118,11 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(m => m.IsHomeTeam, opt => opt.MapFrom(x => x.IsHomeTeam));
             CreateMap<Game, CreateGameCommand>().ReverseMap();
             CreateMap<Game, UpdateGameCommand>().ReverseMap();
+
+            CreateMap<SystemSwitch, SystemSwitchAdminVm>();
+            CreateMap<SystemSwitch, CreateSwitchCommand>().ReverseMap();
+            CreateMap<SystemSwitch, SwitchCommandDto>();
+            CreateMap<SystemSwitch, UpdateSwitchCommand>().ReverseMap();
         }
     }
 }

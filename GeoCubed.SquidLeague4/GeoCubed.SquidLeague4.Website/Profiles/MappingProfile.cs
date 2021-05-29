@@ -54,6 +54,10 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<TeamPlayerViewModel, PlayerWeaponDto>().ReverseMap();
             CreateMap<PlayerWeaponViewModel, PlayerWeaponDto>().ReverseMap();
             CreateMap<GameSettingViewModel, GameSettingsDto>().ReverseMap();
+
+            CreateMap<AdminSwitchViewModel, SystemSwitchAdminVm>().ReverseMap();
+            CreateMap<AdminSwitchViewModel, CreateSwitchCommand>().ReverseMap();
+            CreateMap<AdminSwitchViewModel, UpdateSwitchCommand>().ReverseMap();
         }
     }
 }

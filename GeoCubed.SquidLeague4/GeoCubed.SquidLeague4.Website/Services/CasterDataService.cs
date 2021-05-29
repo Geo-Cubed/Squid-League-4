@@ -2,7 +2,6 @@
 using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
-using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using System.Collections.Generic;

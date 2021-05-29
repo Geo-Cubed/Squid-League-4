@@ -22,7 +22,7 @@ matches
 players - DONE Bar is active checkbox doesn't initialize to correct value
 results
 settings
-system switches
+system switches - DONE
 teams - DONE Bar is active checkbox doesn't initialize to correct value
 weapons
 
@@ -31,3 +31,5 @@ go back to login when not authorized
 fix left panel when admin options are listed
 remove un used api functions
 sort out namespaces and models for website
+go through the controllers and make sure the responses are ok (remove the resposne from delete)
+remove null checks on dependenct injection things in core
