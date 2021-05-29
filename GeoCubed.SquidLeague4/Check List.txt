@@ -17,14 +17,11 @@ login
 casters - DONE Bar is active checkbox doesn't initialise to correct value
 game settings
 helpful people - DONE
-maps
 matches
 players - DONE Bar is active checkbox doesn't initialize to correct value
 results
-settings
 system switches - DONE
 teams - DONE Bar is active checkbox doesn't initialize to correct value
-weapons
 
 TODO:
 go back to login when not authorized

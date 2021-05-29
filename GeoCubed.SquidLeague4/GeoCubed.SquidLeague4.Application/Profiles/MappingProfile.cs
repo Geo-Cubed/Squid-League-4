@@ -8,6 +8,7 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Commands.UpdateGame;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetAllGames;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByMatchId;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByTeamId;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.CreateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
@@ -123,6 +124,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<SystemSwitch, CreateSwitchCommand>().ReverseMap();
             CreateMap<SystemSwitch, SwitchCommandDto>();
             CreateMap<SystemSwitch, UpdateSwitchCommand>().ReverseMap();
+
+            CreateMap<GameSetting, GameSettingAdminVm>();
         }
     }
 }
