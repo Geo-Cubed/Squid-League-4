@@ -20,6 +20,7 @@ using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
+using GeoCubed.SquidLeague4.Application.Features.Modes.Queries.GetAllModes;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
@@ -134,6 +135,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<GameSetting, UpdateGameSettingCommand>().ReverseMap();
 
             CreateMap<GameMap, MapVm>();
+            CreateMap<GameMode, ModeVm>();
         }
     }
 }
