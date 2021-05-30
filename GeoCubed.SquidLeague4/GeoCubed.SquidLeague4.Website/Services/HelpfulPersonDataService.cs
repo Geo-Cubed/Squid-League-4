@@ -40,6 +40,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
         {
             try
             {
+                await this.AddBearerToken();
                 await this._client.DeleteHelpfulPersonAsync(id);
                 return new ApiResponse<int>() { Success = true };
             }

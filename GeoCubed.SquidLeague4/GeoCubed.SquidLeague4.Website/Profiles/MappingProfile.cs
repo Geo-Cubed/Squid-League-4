@@ -47,9 +47,9 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<SwissMatchDetailVm, SwissMatchDetailsViewModel>();
             CreateMap<SwissMatchDto, MatchDetailsDto>();
 
-            CreateMap<GameViewModel, GameVm>().ReverseMap();
-            CreateMap<GameViewModel, CreateGameCommand>().ReverseMap();
-            CreateMap<GameViewModel, UpdateGameCommand>().ReverseMap();
+            CreateMap<AdminGameViewModel, GameVm>().ReverseMap();
+            CreateMap<AdminGameViewModel, CreateGameCommand>().ReverseMap();
+            CreateMap<AdminGameViewModel, UpdateGameCommand>().ReverseMap();
             CreateMap<TeamMatchViewModel, TeamPlayedMatchVm>().ReverseMap();
             CreateMap<TeamPlayerViewModel, PlayerWeaponDto>().ReverseMap();
             CreateMap<PlayerWeaponViewModel, PlayerWeaponDto>().ReverseMap();
@@ -58,6 +58,13 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<AdminSwitchViewModel, SystemSwitchAdminVm>().ReverseMap();
             CreateMap<AdminSwitchViewModel, CreateSwitchCommand>().ReverseMap();
             CreateMap<AdminSwitchViewModel, UpdateSwitchCommand>().ReverseMap();
+
+            CreateMap<AdminGameSettingViewModel, GameSettingAdminVm>().ReverseMap();
+            CreateMap<AdminGameSettingViewModel, CreateGameSettingCommand>().ReverseMap();
+            CreateMap<AdminGameSettingViewModel, UpdateGameSettingCommand>().ReverseMap();
+
+            CreateMap<AdminMapViewModel, MapVm>().ReverseMap();
+            CreateMap<AdminModeViewModel, ModeVm>().ReverseMap();
         }
     }
 }

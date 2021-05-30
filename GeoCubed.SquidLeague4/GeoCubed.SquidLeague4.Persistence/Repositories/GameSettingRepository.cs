@@ -1,5 +1,6 @@
 ﻿using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,11 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
             var gameSetting = this._dbContext.GameSettings.FirstOrDefault(g => g.Id == id);
             return Task.FromResult(gameSetting != null);
+        }
+
+        public Task<IReadOnlyList<GameSetting>> GetMapLists()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

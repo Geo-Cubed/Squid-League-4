@@ -20,7 +20,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreateGame(GameViewModel gameViewModel)
+        public async Task<ApiResponse<int>> CreateGame(AdminGameViewModel gameViewModel)
         {
             try
             {
@@ -47,14 +47,14 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
-        public async Task<List<GameViewModel>> GetAllGames()
+        public async Task<List<AdminGameViewModel>> GetAllGames()
         {
             var allGames = await this._client.GetAllGamesAsync();
-            var mappedGames = this._mapper.Map<ICollection<GameViewModel>>(allGames);
+            var mappedGames = this._mapper.Map<ICollection<AdminGameViewModel>>(allGames);
             return mappedGames.ToList();
         }
 
-        public async Task<ApiResponse<int>> UpdateGame(GameViewModel gameViewModel)
+        public async Task<ApiResponse<int>> UpdateGame(AdminGameViewModel gameViewModel)
         {
             try
             {

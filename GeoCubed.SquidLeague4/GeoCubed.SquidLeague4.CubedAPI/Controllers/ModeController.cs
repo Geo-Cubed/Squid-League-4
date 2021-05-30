@@ -15,6 +15,11 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
     {
         private readonly IMediator _mediator;
 
+        public ModeController(IMediator mediator)
+        {
+            this._mediator = mediator;
+        }
+
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpGet("all", Name = "GetAllModes")]
         [ProducesResponseType(StatusCodes.Status200OK)]

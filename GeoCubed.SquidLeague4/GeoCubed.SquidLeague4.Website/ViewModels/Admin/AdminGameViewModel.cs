@@ -1,6 +1,6 @@
 ﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.Admin
 {
-    public class GameViewModel
+    public class AdminGameViewModel
     {
         public int Id { get; set; }
 

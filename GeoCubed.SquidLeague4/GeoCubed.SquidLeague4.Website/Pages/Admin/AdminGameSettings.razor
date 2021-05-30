@@ -2,8 +2,184 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminGameSettings</h3>
+<div class="text-center">
+    <h3>Map Lists</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddSetting">
+            <span class="oi oi-plus"></span> Add Game Setting
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedSettingId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedSettingId > 0) OpenEditSetting(); })">
+            <span class="oi oi-pencil"></span> Edit Game Setting
+        </button>
+        <button class="btn btn-primary @((this.selectedSettingId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedSettingId > 0) OpenDeleteSetting(); })">
+            <span class="oi oi-trash"></span> Delete Game Setting
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of game settings</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Bracket Stage</th>
+                    <th scope="col">Order</th>
+                    <th scope="col">Map</th>
+                    <th scope="col">Mode</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var setting in this.allSettings.OrderBy(s => s.BracketStage).ThenBy(g => g.SortOrder))
+                {
+                    <tr class="@((this.selectedSettingId == setting.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedSettingId = setting.Id)">
+                        <td scope="row">@setting.Id</td>
+                        <td>@setting.BracketStage</td>
+                        <td>@setting.SortOrder</td>
+                        <td>@this.allMaps.FirstOrDefault(m => m.Id == setting.GameMapId).MapName</td>
+                        <td>@this.allModes.FirstOrDefault(m => m.Id == setting.GameModeId).ModeName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="addModal">
+    <Title>Add</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Bracket Stage</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.BracketStage">
+                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "U_KNOCKOUT_STAGE" || s.Name == "L_KNOCKOUT_STAGE").Select(x => x.Value).OrderBy(x => x))
+                        {
+                            <option value="@stage">@stage</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Map</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.GameMapId">
+                        @foreach (var map in this.allMaps.OrderBy(m => m.MapName))
+                        {
+                            <option value="@map.Id">@map.MapName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Mode</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.GameModeId">
+                        @foreach (var mode in this.allModes.OrderBy(m => m.ModeName))
+                        {
+                            <option value="@mode.Id">@mode.ModeName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Sort Order</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.SortOrder">
+                        @for (int i = 1; i <= int.Parse(this.allSwitches.FirstOrDefault(s => s.Name.EndsWith(this.model.BracketStage + "_BO")).Value); ++i)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddSetting">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editModal">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Id" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Bracket Stage</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.BracketStage">
+                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "U_KNOCKOUT_STAGE" || s.Name == "L_KNOCKOUT_STAGE").Select(x => x.Value).OrderBy(x => x))
+                        {
+                            <option value="@stage">@stage</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Map</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.GameMapId">
+                        @foreach (var map in this.allMaps.OrderBy(m => m.MapName))
+                        {
+                            <option value="@map.Id">@map.MapName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Mode</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.GameModeId">
+                        @foreach (var mode in this.allModes.OrderBy(m => m.ModeName))
+                        {
+                            <option value="@mode.Id">@mode.ModeName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Sort Order</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.SortOrder">
+                        @for (int i = 1; i <= int.Parse(this.allSwitches.FirstOrDefault(s => s.Name.EndsWith(this.model.BracketStage + "_BO")).Value); ++i)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditSetting">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span>
+            <em>
+                @string.Format(
+                    "Are you sure you want to delete '{0}' on {1} {2}?",
+                    this.model.BracketStage,
+                    this.allModes.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameModeId).ModeName,
+                    this.allMaps.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameMapId).MapName
+                )
+            </em>
+        </span>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteSetting">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>

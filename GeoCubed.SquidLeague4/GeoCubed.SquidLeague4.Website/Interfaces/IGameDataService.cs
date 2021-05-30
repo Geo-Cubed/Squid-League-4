@@ -8,9 +8,9 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
 {
     public interface IGameDataService
     {
-        Task<List<GameViewModel>> GetAllGames();
-        Task<ApiResponse<int>> CreateGame(GameViewModel gameViewModel);
-        Task<ApiResponse<int>> UpdateGame(GameViewModel gameViewModel);
+        Task<List<AdminGameViewModel>> GetAllGames();
+        Task<ApiResponse<int>> CreateGame(AdminGameViewModel gameViewModel);
+        Task<ApiResponse<int>> UpdateGame(AdminGameViewModel gameViewModel);
         Task<ApiResponse<int>> DeleteGame(int id);
     }
 }
