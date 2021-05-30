@@ -11,6 +11,7 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.CreateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.CreateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
@@ -136,6 +137,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
 
             CreateMap<GameMap, MapVm>();
             CreateMap<GameMode, ModeVm>();
+
+            CreateMap<GameSetting, MapListVm>();
         }
     }
 }

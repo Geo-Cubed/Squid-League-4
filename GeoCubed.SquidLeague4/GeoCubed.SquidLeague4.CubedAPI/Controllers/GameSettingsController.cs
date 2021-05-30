@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.DeleteGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,14 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         public GameSettingsController(IMediator mediator)
         {
             this._mediator = mediator;
+        }
+
+        [HttpGet("maplist", Name = "GetMapLists")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<MapListVm>>> GetMapLists()
+        {
+            var mapLists = await this._mediator.Send(new GetMapListsQuery());
+            return Ok(mapLists);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
