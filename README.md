@@ -4,4 +4,4 @@
 # Components
 * Database (MySql)
 * Api (ASP.Net Core)
-* Website (ASP.Net Core)
+* Website (ASP.Net Core) Blazor
