@@ -32,7 +32,7 @@
             <tbody>
                 @foreach (var setting in this.allSettings.OrderBy(s => s.BracketStage).ThenBy(g => g.SortOrder))
                 {
-                    <tr class="@((this.selectedSettingId == setting.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedSettingId = setting.Id)">
+                    <tr class="@((this.selectedSettingId == setting.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedSettingId == setting.Id) { OpenEditSetting(); } else { this.selectedSettingId = setting.Id; } })">
                         <td scope="row">@setting.Id</td>
                         <td>@setting.BracketStage</td>
                         <td>@setting.SortOrder</td>
@@ -86,7 +86,7 @@
                 <label class="col-sm-2 col-form-label">Sort Order</label>
                 <div class="col-sm-10">
                     <select class="form-control" @bind="this.model.SortOrder">
-                        @for (int i = 1; i <= int.Parse(this.allSwitches.FirstOrDefault(s => s.Name.EndsWith(this.model.BracketStage + "_BO")).Value); ++i)
+                        @for (int i = 1; i <= this.GetSortOrders(); ++i)
                         {
                             <option value="@i">@i</option>
                         }
@@ -148,7 +148,7 @@
                 <label class="col-sm-2 col-form-label">Sort Order</label>
                 <div class="col-sm-10">
                     <select class="form-control" @bind="this.model.SortOrder">
-                        @for (int i = 1; i <= int.Parse(this.allSwitches.FirstOrDefault(s => s.Name.EndsWith(this.model.BracketStage + "_BO")).Value); ++i)
+                        @for (int i = 1; i <= this.GetSortOrders(); ++i)
                         {
                             <option value="@i">@i</option>
                         }
@@ -168,12 +168,7 @@
     <Body>
         <span>
             <em>
-                @string.Format(
-                    "Are you sure you want to delete '{0}' on {1} {2}?",
-                    this.model.BracketStage,
-                    this.allModes.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameModeId).ModeName,
-                    this.allMaps.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameMapId).MapName
-                )
+                @this.GetDeleteMessage()
             </em>
         </span>
         <h6 class="text-danger">@this.message</h6>

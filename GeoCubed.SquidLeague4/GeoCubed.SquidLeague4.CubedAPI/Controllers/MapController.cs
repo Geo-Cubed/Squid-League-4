@@ -30,6 +30,5 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             var maps = await this._mediator.Send(new GetAllMapsQuery());
             return Ok(maps);
         }
-
     }
 }

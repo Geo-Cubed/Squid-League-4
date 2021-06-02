@@ -37,7 +37,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected AdminGameSettingViewModel model { get; set; }
 
-        protected int selectedSettingId { get; set; }
+        protected int selectedSettingId { get; set; } = 0;
 
         protected Modal addModal { get; set; }
 
@@ -49,7 +49,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected async override Task OnInitializedAsync()
         {
-            this.selectedSettingId = 0;
+            this.model = new AdminGameSettingViewModel();
             this.allModes = await this.modeDataService.GetAllModesForAdmin();
             this.allMaps = await this.mapDataService.GetAllMapsForAdmin();
             this.allSwitches = await this.systemSwitchDataService.GetAllSwitchesForAdmin();
@@ -137,6 +137,35 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.message = response.Message;
             }
+        }
+
+        protected int GetSortOrders()
+        {
+            if (this.selectedSettingId <= 0)
+            {
+                return 0;
+            }
+
+            if(int.TryParse(this.allSwitches.FirstOrDefault(s => s.Name.EndsWith(this.model.BracketStage + "_BO")).Value, out int bestOf))
+            {
+                return bestOf;
+            }
+
+            return 0;
+        }
+
+        protected string GetDeleteMessage()
+        {
+            if (this.selectedSettingId <= 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Format(
+                "Are you sure you want to delete stage '{0}' on {1} {2}?",
+                this.model.BracketStage,
+                this.allModes.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameModeId)?.ModeName,
+                this.allMaps.FirstOrDefault(m => m.Id == this.allSettings.FirstOrDefault(s => s.Id == this.selectedSettingId).GameMapId)?.MapName);
         }
     }
 }
