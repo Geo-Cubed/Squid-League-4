@@ -32,7 +32,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             this.model = new AdminTeamViewModel();
-            this.allTeams = await this.teamDataService.GetAllTeams();
+            this.allTeams = await this.teamDataService.GetAllTeamsForAdmin();
         }
 
         protected void OpenAddTeam()
@@ -50,7 +50,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.addModal.Close();
                 this.model = new AdminTeamViewModel();
-                this.allTeams = await this.teamDataService.GetAllTeams();
+                this.allTeams = await this.teamDataService.GetAllTeamsForAdmin();
             }
             else
             {
@@ -80,7 +80,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.editModal.Close();
                 this.model = new AdminTeamViewModel();
-                this.allTeams = await this.teamDataService.GetAllTeams();
+                this.allTeams = await this.teamDataService.GetAllTeamsForAdmin();
             }
             else
             {
@@ -102,7 +102,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             if (response.Success)
             {
                 this.deleteModal.Close();
-                this.allTeams = await this.teamDataService.GetAllTeams();
+                this.allTeams = await this.teamDataService.GetAllTeamsForAdmin();
             }
             else
             {

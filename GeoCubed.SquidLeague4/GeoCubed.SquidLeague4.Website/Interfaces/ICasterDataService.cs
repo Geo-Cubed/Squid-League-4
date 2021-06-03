@@ -9,7 +9,7 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
     public interface ICasterDataService
     {
         Task<List<CasterDetailViewModel>> GetAllCasters();
-        Task<List<AdminCasterViewModel>> GetAllCastersAdmin();
+        Task<List<AdminCasterViewModel>> GetAllCastersForAdmin();
         Task<CasterDetailViewModel> GetCasterById(int id);
         Task<ApiResponse<int>> CreateCaster(AdminCasterViewModel casterDetailViewModel);
         Task<ApiResponse<int>> UpdateCaster(AdminCasterViewModel casterDetailViewModel);

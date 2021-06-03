@@ -49,7 +49,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
-        public async Task<List<AdminTeamViewModel>> GetAllTeams()
+        public async Task<List<AdminTeamViewModel>> GetAllTeamsForAdmin()
         {
             await this.AddBearerToken();
             var allTeams = await this._client.GetAllTeamsAsync();

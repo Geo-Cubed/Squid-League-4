@@ -30,7 +30,7 @@
             <tbody>
                 @foreach (var sysSwitch in this.allSwitches.OrderBy(s => s.Name))
                 {
-                    <tr class="@((this.selectedSwitchId == sysSwitch.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedSwitchId = sysSwitch.Id)">
+                    <tr class="@((this.selectedSwitchId == sysSwitch.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedSwitchId == sysSwitch.Id) { OpenEditSwitch(); } else { this.selectedSwitchId = sysSwitch.Id; } })">
                         <td scope="row">@sysSwitch.Id</td>
                         <td>@sysSwitch.Name</td>
                         <td>@sysSwitch.Value</td>

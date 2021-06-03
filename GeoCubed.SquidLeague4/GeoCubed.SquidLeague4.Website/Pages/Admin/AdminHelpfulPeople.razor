@@ -31,7 +31,7 @@
             <tbody>
                 @foreach (var person in this.allPeople.OrderBy(p => p.UserName))
                 {
-                    <tr class="@((this.selectedPersonId == person.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedPersonId = person.Id)">
+                    <tr class="@((this.selectedPersonId == person.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedPersonId == person.Id) { OpenEditPerson(); } else { this.selectedPersonId = person.Id; } })">
                         <td scope="row">@person.Id</td>
                         <td>@person.UserName</td>
                         <td>@person.TwitterLink</td>

@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<ApiResponse<int>> CreateMatch(MatchDetailViewModel matchDetailViewModel)
+        public async Task<ApiResponse<int>> CreateMatch(AdminMatchViewModel matchViewModel)
         {
             try
             {
-                var createMatchCommand = this._mapper.Map<CreateMatchCommand>(matchDetailViewModel);
+                var createMatchCommand = this._mapper.Map<CreateMatchCommand>(matchViewModel);
                 var newId = await this._client.AddMatchAsync(createMatchCommand);
                 return new ApiResponse<int>() { Data = newId.Match.Id, Success = true };
             }
@@ -75,11 +76,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedMatches.ToList();
         }
 
-        public async Task<ApiResponse<int>> UpdateMatch(MatchDetailViewModel matchDetailViewModel)
+        public async Task<ApiResponse<int>> UpdateMatch(AdminMatchViewModel matchViewModel)
         {
             try
             {
-                var updateMatchCommand = this._mapper.Map<UpdateMatchCommand>(matchDetailViewModel);
+                var updateMatchCommand = this._mapper.Map<UpdateMatchCommand>(matchViewModel);
                 await this._client.UpdateMatchAsync(updateMatchCommand);
                 return new ApiResponse<int> { Success = true };
             }

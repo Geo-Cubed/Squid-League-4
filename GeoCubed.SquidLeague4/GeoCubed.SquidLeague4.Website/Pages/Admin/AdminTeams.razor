@@ -30,7 +30,7 @@
             <tbody>
                 @foreach (var team in this.allTeams.OrderBy(p => p.TeamName))
                 {
-                    <tr class="@((this.selectedTeamId == team.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.selectedTeamId = team.Id)">
+                    <tr class="@((this.selectedTeamId == team.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedTeamId == team.Id) { OpenEditTeam(); } else { this.selectedTeamId = team.Id; } })">
                         <td scope="row">@team.Id</td>
                         <td>@team.TeamName</td>
                         <td>

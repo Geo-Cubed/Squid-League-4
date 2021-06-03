@@ -15,7 +15,7 @@ helpful people - DONE
 --Admin Pages--
 login
 casters - DONE Bar is active checkbox doesn't initialise to correct value
-game settings - DONE needs testing though
+game settings - DONE needs testing though - issues with adding modal (pre filling and combo box not filling)
 helpful people - DONE
 matches
 players - DONE Bar is active checkbox doesn't initialize to correct value

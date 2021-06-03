@@ -56,7 +56,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedCasters.ToList();
         }
 
-        public async Task<List<AdminCasterViewModel>> GetAllCastersAdmin()
+        public async Task<List<AdminCasterViewModel>> GetAllCastersForAdmin()
         {
             await this.AddBearerToken();
 

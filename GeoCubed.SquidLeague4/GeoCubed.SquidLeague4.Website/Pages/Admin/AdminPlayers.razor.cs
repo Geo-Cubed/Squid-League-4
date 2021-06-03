@@ -48,7 +48,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
                 }
             };
 
-            teams.AddRange(await this.teamDataService.GetAllTeams());
+            teams.AddRange(await this.teamDataService.GetAllTeamsForAdmin());
             this.allTeams = teams;
             this.allPlayers = await this.playerDataService.GetAllPlayers();
         }

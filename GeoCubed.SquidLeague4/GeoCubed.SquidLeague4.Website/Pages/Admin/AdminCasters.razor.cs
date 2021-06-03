@@ -31,7 +31,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected async override Task OnInitializedAsync()
         {
             this.Model = new AdminCasterViewModel();
-            this.allCasters = await this.casterDataService.GetAllCastersAdmin();
+            this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
         }
 
         protected void OpenAddCaster()
@@ -49,7 +49,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.AddModal.Close();
                 this.Model = new AdminCasterViewModel();
-                this.allCasters = await this.casterDataService.GetAllCastersAdmin();
+                this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
             }
             else
             {
@@ -84,7 +84,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.EditModal.Close();
                 this.Model = new AdminCasterViewModel();
-                this.allCasters = await this.casterDataService.GetAllCastersAdmin();
+                this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
             }
             else
             {
@@ -106,7 +106,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             if (response.Success)
             {
                 this.DeleteModal.Close();
-                this.allCasters = await this.casterDataService.GetAllCastersAdmin();
+                this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
             }
             else
             {

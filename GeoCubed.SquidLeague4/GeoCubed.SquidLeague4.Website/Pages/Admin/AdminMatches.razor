@@ -2,8 +2,94 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminMatches</h3>
+<div class="text-center">
+    <h3>Matches</h3>
 
-@code {
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddMatch">
+            <span class="oi oi-plus"></span> Add Match
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedMatchId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedMatchId > 0) OpenEditMatch(); })">
+            <span class="oi oi-pencil"></span> Edit Match
+        </button>
+        <button class="btn btn-primary @((this.selectedMatchId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedMatchId > 0) OpenDeleteMatch(); })">
+            <span class="oi oi-trash"></span> Delete Match
+        </button>
+    </div>
 
-}
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of game settings</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Home Team</th>
+                    <th scope="col">Home Team Score</th>
+                    <th scope="col">Away Team</th>
+                    <th scope="col">Away Team Score</th>
+                    <th scope="col">Caster</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var match in this.allMatches.OrderBy(m => m.MatchDate))
+                {
+                    <tr class="@((this.selectedMatchId == match.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedMatchId == match.Id) { OpenEditMatch(); } else { this.selectedMatchId = match.Id; } })">
+                        <td scope="row">@match.Id</td>
+                        <td>@this.allTeams.FirstOrDefault(t => t.Id == match.HomeTeamId)?.TeamName</td>
+                        <td>@match.HomeTeamScore</td>
+                        <td>@this.allTeams.FirstOrDefault(t => t.Id == match.AwayTeamId)?.TeamName</td>
+                        <td>@match.AwayTeamScore</td>
+                        <td>@this.allCasters.FirstOrDefault(c => c.Id == match.CasterProfileId)?.CasterName</td>
+                        <td>@match.MatchDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="addModal">
+    <Title>Add</Title>
+    <Body>
+        <form>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddMatch">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editModal">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Id" readonly />
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditMatch">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span>
+            <em>
+            </em>
+        </span>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteMatch">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>

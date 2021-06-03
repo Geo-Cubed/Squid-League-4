@@ -31,7 +31,7 @@
             <tbody>
                 @foreach (var caster in this.allCasters.OrderBy(c => c.CasterName))
                 {
-                    <tr class="@((this.SelectedCasterId == caster.Id) ? "table-secondary" : string.Empty)" @onclick="(() => this.SelectedCasterId = caster.Id)">
+                    <tr class="@((this.SelectedCasterId == caster.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.SelectedCasterId == caster.Id) { OpenEditCaster(); } else { this.SelectedCasterId = caster.Id; } })">
                         <td scope="row">@caster.Id</td>
                         <td>@caster.CasterName</td>
                         <td>@caster.Discord</td>
