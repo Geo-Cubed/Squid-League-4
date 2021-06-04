@@ -27,7 +27,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlay
         {
             var response = new UpdatePlayerCommandResponse();
 
-            request.TeamId = ((int)request.TeamId <= 0) ? null : request.TeamId;
+            request.TeamId = (request.TeamId.HasValue && request.TeamId.Value <= 0) ? null : request.TeamId;
 
             var validator = new UpdatePlayerCommandValidator(this._playerRepository, this._teamRepository);
             var validation = await validator.ValidateAsync(request);

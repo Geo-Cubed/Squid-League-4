@@ -15,7 +15,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> DoesGameExist(int id)
         {
-            var game = this._dbContext.Games.FirstOrDefault(x => x.Id == id);
+            var game = this._dbContext.Games.AsNoTracking().FirstOrDefault(x => x.Id == id);
             return Task.FromResult(game != null);
         }
 

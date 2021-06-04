@@ -83,19 +83,24 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPost(Name = "AddMatch")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CreateMatchCommandResponse>> AddMatch([FromBody] CreateMatchCommand createMatchCommand)
         {
             var response = await this._mediator.Send(createMatchCommand);
-            return Ok(response);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPut(Name = "UpdateMatch")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesDefaultResponseType]
@@ -107,7 +112,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
                 return NoContent();
             }
 
-            return NotFound(response);
+            return BadRequest(response);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

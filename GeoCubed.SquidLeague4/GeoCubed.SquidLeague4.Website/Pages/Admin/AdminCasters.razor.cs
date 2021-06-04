@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using Microsoft.AspNetCore.Components;
@@ -34,6 +35,18 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
         }
 
+        private void SetMessage(ApiResponse<int> response)
+        {
+            if (string.IsNullOrEmpty(response.ValidationErrors))
+            {
+                this.Message = response.Message;
+            }
+            else
+            {
+                this.Message = response.ValidationErrors;
+            }
+        }
+
         protected void OpenAddCaster()
         {
             this.Message = string.Empty;
@@ -53,7 +66,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.Message = response.ValidationErrors;
+                this.SetMessage(response);
             }
         }
 
@@ -88,7 +101,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.Message = response.ValidationErrors;
+                this.SetMessage(response);
             }
         }
 
@@ -110,7 +123,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.Message = response.Message;
+                this.SetMessage(response);
             }
         }
     }

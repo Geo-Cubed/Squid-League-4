@@ -16,7 +16,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> DoesMatchExist(int id)
         {
-            var match = this._dbContext.Matches.FirstOrDefault(m => m.Id == id);
+            var match = this._dbContext.Matches.AsNoTracking().FirstOrDefault(m => m.Id == id);
             return Task.FromResult(match != null);
         }
 

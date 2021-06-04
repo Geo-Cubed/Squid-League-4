@@ -1,6 +1,6 @@
 --Standard Pages--
 home - DONE
-404
+404 - DONE
 teams - DONE
 casters - DONE
 matches
@@ -14,14 +14,14 @@ helpful people - DONE
 
 --Admin Pages--
 login
-casters - DONE Bar is active checkbox doesn't initialise to correct value
+casters - DONE
 game settings - DONE needs testing though - issues with adding modal (pre filling and combo box not filling)
 helpful people - DONE
-matches
-players - DONE Bar is active checkbox doesn't initialize to correct value
+matches - DONE Maybe add bracket setting options.
+players - DONE
 results
 system switches - DONE
-teams - DONE Bar is active checkbox doesn't initialize to correct value
+teams - DONE
 
 TODO:
 go back to login when not authorized

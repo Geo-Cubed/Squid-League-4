@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
@@ -19,7 +20,11 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         {
             if (ex.StatusCode == 400)
             {
-                return new ApiResponse<int>() { Message = "Validation errors have occured.", ValidationErrors = ex.Response, Success = false };
+                var validationErrors = JObject.Parse(ex.Response)["validationErrors"].ToString()
+                    .Replace("[", string.Empty)
+                    .Replace("]", string.Empty)
+                    .Replace("\"", string.Empty);
+                return new ApiResponse<int>() { Message = "Validation errors have occured.", ValidationErrors = validationErrors, Success = false };
             }
             else if (ex.StatusCode == 404)
             {

@@ -63,7 +63,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPut(Name = "UpdateGameSetting")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult> UpdateGameSetting([FromBody] UpdateGameSettingCommand updateGameSettingCommand)
@@ -74,7 +74,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
                 return NoContent();
             }
 
-            return NotFound();
+            return BadRequest(response);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

@@ -64,18 +64,24 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPost(Name = "AddCaster")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<CreateCasterCommandResponse>> AddCaster([FromBody] CreateCasterCommand createCasterCommand)
         {
             var response = await this._mediator.Send(createCasterCommand);
-            return Ok(response);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPut(Name = "UpdateCaster")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult> UpdateCaster([FromBody] UpdateCasterCommand updateCasterCommand)
@@ -86,7 +92,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
                 return NoContent();
             }
 
-            return NotFound(response);
+            return BadRequest(response);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

@@ -1,8 +1,8 @@
 ﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,6 +49,18 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             this.allCasters = await this.casterDataService.GetAllCastersForAdmin();
         }
 
+        private void SetMessage(ApiResponse<int> response)
+        {
+            if (string.IsNullOrEmpty(response.ValidationErrors))
+            {
+                this.message = response.Message;
+            }
+            else
+            {
+                this.message = response.ValidationErrors;
+            }
+        }
+
         protected void OpenAddMatch()
         {
             this.message = string.Empty;
@@ -59,7 +71,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
                 HomeTeamScore = 0,
                 AwayTeamScore = 0,
                 CasterProfileId = -1, 
-                SecondaryCasterProfileId = -1
+                SecondaryCasterProfileId = -1,
+                Winner = "none"
             };
 
             this.addModal.Open();
@@ -77,7 +90,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.message = response.ValidationErrors;
+                this.SetMessage(response);
             }
         }
 
@@ -114,7 +127,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.message = response.ValidationErrors;
+                this.SetMessage(response);
             }
         }
 
@@ -142,7 +155,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
             else
             {
-                this.message = response.Message;
+                this.SetMessage(response);
             }
         }
 

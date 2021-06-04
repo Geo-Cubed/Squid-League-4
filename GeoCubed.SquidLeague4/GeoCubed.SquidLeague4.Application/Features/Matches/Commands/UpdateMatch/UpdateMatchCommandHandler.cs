@@ -29,6 +29,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatc
         {
             var response = new UpdateMatchCommandResponse();
 
+            request.CasterProfileId = (request.CasterProfileId <= 0) ? null : request.CasterProfileId;
+            request.SecondaryCasterProfileId = (request.SecondaryCasterProfileId <= 0) ? null : request.SecondaryCasterProfileId;
+
             var validator = new UpdateMatchCommandValidator(this._matchRepository, this._teamRepository, this._casterRepository);
             var validation = await validator.ValidateAsync(request);
             if (validation.Errors.Count() > 0)

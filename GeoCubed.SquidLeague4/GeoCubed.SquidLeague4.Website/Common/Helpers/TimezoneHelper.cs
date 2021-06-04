@@ -10,5 +10,11 @@ namespace GeoCubed.SquidLeague4.Website.Common.Helpers
             utcDate.AddHours(1);
             return utcDate;
         }
+
+        public static DateTime ConvertFromBstToUtc(this DateTime bstDate)
+        {
+            bstDate.AddHours(-1);
+            return bstDate;
+        }
     }
 }

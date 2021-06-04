@@ -6,6 +6,7 @@ using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
+using System;
 
 namespace GeoCubed.SquidLeague4.Website.Profiles
 {
@@ -39,8 +40,12 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<AdminHelpfulPeopleViewModel, CreateHelpfulPersonCommand>().ReverseMap();
 
             CreateMap<MatchDetailVm, MatchDetailViewModel>().ReverseMap();
-            CreateMap<AdminMatchViewModel, UpdateMatchCommand>().ReverseMap();
-            CreateMap<AdminMatchViewModel, CreateMatchCommand>().ReverseMap();
+            CreateMap<MatchAdminVm, AdminMatchViewModel>()
+                .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.UtcDateTime.ConvertFromUtcToBst())).ReverseMap();
+            CreateMap<AdminMatchViewModel, UpdateMatchCommand>()
+                .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.ConvertFromBstToUtc())).ReverseMap();
+            CreateMap<AdminMatchViewModel, CreateMatchCommand>()
+                .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.ConvertFromBstToUtc())).ReverseMap();
             CreateMap<UpcommingMatchDetailVm, UpcommingMatchViewModel>()
                 .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.UtcDateTime.ConvertFromUtcToBst())).ReverseMap();
 

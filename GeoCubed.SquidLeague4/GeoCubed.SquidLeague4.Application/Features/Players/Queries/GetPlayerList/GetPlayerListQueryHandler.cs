@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using GeoCubed.SquidLeague4.Application.Common.Helpers;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
-using GeoCubed.SquidLeague4.Domain.Entities;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,10 +15,8 @@ namespace GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerLi
 
         public GetPlayerListQueryHandler(IMapper mapper, IPlayerRepository playerRepository)
         {
-            this._mapper = mapper ?? 
-                throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(mapper.GetType(), this.GetType()));
-            this._playerRepository = playerRepository ?? 
-                throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(playerRepository.GetType(), this.GetType()));
+            this._mapper = mapper;
+            this._playerRepository = playerRepository;
         }
 
         public async Task<List<PlayerDetailVM>> Handle(GetPlayerListQuery request, CancellationToken cancellationToken)

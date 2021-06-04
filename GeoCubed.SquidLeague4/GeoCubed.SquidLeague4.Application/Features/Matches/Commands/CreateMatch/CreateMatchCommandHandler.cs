@@ -30,6 +30,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatc
         {
             var response = new CreateMatchCommandResponse();
 
+            request.CasterProfileId = (request.CasterProfileId <= 0) ? null : request.CasterProfileId;
+            request.SecondaryCasterProfileId = (request.SecondaryCasterProfileId <= 0) ? null : request.SecondaryCasterProfileId;
+
             var validator = new CreateMatchCommandValidator(this._teamRepository, this._casterRepository);
             var validation = await validator.ValidateAsync(request);
             if (validation.Errors.Count() > 0)

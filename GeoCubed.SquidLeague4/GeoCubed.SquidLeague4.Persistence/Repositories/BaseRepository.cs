@@ -53,7 +53,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
                 await this._dbContext.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (System.Exception ex)
             {
                 this._dbContext.Entry(entity).State = EntityState.Unchanged;
                 return false;

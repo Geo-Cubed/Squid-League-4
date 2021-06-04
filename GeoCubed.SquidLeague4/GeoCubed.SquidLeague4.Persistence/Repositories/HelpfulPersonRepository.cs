@@ -1,5 +1,6 @@
 ﻿using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> DoesHelpfulPersonExist(int id)
         {
-            var person = this._dbContext.HelpfulPeople.Any(t => t.Id == id);
+            var person = this._dbContext.HelpfulPeople.AsNoTracking().Any(t => t.Id == id);
             return Task.FromResult(person);
         }
     }

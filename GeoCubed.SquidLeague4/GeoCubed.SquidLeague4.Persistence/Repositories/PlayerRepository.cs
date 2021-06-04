@@ -15,13 +15,13 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> DoesPlayerExist(int id)
         {
-            var player = this._dbContext.Players.Any(p => p.Id == id);
+            var player = this._dbContext.Players.AsNoTracking().Any(p => p.Id == id);
             return Task.FromResult(player);
         }
 
         public Task<IReadOnlyList<Player>> GetAllPlayersWithTeams()
         {
-            var players = this._dbContext.Players.Where(p => (bool)p.IsActive).Include(p => p.Team).ToList();
+            var players = this._dbContext.Players.Include(p => p.Team).ToList();
             return Task.FromResult((IReadOnlyList<Player>)players);
         }
 

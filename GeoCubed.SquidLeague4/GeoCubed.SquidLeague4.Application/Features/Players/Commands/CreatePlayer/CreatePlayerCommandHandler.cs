@@ -26,7 +26,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlay
         {
             var createPlayerCommandResponse = new CreatePlayerCommandResponse();
 
-            request.TeamId = ((int)request.TeamId <= 0) ? null : request.TeamId;
+            request.TeamId = (request.TeamId.HasValue && request.TeamId.Value <= 0) ? null : request.TeamId;
 
             var validator = new CreatePlayerCommandValidator(this._teamRepository);
             var validation = await validator.ValidateAsync(request);

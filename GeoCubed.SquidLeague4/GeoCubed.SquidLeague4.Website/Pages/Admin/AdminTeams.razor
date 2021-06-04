@@ -64,11 +64,12 @@
                 <label class="col-sm-2 col-form-label">Is Active</label>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" @bind-value="this.model.IsActive" />
+                        <input type="checkbox" class="form-check-input" @bind="this.model.IsActive" />
                     </div>
                 </div>
             </div>
         </form>
+        <h6 class="text-danger">@this.message</h6>
     </Body>
     <Footer>
         <button type="button" class="btn btn-primary" @onclick="AddTeam">Add</button>
@@ -96,11 +97,12 @@
                 <label class="col-sm-2 col-form-label">Is Active</label>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" @bind-value="this.model.IsActive" />
+                        <input type="checkbox" class="form-check-input" @bind="this.model.IsActive" />
                     </div>
                 </div>
             </div>
         </form>
+        <h6 class="text-danger">@this.message</h6>
     </Body>
     <Footer>
         <button type="button" class="btn btn-primary" @onclick="EditTeam">Save Changes</button>

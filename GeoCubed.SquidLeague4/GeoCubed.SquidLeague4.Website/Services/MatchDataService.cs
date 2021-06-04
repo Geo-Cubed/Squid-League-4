@@ -55,9 +55,12 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedMatches.ToList();
         }
 
-        public Task<List<AdminMatchViewModel>> GetAllMatchesForAdmin()
+        public async Task<List<AdminMatchViewModel>> GetAllMatchesForAdmin()
         {
-            return Task.FromResult(new List<AdminMatchViewModel>());
+            await this.AddBearerToken();
+            var allMatches = await this._client.GetAllMatchesForAdminAsync();
+            var mappedMatches = this._mapper.Map<ICollection<AdminMatchViewModel>>(allMatches);
+            return mappedMatches.ToList();
         }
 
         public async Task<MatchDetailViewModel> GetMatchById(int id)

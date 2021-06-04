@@ -15,7 +15,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> DoesTeamExist(int id)
         {
-            var team = this._dbContext.Teams.Any(t => t.Id == id);
+            var team = this._dbContext.Teams.AsNoTracking().Any(t => t.Id == id);
             return Task.FromResult(team);
         }
 
