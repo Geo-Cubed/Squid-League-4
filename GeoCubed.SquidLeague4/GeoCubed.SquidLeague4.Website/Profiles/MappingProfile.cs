@@ -39,8 +39,8 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<AdminHelpfulPeopleViewModel, CreateHelpfulPersonCommand>().ReverseMap();
 
             CreateMap<MatchDetailVm, MatchDetailViewModel>().ReverseMap();
-            CreateMap<MatchDetailViewModel, UpdateMatchCommand>().ReverseMap();
-            CreateMap<MatchDetailViewModel, CreateMatchCommand>().ReverseMap();
+            CreateMap<AdminMatchViewModel, UpdateMatchCommand>().ReverseMap();
+            CreateMap<AdminMatchViewModel, CreateMatchCommand>().ReverseMap();
             CreateMap<UpcommingMatchDetailVm, UpcommingMatchViewModel>()
                 .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.UtcDateTime.ConvertFromUtcToBst())).ReverseMap();
 

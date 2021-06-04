@@ -1,4 +1,6 @@
-﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+﻿using GeoCubed.SquidLeague4.Website.Common.Helpers;
+using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.Models.Enums;
 using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using Microsoft.AspNetCore.Components;
@@ -38,25 +40,22 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             this.model = new AdminPlayerViewModel();
-            var teams = new List<AdminTeamViewModel>() 
-            { 
-                new AdminTeamViewModel() 
-                { 
-                    Id = -1, 
-                    TeamName = "No Team", 
-                    IsActive = false 
-                }
-            };
-
-            teams.AddRange(await this.teamDataService.GetAllTeamsForAdmin());
-            this.allTeams = teams;
+            this.allTeams = await this.teamDataService.GetAllTeamsForAdmin();
             this.allPlayers = await this.playerDataService.GetAllPlayers();
         }
 
         protected void OpenAddPlayer() 
         {
             this.message = string.Empty;
-            this.model = new AdminPlayerViewModel();
+            this.model = new AdminPlayerViewModel() 
+            {
+                SzRank = Ranks.unknown.GetDescription(),
+                TcRank = Ranks.unknown.GetDescription(),
+                RmRank = Ranks.unknown.GetDescription(),
+                CbRank = Ranks.unknown.GetDescription(),
+                TeamId = -1 
+            };
+
             this.addModal.Open();
         }
 
@@ -88,7 +87,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
                 TcRank = playerToEdit.TcRank,
                 RmRank = playerToEdit.RmRank,
                 CbRank = playerToEdit.CbRank,
-                TeamId = playerToEdit.TeamId,
+                TeamId = playerToEdit.TeamId ?? -1,
                 IsActive = playerToEdit.IsActive
             };
 
@@ -114,7 +113,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected void OpenDeletePlayer() 
         {
             this.message = string.Empty;
-            this.model = new AdminPlayerViewModel() { InGameName = this.allPlayers.FirstOrDefault(c => c.Id == this.selectedPlayerId).InGameName };
+            this.model = new AdminPlayerViewModel() 
+            { 
+                InGameName = this.allPlayers.FirstOrDefault(c => c.Id == this.selectedPlayerId).InGameName 
+            };
+
             this.deleteModal.Open();
         }
 

@@ -1,6 +1,7 @@
 ﻿using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.DeleteMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetAllMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchById;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
@@ -68,6 +69,16 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return Ok(matches);
         }
 
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpGet("alladmin", Name = "GetAllMatchesForAdmin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<List<MatchAdminVm>>> GetMatchesForAdmin()
+        {
+            var matches = await this._mediator.Send(new GetAllMatchesForAdminQuery());
+            return Ok(matches);
+        }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpPost(Name = "AddMatch")]

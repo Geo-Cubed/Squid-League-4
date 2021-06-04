@@ -18,6 +18,7 @@ using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfu
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Maps.Queries.GetAllMaps;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetAllMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
@@ -97,7 +98,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(m => m.AwayTeam, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
             CreateMap<Match, CreateMatchCommand>().ReverseMap();
             CreateMap<Match, MatchCommandDto>();
-
+            CreateMap<Match, MatchAdminVm>();
             CreateMap<BracketSwiss, SwissMatchDetailVm>();
             CreateMap<Match, SwissMatchDto>()
                 .ForMember(m => m.HomeTeam, opt => opt.MapFrom(x => x.HomeTeam.TeamName))

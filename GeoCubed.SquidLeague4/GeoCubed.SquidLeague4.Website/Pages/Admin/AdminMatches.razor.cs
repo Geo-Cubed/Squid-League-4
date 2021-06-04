@@ -52,7 +52,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected void OpenAddMatch()
         {
             this.message = string.Empty;
-            this.model = new AdminMatchViewModel();
+            this.model = new AdminMatchViewModel()
+            {
+                HomeTeamId = (this.allTeams.Count() > 0) ? this.allTeams.OrderBy(t => t.TeamName).First().Id : -1, 
+                AwayTeamId = (this.allTeams.Count() > 1) ? this.allTeams.OrderBy(t => t.TeamName).ElementAt(1).Id : -1,
+                HomeTeamScore = 0,
+                AwayTeamScore = 0,
+                CasterProfileId = -1, 
+                SecondaryCasterProfileId = -1
+            };
+
             this.addModal.Open();
         }
 
@@ -82,12 +91,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
                 HomeTeamId = matchToEdit.HomeTeamId,
                 AwayTeamId = matchToEdit.AwayTeamId,
                 Winner = matchToEdit.Winner,
-                HomeTeamScore = matchToEdit.HomeTeamScore,
-                AwayTeamScore = matchToEdit.AwayTeamScore,
-                CasterProfileId = matchToEdit.CasterProfileId,
+                HomeTeamScore = (matchToEdit.HomeTeamScore < 0) ? 0 : matchToEdit.HomeTeamScore,
+                AwayTeamScore = (matchToEdit.AwayTeamScore < 0) ? 0 : matchToEdit.AwayTeamScore,
+                CasterProfileId = matchToEdit.CasterProfileId ?? -1,
                 MatchVodLink = matchToEdit.MatchVodLink,
                 MatchDate = matchToEdit.MatchDate,
-                SecondaryCasterProfileId = matchToEdit.SecondaryCasterProfileId
+                SecondaryCasterProfileId = matchToEdit.SecondaryCasterProfileId ?? -1
             };
 
             this.editModal.Open();
@@ -135,6 +144,27 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 this.message = response.Message;
             }
+        }
+
+        protected string DeleteMessage()
+        {
+            if (this.selectedMatchId <= 0)
+            {
+                return string.Empty;
+            }
+
+            var match = this.allMatches.FirstOrDefault(m => m.Id == this.selectedMatchId);
+            if (match == null)
+            {
+                return "Are you sure you want to delete match";
+            }
+
+            return string.Format(
+                "Are you sure you want to delete match {0}: {1} vs. {2}",
+                this.selectedMatchId,
+                this.allTeams.FirstOrDefault(t => t.Id == match.HomeTeamId)?.TeamName,
+                this.allTeams.FirstOrDefault(t => t.Id == match.AwayTeamId)?.TeamName
+            );
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using GeoCubed.SquidLeague4.Application.Common.Helpers;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -19,17 +17,16 @@ namespace GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlay
 
         public CreatePlayerCommandHandler(IMapper mapper, IAsyncRepository<Player> playerRepository, ITeamRepository teamRepository)
         {
-            this._mapper = mapper ?? 
-                throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(mapper.GetType(), this.GetType()));
-            this._playerRepository = playerRepository ?? 
-                throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(playerRepository.GetType(), this.GetType()));
-            this._teamRepository = teamRepository ?? 
-                throw new ArgumentException(ErrorMessageHeleper.GetNullArguementMessage(teamRepository.GetType(), this.GetType()));
+            this._mapper = mapper;
+            this._playerRepository = playerRepository;
+            this._teamRepository = teamRepository;
         }
 
         public async Task<CreatePlayerCommandResponse> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
         {
             var createPlayerCommandResponse = new CreatePlayerCommandResponse();
+
+            request.TeamId = ((int)request.TeamId <= 0) ? null : request.TeamId;
 
             var validator = new CreatePlayerCommandValidator(this._teamRepository);
             var validation = await validator.ValidateAsync(request);
