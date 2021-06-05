@@ -1,0 +1,120 @@
+﻿@page "/admin/root"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+
+<div class="text-center">
+    <h3>Admin Options</h3>
+
+    <div class="d-flex flex-wrap justify-content-center">
+
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/players")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Players</h5>
+                <div class="nav-item px-3">
+                    <span class="oi oi-person"></span>
+                </div>
+                <p>Create, Edit and Delete Players</p>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/teams")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Teams</h5>
+                <div class="px-3">
+                    <span class="oi oi-people"></span>
+                </div>
+                <p>Create, Edit and Delete Teams</p>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/results")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Results</h5>
+                <div class="px-3">
+                    <span class="oi oi-clipboard"></span>
+                </div>
+                <p>Enter match results</p>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/matches")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Matches</h5>
+                <div class="px-3">
+                    <span class="oi oi-calendar"></span>
+                </div>
+                <p>Create, Edit and Delete Matches</p>
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/bracket")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Bracket</h5>
+                <div class="px-3">
+                    <span class="oi oi-fork"></span>
+                </div>
+                <p>Assign Matches to a Bracket</p>
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/gamesettings")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Map Lists</h5>
+                <div class="px-3">
+                    <span class="oi oi-cog"></span>
+                </div>
+                <p>Create and Edit map lists for each bracket stage</p>
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/casters")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Casters</h5>
+                <div class="px-3">
+                    <span class="oi oi-microphone"></span>
+                </div>
+                <p>Create, Edit and Delete Casters</p>
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/helpfulpeople")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Helpful People</h5>
+                <div class="px-3">
+                    <span class="oi oi-heart"></span>
+                </div>
+                <p>Create, Edit and Delete Helpful People</p>
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/systemswitches")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">System Switches</h5>
+                <div class="px-3">
+                    <span class="oi oi-wrench"></span>
+                </div>
+                <p>Edit the underlying System Switches</p>
+                <p class="text-danger">This Requires the Admin Role</p>
+            </div>
+        </div>
+        
+        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/userdashboard")'>
+            <div class="card-body">
+                <h5 class="card-title text-center">User Dashboard</h5>
+                <div class="px-3">
+                    <span class="oi oi-dashboard"></span>
+                </div>
+                <p>Manage Users</p>
+                <p class="text-danger">This Requires the Admin Role</p>
+            </div>
+        </div>
+    </div>
+</div>

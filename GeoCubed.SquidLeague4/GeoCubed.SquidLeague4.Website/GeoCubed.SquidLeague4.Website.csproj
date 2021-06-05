@@ -36,6 +36,7 @@
     <None Include="Pages\Admin\AdminMatches.razor" />
     <None Include="Pages\Admin\AdminMatchResults.razor" />
     <None Include="Pages\Admin\AdminPlayers.razor" />
+    <None Include="Pages\Admin\AdminRoot.razor" />
     <None Include="Pages\Admin\AdminSystemSwitches.razor" />
     <None Include="Pages\Admin\AdminTeams.razor" />
     <None Include="Pages\Bracket.razor" />
