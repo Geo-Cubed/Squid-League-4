@@ -29,6 +29,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
                 if (!string.IsNullOrEmpty(authenticateResponse.Token))
                 {
                     await this._localStorage.SetItemAsync("token", authenticateResponse.Token);
+                    await this._localStorage.SetItemAsync("user", authenticateResponse.UserName);
                     ((CustomAuthenticationStateProvider)this._authenticationStateProvider).SetUserAuthenticated(username);
                     this._client.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticateResponse.Token);
                     return true;
@@ -42,8 +43,16 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
+        public async Task Logout()
+        {
+            await this._localStorage.RemoveItemAsync("token");
+            ((CustomAuthenticationStateProvider)this._authenticationStateProvider).SetUserLoggedOut();
+            this._client.HttpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
         public async Task<bool> Register(string username, string password)
         {
+            await this.AddBearerToken();
             RegistrationRequest registrationRequest = new RegistrationRequest() { UserName = username, Password = password };
             var response = await _client.RegisterAsync(registrationRequest);
 
@@ -53,6 +62,20 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
 
             return false;
+        }
+
+        public async Task<bool> ValidateAuthenticated()
+        {
+            await this.AddBearerToken();
+            try
+            {
+                var response = await this._client.CheckValidTokenAsync();
+                return response;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

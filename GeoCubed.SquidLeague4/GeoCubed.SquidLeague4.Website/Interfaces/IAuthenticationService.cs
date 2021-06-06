@@ -8,5 +8,9 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
 
         Task<bool> Register(string username, string password);
 
+        Task<bool> ValidateAuthenticated();
+
+        Task Logout();
+
     }
 }

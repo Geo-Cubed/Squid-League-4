@@ -22,11 +22,11 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
 
         [Authorize]
         [HttpGet("checkvalid", Name = "CheckValidToken")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult CheckValidToken()
+        public ActionResult<bool> CheckValidToken()
         {
-            return NoContent();
+            return Ok(true);
         }
 
         [Authorize(Roles = Roles.Admin)]
