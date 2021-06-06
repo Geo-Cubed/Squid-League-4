@@ -143,7 +143,7 @@ namespace GeoCubed.SquidLeague4.Identity.Services
                 UserName = request.UserName
             };
 
-            var result = await this._userManager.CreateAsync(user);
+            var result = await this._userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
                 return new RegistrationResponse() { UserId = user.Id };

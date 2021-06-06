@@ -20,6 +20,7 @@ using GeoCubed.SquidLeague4.Application.Features.Maps.Queries.GetAllMaps;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetAllMatchesForAdmin;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetBasicMatchInfo;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
@@ -27,6 +28,7 @@ using GeoCubed.SquidLeague4.Application.Features.Modes.Queries.GetAllModes;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
+using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.CreateSwitch;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.UpdateSwitch;
@@ -97,14 +99,19 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Match, MatchDetailVm>()
                 .ForMember(m => m.HomeTeam, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
                 .ForMember(m => m.AwayTeam, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
+            CreateMap<Match, BasicMatchInfoVm>()
+                .ForMember(m => m.HomeTeam, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
+                .ForMember(m => m.AwayTeam, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
             CreateMap<Match, CreateMatchCommand>().ReverseMap();
             CreateMap<Match, UpdateMatchCommand>().ReverseMap();
             CreateMap<Match, MatchCommandDto>();
             CreateMap<Match, MatchAdminVm>();
-            CreateMap<BracketSwiss, SwissMatchDetailVm>();
             CreateMap<Match, SwissMatchDto>()
                 .ForMember(m => m.HomeTeam, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
                 .ForMember(m => m.AwayTeam, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
+            
+            CreateMap<BracketSwiss, SwissMatchDetailVm>();
+            CreateMap<BracketSwiss, BracketSwissAdminVm>();
 
             CreateMap<Game, GameVm>();
             CreateMap<Game, MatchGameVm>()

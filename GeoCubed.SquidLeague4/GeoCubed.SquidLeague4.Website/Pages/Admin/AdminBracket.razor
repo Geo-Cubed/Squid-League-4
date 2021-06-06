@@ -1,0 +1,32 @@
+﻿@page "/admin/brackets"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+@using GeoCubed.SquidLeague4.Website.Models.Enums;
+@using GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets;
+
+<div class="text-center">
+    <h3>Brackets</h3>
+
+    <select class="form-control mb-3" @onchange="OnBracketSelect">
+        <option value="@((int)BracketFormats.Swiss)">Swiss Stage</option>
+        <option value="@((int)BracketFormats.Upper)">Upper Bracket</option>
+        <option value="@((int)BracketFormats.Lower)">Lower Bracket</option>
+    </select>
+
+    <!-- Switches in the correct selected bracket -->
+    @switch (this.selectedFormat)
+    {
+        case BracketFormats.Swiss:
+            <AdminSwissBracket></AdminSwissBracket>
+            break;
+        case BracketFormats.Lower:
+            <AdminLowerBracket></AdminLowerBracket>
+            break;
+        case BracketFormats.Upper:
+            <AdminUpperBracket></AdminUpperBracket>
+            break;
+        default:
+            <h3>Something went wrong :(</h3>
+            break;
+    }
+</div>
