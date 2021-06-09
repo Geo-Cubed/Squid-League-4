@@ -13,6 +13,12 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
         }
 
+        public Task<bool> DoesSwissMatchExist(int id)
+        {
+            var match = this._dbContext.BracketSwisses.FirstOrDefault(x => x.Id == id);
+            return Task.FromResult(match != null);
+        }
+
         public Task<IReadOnlyList<BracketSwiss>> GetAllSwissMatchesWithMatches()
         {
             var swissMatches = this._dbContext.BracketSwisses

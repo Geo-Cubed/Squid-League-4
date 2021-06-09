@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
+using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System;
@@ -48,9 +49,12 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
                 .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.ConvertFromBstToUtc())).ReverseMap();
             CreateMap<UpcommingMatchDetailVm, UpcommingMatchViewModel>()
                 .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.UtcDateTime.ConvertFromUtcToBst())).ReverseMap();
+            CreateMap<BasicMatchInfoVm, BasicMatchInfo>().ReverseMap();
 
             CreateMap<SwissMatchDetailVm, SwissMatchDetailsViewModel>();
             CreateMap<SwissMatchDto, MatchDetailsDto>();
+            CreateMap<BracketSwissAdminVm, AdminBracketSwissViewModel>().ReverseMap();
+            CreateMap<CreateSwissMatchCommand, AdminBracketSwissViewModel>().ReverseMap();
 
             CreateMap<AdminGameViewModel, GameVm>().ReverseMap();
             CreateMap<AdminGameViewModel, CreateGameCommand>().ReverseMap();

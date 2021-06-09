@@ -28,6 +28,7 @@ using GeoCubed.SquidLeague4.Application.Features.Modes.Queries.GetAllModes;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
+using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.CreateSwitch;
@@ -112,6 +113,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             
             CreateMap<BracketSwiss, SwissMatchDetailVm>();
             CreateMap<BracketSwiss, BracketSwissAdminVm>();
+            CreateMap<CreateSwissMatchCommand, BracketSwiss>();
+            CreateMap<BracketSwiss, SwissCommandDto>();
 
             CreateMap<Game, GameVm>();
             CreateMap<Game, MatchGameVm>()

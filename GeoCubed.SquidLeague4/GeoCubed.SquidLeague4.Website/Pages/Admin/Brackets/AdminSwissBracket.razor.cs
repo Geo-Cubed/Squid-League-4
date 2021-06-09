@@ -2,8 +2,8 @@
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +13,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
     public partial class AdminSwissBracket
     {
         [Inject]
+        private ISwissDataService swissDataService { get; set; }
+
+        protected IEnumerable<AdminBracketSwissViewModel> allBracketSwiss { get; set; }
+            = new List<AdminBracketSwissViewModel>();
+
+        [Inject]
         private ISystemSwitchDataService switchDataService { get; set; }
 
         protected IEnumerable<AdminSwitchViewModel> allSwitches { get; set; }
@@ -21,11 +27,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         [Inject]
         private IMatchDataService matchDataService { get; set; }
 
-        protected IEnumerable<AdminMatchViewModel> allMatches { get; set; }
-            = new List<AdminMatchViewModel>();
-
-        protected IEnumerable<AdminBracketSwissViewModel> allBracketSwiss { get; set; }
-            = new List<AdminBracketSwissViewModel>();
+        protected IEnumerable<BasicMatchInfo> allMatches { get; set; }
+            = new List<BasicMatchInfo>();
 
         protected int selectedSwissId { get; set; }
 
@@ -33,16 +36,15 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
 
         protected Modal addModal { get; set; }
 
-        protected Modal editModal { get; set; }
-
         protected Modal deleteModal { get; set; }
 
         protected string message { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            this.allMatches = await this.matchDataService.GetAllMatchesForAdmin();
+            this.allMatches = await this.matchDataService.GetBasicMatchInfo();
             this.allSwitches = await this.switchDataService.GetAllSwitchesForAdmin();
+            this.allBracketSwiss = await this.swissDataService.GetSwissMatchesForAdmin();
         }
 
         protected string GetMatchVsText(int swissId)
@@ -53,7 +55,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
                 return string.Empty;
             }
 
-            return string.Format("{0} vs {1}", "a", "b");
+            return string.Format("{0} vs {1}", match.HomeTeam, match.AwayTeam);
         }
 
         protected string GetDeleteText()
@@ -87,42 +89,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected async Task AddSwiss()
         {
             this.message = string.Empty;
-            //var response = await this.matchDataService.CreateMatch(this.model);
-            if (/*response.Success*/false)
+            var response = await this.swissDataService.CreateSwissMatch(this.model);
+            if (response.Success)
             {
                 this.addModal.Close();
                 this.model = new AdminBracketSwissViewModel();
-                //this.allBracketSwiss = await this.matchDataService.GetAllMatchesForAdmin();
-            }
-            else
-            {
-                this.SetMessage(null);
-            }
-        }
-
-        protected void OpenEditSwiss()
-        {
-            this.message = string.Empty;
-            var swissToEdit = this.allBracketSwiss.FirstOrDefault(x => x.Id == this.selectedSwissId);
-            this.model = new AdminBracketSwissViewModel()
-            {
-                Id = swissToEdit.Id,
-                MatchId = swissToEdit.MatchId,
-                MatchWeek = swissToEdit.MatchWeek
-            };
-
-            this.editModal.Open();
-        }
-
-        protected async Task EditSwiss()
-        {
-            this.message = string.Empty;
-            //var response = await this.matchDataService.UpdateMatch(this.model);
-            if (/*response.Success*/false)
-            {
-                this.editModal.Close();
-                this.model = new AdminBracketSwissViewModel();
-                //this.allBracketSwiss = await this.matchDataService.GetAllMatchesForAdmin();
+                this.allBracketSwiss = await this.swissDataService.GetSwissMatchesForAdmin();
             }
             else
             {
@@ -146,11 +118,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected async Task DeleteSwiss()
         {
             this.message = string.Empty;
-            //var response = await this.matchDataService.DeleteMatch(this.selectedSwissId);
-            if (/*response.Success*/false)
+            var response = await this.swissDataService.DeleteSwissMatch(this.selectedSwissId);
+            if (response.Success)
             {
                 this.deleteModal.Close();
-                //this.allBracketSwiss = await this.matchDataService.GetAllMatchesForAdmin();
+                this.allBracketSwiss = await this.swissDataService.GetSwissMatchesForAdmin();
             }
             else
             {

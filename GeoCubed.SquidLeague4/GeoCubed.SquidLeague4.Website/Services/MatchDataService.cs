@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,14 @@ namespace GeoCubed.SquidLeague4.Website.Services
             await this.AddBearerToken();
             var allMatches = await this._client.GetAllMatchesForAdminAsync();
             var mappedMatches = this._mapper.Map<ICollection<AdminMatchViewModel>>(allMatches);
+            return mappedMatches.ToList();
+        }
+
+        public async Task<List<BasicMatchInfo>> GetBasicMatchInfo()
+        {
+            await this.AddBearerToken();
+            var matches = await this._client.GetBasicMatchInfoAsync();
+            var mappedMatches = this._mapper.Map<ICollection<BasicMatchInfo>>(matches);
             return mappedMatches.ToList();
         }
 
