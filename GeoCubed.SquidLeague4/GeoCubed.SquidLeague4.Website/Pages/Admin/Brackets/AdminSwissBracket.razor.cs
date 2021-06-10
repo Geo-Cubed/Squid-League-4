@@ -21,8 +21,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         [Inject]
         private ISystemSwitchDataService switchDataService { get; set; }
 
-        protected IEnumerable<AdminSwitchViewModel> allSwitches { get; set; }
-            = new List<AdminSwitchViewModel>();
+        protected IEnumerable<int> swissWeeks { get; set; }
+            = new List<int>();
 
         [Inject]
         private IMatchDataService matchDataService { get; set; }
@@ -30,7 +30,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected IEnumerable<BasicMatchInfo> allMatches { get; set; }
             = new List<BasicMatchInfo>();
 
-        protected int selectedSwissId { get; set; }
+        protected int selectedSwissId { get; set; } = 0;
 
         protected AdminBracketSwissViewModel model { get; set; }
 
@@ -42,14 +42,15 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
 
         protected override async Task OnInitializedAsync()
         {
+            this.model = new AdminBracketSwissViewModel();
             this.allMatches = await this.matchDataService.GetBasicMatchInfo();
-            this.allSwitches = await this.switchDataService.GetAllSwitchesForAdmin();
+            this.swissWeeks = await this.switchDataService.GetSwissWeeks();
             this.allBracketSwiss = await this.swissDataService.GetSwissMatchesForAdmin();
         }
 
-        protected string GetMatchVsText(int swissId)
+        protected string GetMatchVsText(int matchId)
         {
-            var match = this.allMatches.FirstOrDefault(m => m.Id == this.allBracketSwiss.FirstOrDefault(s => s.Id == swissId).MatchId);
+            var match = this.allMatches.FirstOrDefault(m => m.Id == matchId);
             if (match == null)
             {
                 return string.Empty;
@@ -60,7 +61,22 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
 
         protected string GetDeleteText()
         {
-            return string.Empty;
+            if (this.selectedSwissId <= 0)
+            {
+                return string.Empty;
+            }
+
+            var swiss = this.allBracketSwiss.FirstOrDefault(s => s.Id == this.selectedSwissId);
+            if (swiss == null)
+            {
+                return string.Empty;
+            }
+
+            var vsText = this.GetMatchVsText(this.model.MatchId);
+            return string.Format(
+                "Are you sure you want to delete {0} on week {1}", 
+                vsText, 
+                swiss.MatchWeek);
         }
 
         private void SetMessage(ApiResponse<int> response)
@@ -98,7 +114,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
             }
             else
             {
-                this.SetMessage(null);
+                this.SetMessage(response);
             }
         }
 
@@ -126,7 +142,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
             }
             else
             {
-                this.SetMessage(null);
+                this.SetMessage(response);
             }
         }
     }

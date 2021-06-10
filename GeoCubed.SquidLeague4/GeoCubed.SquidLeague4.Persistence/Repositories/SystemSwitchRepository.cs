@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using GeoCubed.SquidLeague4.Persistence.Common;
 
 namespace GeoCubed.SquidLeague4.Persistence.Repositories
 {
@@ -19,10 +20,28 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(switches.Any());
         }
 
+        public Task<IReadOnlyList<string>> GetLowerStages()
+        {
+            return Task.FromResult(this.GetSwitchValues(SystemSwitchHelper.LowerStage));
+        }
+
         public Task<IReadOnlyList<int>> GetSwissWeeks()
         {
-            var settings = this._dbContext.SystemSwitches.Where(x => x.Name == "SWISS_STAGE").Select(x => int.Parse(x.Value));
-            return Task.FromResult((IReadOnlyList<int>)settings.ToList());
+            var weeks = this.GetSwitchValues(SystemSwitchHelper.SwissWeek);
+            return Task.FromResult((IReadOnlyList<int>)weeks.Select(x => int.Parse(x)).ToList());
+        }
+
+        public Task<IReadOnlyList<string>> GetUpperStages()
+        {
+            return Task.FromResult(this.GetSwitchValues(SystemSwitchHelper.UpperStage));
+        }
+
+        private IReadOnlyList<string> GetSwitchValues(string name)
+        {
+            var stages = this._dbContext.SystemSwitches
+                .Where(s => s.Name == name)
+                .Select(x => x.Value);
+            return stages.ToList();
         }
     }
 }

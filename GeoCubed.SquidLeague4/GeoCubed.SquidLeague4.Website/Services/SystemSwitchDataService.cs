@@ -57,6 +57,12 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedSwitches.ToList();
         }
 
+        public async Task<List<int>> GetSwissWeeks()
+        {
+            var swissWeeks = await this._client.GetSwissWeeksAsync();
+            return swissWeeks.ToList();
+        }
+
         public async Task<ApiResponse<int>> UpdateSwitch(AdminSwitchViewModel adminSwitchViewModel)
         {
             try

@@ -1,7 +1,10 @@
 ﻿using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.CreateSwitch;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.DeleteSwitch;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Commands.UpdateSwitch;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Queries.GetAllLowerStages;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Queries.GetAllSwissWeeks;
 using GeoCubed.SquidLeague4.Application.Features.Switches.Queries.GetAllSwitchesForAdmin;
+using GeoCubed.SquidLeague4.Application.Features.Switches.Queries.GetAllUpperStages;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +34,30 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         public async Task<ActionResult<List<SystemSwitchAdminVm>>> GetAllSystemSwitchesForAdmin()
         {
             var switches = await this._mediator.Send(new GetAllSwitchesForAdminQuery());
+            return Ok(switches);
+        }
+
+        [HttpGet("swissweeks", Name = "GetSwissWeeks")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<int>>> GetAllSwissWeeks()
+        {
+            var switches = await this._mediator.Send(new GetAllSwissWeeksQuery());
+            return Ok(switches);
+        }
+
+        [HttpGet("upperstages", Name = "GetUpperStages")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<string>>> GetUpperStages()
+        {
+            var switches = await this._mediator.Send(new GetAllUpperStagesQuery());
+            return Ok(switches);
+        }
+
+        [HttpGet("lowerstages", Name = "GetLowerStages")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<string>>> GetLowerStages()
+        {
+            var switches = await this._mediator.Send(new GetAllLowerStagesQuery());
             return Ok(switches);
         }
 

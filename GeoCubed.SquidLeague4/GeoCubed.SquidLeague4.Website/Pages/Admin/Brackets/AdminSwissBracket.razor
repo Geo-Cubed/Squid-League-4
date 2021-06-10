@@ -5,7 +5,7 @@
     <h3>Swiss Bracket</h3>
 
     <div class="d-flex justify-content-end m-2">
-        <button type="button" class="btn btn-primary" @onclick="OpenAddSwiss">
+        <button type="button" class="btn btn-primary mr-2" @onclick="OpenAddSwiss">
             <span class="oi oi-plus"></span> Add Swiss Match
         </button>
         <button class="btn btn-primary @((this.selectedSwissId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedSwissId > 0) OpenDeleteSwiss(); })">
@@ -28,7 +28,7 @@
                 {
                     <tr class="@((this.selectedSwissId == swiss.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { this.selectedSwissId = swiss.Id; })">
                         <td scope="row">@swiss.Id</td>
-                        <td>@this.GetMatchVsText(swiss.Id)</td>
+                        <td>@this.GetMatchVsText(swiss.MatchId)</td>
                         <td>@swiss.MatchWeek</td>
                     </tr>
                 }
@@ -43,11 +43,25 @@
         <form>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Match</label>
-                
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.MatchId">
+                        @foreach (var match in this.allMatches)
+                        {
+                            <option value="@match.Id">@this.GetMatchVsText(match.Id)</option>
+                        }
+                    </select>
+                </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Match Week</label>
-
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.model.MatchWeek">
+                        @foreach (var week in this.swissWeeks)
+                        {
+                            <option value="@week">@week</option>
+                        }
+                    </select>
+                </div>
             </div>
         </form>
         <h6 class="text-danger">@this.message</h6>

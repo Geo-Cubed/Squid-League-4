@@ -8,6 +8,7 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
     public interface ISystemSwitchDataService
     {
         Task<List<AdminSwitchViewModel>> GetAllSwitchesForAdmin();
+        Task<List<int>> GetSwissWeeks();
         Task<ApiResponse<int>> CreateSwitch(AdminSwitchViewModel adminSwitchViewModel);
         Task<ApiResponse<int>> UpdateSwitch(AdminSwitchViewModel adminSwitchViewModel);
         Task<ApiResponse<int>> DeleteSwitch(int id);

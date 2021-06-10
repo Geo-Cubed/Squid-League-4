@@ -9,5 +9,9 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
         Task<bool> DoesSwitchExist(int id);
 
         Task<IReadOnlyList<int>> GetSwissWeeks();
+
+        Task<IReadOnlyList<string>> GetUpperStages();
+
+        Task<IReadOnlyList<string>> GetLowerStages();
     }
 }
