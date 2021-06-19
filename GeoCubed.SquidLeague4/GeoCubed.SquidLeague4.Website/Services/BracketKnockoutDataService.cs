@@ -19,21 +19,50 @@ namespace GeoCubed.SquidLeague4.Website.Services
             this._mapper = mapper;
         }
 
-        public async Task<List<AdminLowerBracketViewModel>> GetLowerBracketMatches()
+        public async Task<ApiResponse<int>> CreateKnockoutMatch(AdminKnockoutMatchViewModel knockoutMatch)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                var knockoutMatchCommand = this._mapper.Map<CreateKnockoutMatchCommand>(knockoutMatch);
+                var newId = await this._client.AddKnockoutMatchAsync(knockoutMatchCommand);
+                return new ApiResponse<int>() { Data = newId.KnockoutMatch.Id, Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
+        }
+
+        public async Task<ApiResponse<int>> DeleteKnockoutMatch(int id)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                await this._client.DeleteKnockoutMatchAsync(id);
+                return new ApiResponse<int>() { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
+        }
+
+        public async Task<List<AdminKnockoutMatchViewModel>> GetLowerBracketMatches()
         {
             await this.AddBearerToken();
 
             var lower = await this._client.GetAllLowerBracketAsync();
-            var lowerMapped = this._mapper.Map<ICollection<AdminLowerBracketViewModel>>(lower);
+            var lowerMapped = this._mapper.Map<ICollection<AdminKnockoutMatchViewModel>>(lower);
             return lowerMapped.ToList();
         }
 
-        public async Task<List<AdminUpperBracketViewModel>> GetUpperBracketMatches()
+        public async Task<List<AdminKnockoutMatchViewModel>> GetUpperBracketMatches()
         {
             await this.AddBearerToken();
 
             var upper = await this._client.GetAllUpperBracketAsync();
-            var upperMapped = this._mapper.Map<ICollection<AdminUpperBracketViewModel>>(upper);
+            var upperMapped = this._mapper.Map<ICollection<AdminKnockoutMatchViewModel>>(upper);
             return upperMapped.ToList();
         }
     }

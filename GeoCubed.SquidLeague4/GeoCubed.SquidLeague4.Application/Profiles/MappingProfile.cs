@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Commands.CreateKnockoutMatch;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLowerBracket;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllUpperBracket;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.CreateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.UpdateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterById;
@@ -16,7 +19,6 @@ using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.CreateHe
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonForAdmin;
-using GeoCubed.SquidLeague4.Application.Features.LowerBracket.Queries.GetAllLowerBracket;
 using GeoCubed.SquidLeague4.Application.Features.Maps.Queries.GetAllMaps;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
@@ -40,7 +42,6 @@ using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.UpdateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList;
-using GeoCubed.SquidLeague4.Application.Features.UpperBracket.Queries.GetAllUpperBracket;
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using System.Linq;
@@ -157,6 +158,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
 
             CreateMap<BracketKnockout, UpperBracketVm>();
             CreateMap<BracketKnockout, LowerBracketVm>();
+            CreateMap<BracketKnockout, CreateKnockoutMatchCommand>().ReverseMap();
+            CreateMap<BracketKnockout, BracketCommandDto>().ReverseMap();
         }
     }
 }

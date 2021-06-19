@@ -14,6 +14,13 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
         }
 
+        public Task<bool> DoesKnockoutStageExist(string stage)
+        {
+            var switches = this._dbContext.SystemSwitches.AsNoTracking()
+                .Where(s => (s.Name == SystemSwitchHelper.LowerStage || s.Name == SystemSwitchHelper.UpperStage) && s.Value == stage);
+            return Task.FromResult(switches.Any());
+        }
+
         public Task<bool> DoesSwitchExist(int id)
         {
             var switches = this._dbContext.SystemSwitches.AsNoTracking().Where(s => s.Id == id);

@@ -4,7 +4,6 @@ using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,8 +15,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         [Inject]
         private IBracketKnockoutDataService bracketDataService { get; set; }
 
-        protected IEnumerable<AdminUpperBracketViewModel> allUpperBracket { get; set; }
-            = new List<AdminUpperBracketViewModel>();
+        protected IEnumerable<AdminKnockoutMatchViewModel> allUpperBracket { get; set; }
+            = new List<AdminKnockoutMatchViewModel>();
 
         [Inject]
         private ISystemSwitchDataService switchDataService { get; set; }
@@ -33,7 +32,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
 
         protected int selectedUpperBracketId { get; set; } = 0;
 
-        protected AdminUpperBracketViewModel model { get; set; }
+        protected AdminKnockoutMatchViewModel model { get; set; }
 
         protected Modal addModal { get; set; }
 
@@ -43,7 +42,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
 
         protected override async Task OnInitializedAsync()
         {
-            this.model = new AdminUpperBracketViewModel();
+            this.model = new AdminKnockoutMatchViewModel();
             this.allMatches = await this.matchDataService.GetBasicMatchInfo();
             this.upperStages = await this.switchDataService.GetUpperKnockoutStages();
             this.allUpperBracket = await this.bracketDataService.GetUpperBracketMatches();
@@ -95,7 +94,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected void OpenAddUpper()
         {
             this.message = string.Empty;
-            this.model = new AdminUpperBracketViewModel()
+            this.model = new AdminKnockoutMatchViewModel()
             {
 
             };
@@ -106,11 +105,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected async Task AddUpper()
         {
             this.message = string.Empty;
-            var response = new ApiResponse<int>(); //await this.bracketDataService.CreateSwissMatch(this.model);
+            var response = await this.bracketDataService.CreateKnockoutMatch(this.model);
             if (response.Success)
             {
                 this.addModal.Close();
-                this.model = new AdminUpperBracketViewModel();
+                this.model = new AdminKnockoutMatchViewModel();
                 this.allUpperBracket = await this.bracketDataService.GetUpperBracketMatches();
             }
             else
@@ -123,7 +122,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         {
             this.message = string.Empty;
             var currentUpper = this.allUpperBracket.FirstOrDefault(c => c.Id == this.selectedUpperBracketId);
-            this.model = new AdminUpperBracketViewModel()
+            this.model = new AdminKnockoutMatchViewModel()
             {
                 MatchId = currentUpper.MatchId,
                 Stage = currentUpper.Stage
@@ -135,7 +134,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin.Brackets
         protected async Task DeleteUpper()
         {
             this.message = string.Empty;
-            var response = new ApiResponse<int>(); //await this.bracketDataService.DeleteSwissMatch(this.selectedUpperBracketId);
+            var response = await this.bracketDataService.DeleteKnockoutMatch(this.selectedUpperBracketId);
             if (response.Success)
             {
                 this.deleteModal.Close();

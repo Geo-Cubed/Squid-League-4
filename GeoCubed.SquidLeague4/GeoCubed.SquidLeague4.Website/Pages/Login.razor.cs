@@ -27,7 +27,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             var isAuthorized = await this.AuthenticationService.Authenticate(this.LoginViewModel.Username, this.LoginViewModel.Password);
             if (isAuthorized)
             {
-                NavigationManager.NavigateTo("home");
+                NavigationManager.NavigateTo("admin/root");
             }
 
             this.Message = "Username or Password are incorrect";

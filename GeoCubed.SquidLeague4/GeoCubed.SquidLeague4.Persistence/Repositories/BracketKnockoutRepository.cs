@@ -1,6 +1,7 @@
 ﻿using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using GeoCubed.SquidLeague4.Persistence.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,12 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
     {
         public BracketKnockoutRepository(SquidLeagueDbContext context) : base(context)
         {
+        }
+
+        public Task<bool> DoesBracketMatchExist(int id)
+        {
+            var bracketMatches = this._dbContext.BracketKnockouts.AsNoTracking().Where(x => x.Id == id);
+            return Task.FromResult(bracketMatches.Any());
         }
 
         public Task<IReadOnlyList<BracketKnockout>> GetLowerBracket()

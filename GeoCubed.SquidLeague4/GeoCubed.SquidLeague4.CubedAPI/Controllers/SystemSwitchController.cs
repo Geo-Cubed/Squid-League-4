@@ -78,7 +78,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return BadRequest(response);
         }
 
-        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [Authorize(Roles = Roles.Admin)]
         [HttpPut(Name = "UpdateSwitch")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

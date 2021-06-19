@@ -1,5 +1,7 @@
-﻿using GeoCubed.SquidLeague4.Application.Features.LowerBracket.Queries.GetAllLowerBracket;
-using GeoCubed.SquidLeague4.Application.Features.UpperBracket.Queries.GetAllUpperBracket;
+﻿using GeoCubed.SquidLeague4.Application.Features.Bracket.Commands.CreateKnockoutMatch;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Commands.DeleteKnockoutMatch;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLowerBracket;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllUpperBracket;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -41,6 +43,41 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var lower = await this._mediator.Send(new GetAllLowerBracketQuery());
             return Ok(lower);
+        }
+
+        [HttpPost(Name = "AddKnockoutMatch")]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<CreateKnockoutMatchCommandResponse>> AddKnockoutMatch([FromBody] CreateKnockoutMatchCommand createKnockoutMatchCommand)
+        {
+            var response = await this._mediator.Send(createKnockoutMatchCommand);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
+        }
+
+        [HttpDelete("{id}", Name = "DeleteKnockoutMatch")]
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> DeleteKnockoutMatch(int id)
+        {
+            var request = new DeleteKnockoutMatchCommand(id);
+            var response = await this._mediator.Send(request);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(response);
         }
     }
 }

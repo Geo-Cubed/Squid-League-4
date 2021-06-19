@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeoCubed.SquidLeague4.Application.Features.LowerBracket.Queries.GetAllLowerBracket
+namespace GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLowerBracket
 {
     public class GetAllLowerBracketQueryHandler : IRequestHandler<GetAllLowerBracketQuery, List<LowerBracketVm>>
     {

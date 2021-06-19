@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeoCubed.SquidLeague4.Application.Features.UpperBracket.Queries.GetAllUpperBracket
+namespace GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllUpperBracket
 {
     public class GetAllUpperBracketQueryHandler : IRequestHandler<GetAllUpperBracketQuery, List<UpperBracketVm>>
     {

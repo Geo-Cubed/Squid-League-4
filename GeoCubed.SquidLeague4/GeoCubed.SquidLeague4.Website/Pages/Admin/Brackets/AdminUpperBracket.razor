@@ -6,10 +6,10 @@
 
     <div class="d-flex justify-content-end m-2">
         <button type="button" class="btn btn-primary mr-2" @onclick="OpenAddUpper">
-            <span class="oi oi-plus"></span> Add Swiss Match
+            <span class="oi oi-plus"></span> Add Upper Knockout Match
         </button>
         <button class="btn btn-primary @((this.selectedUpperBracketId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedUpperBracketId > 0) OpenDeleteUpper(); })">
-            <span class="oi oi-trash"></span> Delete Swiss Match
+            <span class="oi oi-trash"></span> Delete Upper Knockout Match
         </button>
     </div>
 
