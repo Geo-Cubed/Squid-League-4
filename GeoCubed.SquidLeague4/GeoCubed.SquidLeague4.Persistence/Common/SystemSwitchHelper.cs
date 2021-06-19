@@ -3,7 +3,7 @@
     public static class SystemSwitchHelper
     {
         public const string SwissWeek = "SWISS_STAGE";
-        public const string UpperStage = "U_KNOCKOUT_STAGE";
-        public const string LowerStage = "L_KNOCKOUT_STAGE";
+        public const string UpperStage = "KNOCKOUT_STAGE_U";
+        public const string LowerStage = "KNOCKOUT_STAGE_L";
     }
 }

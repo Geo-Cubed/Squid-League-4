@@ -57,10 +57,22 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedSwitches.ToList();
         }
 
+        public async Task<List<string>> GetLowerKnockoutStages()
+        {
+            var stages = await this._client.GetLowerStagesAsync();
+            return stages.ToList();
+        }
+
         public async Task<List<int>> GetSwissWeeks()
         {
             var swissWeeks = await this._client.GetSwissWeeksAsync();
             return swissWeeks.ToList();
+        }
+
+        public async Task<List<string>> GetUpperKnockoutStages()
+        {
+            var stages = await this._client.GetUpperStagesAsync();
+            return stages.ToList();
         }
 
         public async Task<ApiResponse<int>> UpdateSwitch(AdminSwitchViewModel adminSwitchViewModel)
