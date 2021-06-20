@@ -97,25 +97,31 @@
             </div>
         </div>
         
-        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/systemswitches")'>
+        <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/systemswitches"); } }'>
             <div class="card-body">
                 <h5 class="card-title text-center">System Switches</h5>
                 <div class="px-3">
                     <span class="oi oi-wrench"></span>
                 </div>
                 <p>Edit the underlying System Switches</p>
-                <p class="text-danger">This Requires the Admin Role</p>
+                @if (!isAdmin)
+                {
+                    <p class="text-danger">This Requires the Admin Role</p>
+                }
             </div>
         </div>
         
-        <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/userdashboard")'>
+        <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/userdashboard"); } }'>
             <div class="card-body">
                 <h5 class="card-title text-center">User Dashboard</h5>
                 <div class="px-3">
                     <span class="oi oi-dashboard"></span>
                 </div>
                 <p>Manage Users</p>
-                <p class="text-danger">This Requires the Admin Role</p>
+                @if (!isAdmin)
+                {
+                    <p class="text-danger">This Requires the Admin Role</p>
+                }
             </div>
         </div>
     </div>

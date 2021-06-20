@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Application.Models.Authentication;
 using GeoCubed.SquidLeague4.Application.Models.Authentication.Enum;
 using GeoCubed.SquidLeague4.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,15 +21,18 @@ namespace GeoCubed.SquidLeague4.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AuthenticationService(
             UserManager<ApplicationUser> userManager,
             IOptions<JwtSettings> jwtSettings,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             this._userManager = userManager;
             this._jwtSettings = jwtSettings.Value;
             this._signInManager = signInManager;
+            this._roleManager = roleManager;
         }
 
         public async Task<RoleResponse> AddRole(RoleRequest request)
@@ -117,6 +121,12 @@ namespace GeoCubed.SquidLeague4.Identity.Services
             return response;
         }
 
+        public async Task<List<string>> GetAllRoles()
+        {
+            var roles = await this._roleManager.Roles.ToListAsync();
+            return roles.Select(x => x.Name).ToList();
+        }
+
         public async Task<List<string>> GetRoles(string username)
         {
             var roles = new List<string>();
@@ -128,6 +138,22 @@ namespace GeoCubed.SquidLeague4.Identity.Services
             }
 
             return roles;
+        }
+
+        public async Task<List<UserDto>> GetUsers()
+        {
+            var users = await this._userManager.Users.ToListAsync();
+            var userList = new List<UserDto>();
+            foreach (var user in users)
+            {
+                userList.Add(new UserDto()
+                {
+                    UserName = user.UserName,
+                    Roles = await this.GetRoles(user.UserName)
+                });
+            }
+
+            return userList;
         }
 
         public async Task<RegistrationResponse> RegisterAsync(RegistrationRequest request)

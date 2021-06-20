@@ -43,6 +43,7 @@
     <None Include="Pages\Admin\Brackets\AdminLowerBracket.razor" />
     <None Include="Pages\Admin\Brackets\AdminSwissBracket.razor" />
     <None Include="Pages\Admin\Brackets\AdminUpperBracket.razor" />
+    <None Include="Pages\Admin\UserDashboard.razor" />
     <None Include="Pages\Bracket.razor" />
     <None Include="Pages\Brackets\LowerBracket.razor" />
     <None Include="Pages\Brackets\SwissBracket.razor" />

@@ -1,0 +1,114 @@
+﻿@page "/admin/userdashboard"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization;
+
+<div class="text-center">
+    <h3>User Dashboard</h3>
+
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddUser">
+            <span class="oi oi-plus"></span> Add User
+        </button>
+        <button type="button" class="btn btn-primary mr-2 ml-2" @onclick="OpenEditUserRoles">
+            <span class="oi oi-pencil"></span> Edit User Roles
+        </button>
+        <button class="btn btn-primary @((!string.IsNullOrEmpty(this.selectedUserName)) ? string.Empty : "disabled")" @onclick="(() => { if (!string.IsNullOrEmpty(this.selectedUserName)) this.deleteUser.Open(); })">
+            <span class="oi oi-trash"></span> Delete User
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of users</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in this.allUsers.OrderBy(x => x.UserName))
+                {
+                    <tr class="@((this.selectedUserName == user.UserName) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedUserName == user.UserName) { OpenEditUserRoles(); } else { this.selectedUserName = user.UserName; } })">
+                        <td scope="row">@user.UserName</td>
+                        <td>@string.Join(" , ", user.Roles)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<Modal @ref="addUser">
+    <Title>Add</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.creationModel.Username" placeholder="Username" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" placeholder="password" @bind-value="this.creationModel.Password" />
+                </div>
+            </div>
+        </form>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddTeam">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addUser.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editUserRoles">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.UserName" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Current roles</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="@string.Join(" , ", this.model.Roles)" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Roles</label>
+                <div class="col-sm-10">
+                    <select class="form-control" @bind="this.roleModel">
+                        @foreach (var role in this.allRoles.OrderBy(x => x))
+                        {
+                            <option value="@role">@role</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </form>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="(() => EditUserRoles(true))">Add Role</button>
+        <button type="button" class="btn btn-danger" @onclick="(() => EditUserRoles(false))">Remove Role</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editUserRoles.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteUser">
+    <Title>Delete</Title>
+    <Body>
+        <span><em>@string.Format("Are you sure you want to delete '{0}'?", this.selectedUserName)</em></span>
+        <h6 class="text-danger">@this.message</h6>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteUser.Close())">Cancel</button>
+    </Footer>
+</Modal>

@@ -13,20 +13,19 @@ useful information
 helpful people - DONE
 
 --Admin Pages--
-login
+login - DONE
 casters - DONE
 game settings - DONE needs testing though - issues with adding modal (pre filling and combo box not filling)
 helpful people - DONE
-matches - DONE Maybe add bracket setting options.
+matches - DONE
 players - DONE
 results
 system switches - DONE
 teams - DONE
+user dashboard - DONE
 
 TODO:
-go back to login when not authorized
-fix left panel when admin options are listed
 remove un used api functions
 sort out namespaces and models for website
 go through the controllers and make sure the responses are ok (remove the response from delete) (add might need a bad request resposne)
-remove null checks on dependenct injection things in core
+remove null checks on dependency injection things in core

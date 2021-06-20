@@ -18,6 +18,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected string userName { get; set; }
 
+        protected bool isAdmin { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             var isValidToken = await this.authenticationService.ValidateAuthenticated();
@@ -28,6 +30,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             }
 
             this.userName = await this.localStorageService.GetItemAsync<string>("user");
+            this.isAdmin = await this.authenticationService.CheckIfAdmin();
         }
 
         protected void NavigateTo(string url)

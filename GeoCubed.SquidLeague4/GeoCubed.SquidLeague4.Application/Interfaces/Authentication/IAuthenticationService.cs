@@ -12,6 +12,10 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Authentication
 
         Task<DeleteResponse> DeleteAsync(DeleteRequest request);
 
+        Task<List<UserDto>> GetUsers();
+
+        Task<List<string>> GetAllRoles();
+
         Task<List<string>> GetRoles(string username);
 
         Task<RoleResponse> AddRole(RoleRequest request);

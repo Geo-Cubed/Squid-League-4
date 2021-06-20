@@ -20,5 +20,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatc
         public DateTime? MatchDate { get; set; }
 
         public int? SecondaryCasterProfileId { get; set; }
+
+        public string Winner { get; set; }
     }
 }

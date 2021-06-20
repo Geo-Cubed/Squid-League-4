@@ -77,6 +77,9 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
 
             CreateMap<UpperBracketVm, AdminKnockoutMatchViewModel>().ReverseMap();
             CreateMap<AdminKnockoutMatchViewModel, CreateKnockoutMatchCommand>().ReverseMap();
+
+            CreateMap<UserDto, AdminUserViewModel>().ReverseMap();
+            CreateMap<RoleRequest, AdminRoleRequestViewModel>().ReverseMap();
         }
     }
 }
