@@ -1,0 +1,84 @@
+﻿@page "/maps"
+
+<div class="text-center">
+    <h1 class="text-center">Maps</h1>
+
+    @if (this.swissMapLists.Count() == 0 && this.upperMapLists.Count() == 0 && this.lowerMapLists.Count() == 0)
+    {
+        <h2 class="m-2">There are no maps yet</h2>
+    }
+    else
+    {
+        @if (this.swissMapLists.Count() > 0)
+        {
+            <div class="d-block m-2">
+                <h2 class="text-center">Swiss Maps</h2>
+                <div>
+                    @foreach (var group in this.swissMapLists.GroupBy(x => x.BracketStage))
+                    {
+                        <h3 class="text-center">@string.Format("Week {0}", group.FirstOrDefault().BracketStage)</h3>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            @foreach (var week in group.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="card m-2" style="width:15rem;">
+                                    <img class="card-img-top img-fluid cardImg" src="@week.Map.PicturePath" alt="@week.Map.MapName" title="@week.Map.MapName" />
+                                    <div class="text-center m-2">
+                                        <img class="img-fluid card-img-bottom" src="@week.Mode.PicturePath" style="heigth:40px;width:40px" alt="@week.Mode.ModeName" title="@week.Mode.ModeName" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (this.upperMapLists.Count() > 0)
+        {
+            <div class="d-block m-2">
+                <h2 class="text-center">Upper Bracket Maps</h2>
+                <div>
+                    @foreach (var group in this.upperMapLists.GroupBy(x => x.BracketStage))
+                    {
+                        <h3 class="text-center">@string.Format("Stage {0}", group.FirstOrDefault().BracketStage)</h3>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            @foreach (var week in group.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="card m-2" style="width:15rem;">
+                                    <img class="card-img-top img-fluid cardImg" src="@week.Map.PicturePath" alt="@week.Map.MapName" title="@week.Map.MapName" />
+                                    <div class="text-center m-2">
+                                        <img class="img-fluid card-img-bottom" src="@week.Mode.PicturePath" style="heigth:40px;width:40px" alt="@week.Mode.ModeName" title="@week.Mode.ModeName" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (this.lowerMapLists.Count() > 0)
+        {
+            <div class="d-block m-2">
+                <h2 class="text-center">Lower Bracket Maps</h2>
+                <div>
+                    @foreach (var group in this.lowerMapLists.GroupBy(x => x.BracketStage))
+                    {
+                        <h3 class="text-center">@string.Format("Stage {0}", group.FirstOrDefault().BracketStage)</h3>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            @foreach (var week in group.OrderBy(x => x.SortOrder))
+                            {
+                                <div class="card m-2" style="width:15rem;">
+                                    <img class="card-img-top img-fluid cardImg" src="@week.Map.PicturePath" alt="@week.Map.MapName" title="@week.Map.MapName" />
+                                    <div class="text-center m-2">
+                                        <img class="img-fluid card-img-bottom" src="@week.Mode.PicturePath" style="heigth:40px;width:40px" alt="@week.Mode.ModeName" title="@week.Mode.ModeName" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -1,4 +1,4 @@
-﻿namespace GeoCubed.SquidLeague4.Website.ViewModels
+﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.GameSettings
 {
     public class GameSettingViewModel
     {

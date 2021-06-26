@@ -21,7 +21,11 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<IReadOnlyList<GameSetting>> GetMapLists()
         {
-            throw new System.NotImplementedException();
+            var gameSettings = this._dbContext.GameSettings
+                .Include(x => x.GameMap)
+                .Include(x => x.GameMode)
+                .ToList();
+            return Task.FromResult((IReadOnlyList<GameSetting>)gameSettings);
         }
     }
 }

@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +55,13 @@ namespace GeoCubed.SquidLeague4.Website.Services
             var allSettings = await this._client.GetGameSettingsForAdminAsync();
             var mappedSettings = this._mapper.Map<ICollection<AdminGameSettingViewModel>>(allSettings);
             return mappedSettings.ToList();
+        }
+
+        public async Task<List<MapListViewModel>> GetMapLists()
+        {
+            var maps = await this._client.GetMapListsAsync();
+            var mappedMaps = this._mapper.Map<ICollection<MapListViewModel>>(maps);
+            return mappedMaps.ToList();
         }
 
         public async Task<ApiResponse<int>> UpdateSetting(AdminGameSettingViewModel gameSettingViewModel)

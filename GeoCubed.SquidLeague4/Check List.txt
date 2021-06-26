@@ -4,6 +4,7 @@ home - DONE
 teams - DONE
 casters - DONE
 matches
+map list - DONE
 bracket
 	> Swiss - DONE
 	> Upper Bracket

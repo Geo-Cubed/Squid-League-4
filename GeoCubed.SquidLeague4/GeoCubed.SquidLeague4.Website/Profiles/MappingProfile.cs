@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
+using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
@@ -63,6 +64,9 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<TeamPlayerViewModel, PlayerWeaponDto>().ReverseMap();
             CreateMap<PlayerWeaponViewModel, PlayerWeaponDto>().ReverseMap();
             CreateMap<GameSettingViewModel, GameSettingsDto>().ReverseMap();
+            CreateMap<MapListViewModel, MapListVm>().ReverseMap();
+            CreateMap<MapListMapDto, MapListMapVm>().ReverseMap();
+            CreateMap<MapListModeDto, MapListModeVm>().ReverseMap();
 
             CreateMap<AdminSwitchViewModel, SystemSwitchAdminVm>().ReverseMap();
             CreateMap<AdminSwitchViewModel, CreateSwitchCommand>().ReverseMap();

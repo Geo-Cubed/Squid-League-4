@@ -23,6 +23,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMap
             var mapLists = await this._settingRepository.GetMapLists();
             var mappedLists = this._mapper.Map<List<MapListVm>>(mapLists);
             return mappedLists;
+
         }
     }
 }

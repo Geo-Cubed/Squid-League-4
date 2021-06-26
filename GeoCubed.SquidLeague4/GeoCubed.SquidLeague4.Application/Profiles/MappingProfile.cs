@@ -150,11 +150,15 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<GameSetting, GameSettingCommandDto>();
             CreateMap<GameSetting, CreateGameSettingCommand>().ReverseMap();
             CreateMap<GameSetting, UpdateGameSettingCommand>().ReverseMap();
+            CreateMap<GameSetting, MapListVm>()
+                .ForMember(m => m.Map, opt => opt.MapFrom(x => x.GameMap))
+                .ForMember(m => m.Mode, opt => opt.MapFrom(x => x.GameMode));
 
             CreateMap<GameMap, MapVm>();
+            CreateMap<GameMap, MapListMapVm>();
             CreateMap<GameMode, ModeVm>();
+            CreateMap<GameMode, MapListModeVm>();
 
-            CreateMap<GameSetting, MapListVm>();
 
             CreateMap<BracketKnockout, UpperBracketVm>();
             CreateMap<BracketKnockout, LowerBracketVm>();
