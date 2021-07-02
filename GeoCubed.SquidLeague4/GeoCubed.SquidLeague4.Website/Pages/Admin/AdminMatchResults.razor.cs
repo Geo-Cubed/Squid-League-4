@@ -1,4 +1,5 @@
 ﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -16,9 +17,17 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected IEnumerable<BasicMatchInfo> matches { get; set; }
             = new List<BasicMatchInfo>();
 
+        protected IEnumerable<AdminGameFullInfoViewModel> games { get; set; }
+            = new List<AdminGameFullInfoViewModel>();
+
         protected override async Task OnInitializedAsync()
         {
             this.matches = await this.matchDataService.GetBasicMatchInfo();
+        }
+
+        protected string GetMatchText(string HomeTeam, string AwayTeam)
+        {
+            return string.Format("{0} vs. {1}", HomeTeam, AwayTeam);
         }
     }
 }

@@ -2,8 +2,31 @@
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 
-<h3>AdminMatchResults</h3>
+<div class="text-center">
+    <h3 class="m-2">Match Results</h3>
+    <select class="form-control mb-3">
+        @foreach (var match in this.matches)
+        {
+            <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
+        }
+    </select>
 
-@code {
+    <ul class="nav nav-tabs" id="gameTab" role="tablist">
+        @foreach (var game in this.games)
+        {
+            <li class="nav-item">
+                <a class="nav-link @((game == this.games.FirstOrDefault())? "active" : string.Empty)" id="" 
+                   data-toggle="tab" href="#" role="tab" aria-controls="" 
+                   aria-selected="@((game == this.games.FirstOrDefault())? "true":"false")"></a>
+            </li>
+        }
+    </ul>
+    <div class="tab-content" id="gameTabContent">
+        @foreach (var game in this.games)
+        {
+            <div class="tab-pane fade @((game == this.games.FirstOrDefault())? "show active" : string.Empty)" id="" role="tabpanel" aria-labelledby="">
 
-}
+            </div>
+        }
+    </div>
+</div>
