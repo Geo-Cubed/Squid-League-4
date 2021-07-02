@@ -5,27 +5,35 @@
 
 <div class="text-center">
     <h1 class="mb-2">Squid League 4</h1>
-    <h2 class="mb-2">Upcomming Matches</h2>
+    @if (this.UpcommingMatches.Count() == 0)
+    {
+        <h2 class="mb-2">There are no upcomming matches</h2>
+        <!-- TODO: Add mini nav menu-->
+    }
+    else
+    {
+        <h2 class="mb-2">Upcomming Matches</h2>
 
-    <div class="d-flex flex-column justify-content-center align-items-center">
-        @foreach (var dayOfMatches in this.UpcommingMatches.Where(m => m.MatchDate.HasValue).GroupBy(m => m.MatchDate.Value.ToShortDateString()))
-        {
-            <h3>@dayOfMatches.FirstOrDefault().MatchDate.Value.ToLongDateString()</h3>
-            @foreach (var match in dayOfMatches)
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            @foreach (var dayOfMatches in this.UpcommingMatches.Where(m => m.MatchDate.HasValue).GroupBy(m => m.MatchDate.Value.ToShortDateString()))
             {
-                <div class="card m-2" style="width:18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@string.Format("{0} vs. {1}", match.HomeTeam, match.AwayTeam)</h5>
-                        <p class="card-text">@string.Format("{0} BST", match.MatchDate.Value)</p>
-                        @if (!string.IsNullOrEmpty(match.MatchVodLink))
-                        {
-                            <a href="@match.MatchVodLink" target="_blank">
-                                <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
-                            </a>
-                        }
+                <h3>@dayOfMatches.FirstOrDefault().MatchDate.Value.ToLongDateString()</h3>
+                @foreach (var match in dayOfMatches)
+                {
+                    <div class="card m-2" style="width:18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@string.Format("{0} vs. {1}", match.HomeTeam, match.AwayTeam)</h5>
+                            <p class="card-text">@string.Format("{0} BST", match.MatchDate.Value)</p>
+                            @if (!string.IsNullOrEmpty(match.MatchVodLink))
+                            {
+                                <a href="@match.MatchVodLink" target="_blank">
+                                    <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
+                                </a>
+                            }
+                        </div>
                     </div>
-                </div>
+                }
             }
-        }
-    </div>
+        </div>
+    }
 </div>
