@@ -23,6 +23,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             this.matches = await this.matchDataService.GetBasicMatchInfo();
+            // TODO: Get map list.
         }
 
         protected string GetMatchText(string HomeTeam, string AwayTeam)

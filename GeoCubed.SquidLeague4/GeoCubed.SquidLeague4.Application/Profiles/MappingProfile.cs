@@ -159,7 +159,6 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<GameMode, ModeVm>();
             CreateMap<GameMode, MapListModeVm>();
 
-
             CreateMap<BracketKnockout, UpperBracketVm>();
             CreateMap<BracketKnockout, LowerBracketVm>();
             CreateMap<BracketKnockout, CreateKnockoutMatchCommand>().ReverseMap();
