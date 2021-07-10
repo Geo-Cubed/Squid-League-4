@@ -24,6 +24,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
         public Task<List<SetInformationVm>> Handle(GetSetInfoQuery request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+            // Get maps for match id.
+            // Get set info.
+            // Fill up any blank spaces (count set info vs count maps)
         }
     }
 }
