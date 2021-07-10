@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Commands.DeletePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerList;
+using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -50,6 +51,17 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpGet("playersbyteamid", Name = "GetPlayersByTeamId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<List<MinimumPlayerInfoVm>>> GetPlayersByTeamId(int teamId)
+        {
+            var players = await this._mediator.Send(new GetPlayersByTeamIdQuery(teamId));
+            return Ok(players);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

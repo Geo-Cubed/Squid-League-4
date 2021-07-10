@@ -13,5 +13,6 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
         Task<ApiResponse<int>> UpdateSetting(AdminGameSettingViewModel gameSettingViewModel);
         Task<ApiResponse<int>> DeleteSetting(int id);
         Task<List<MapListViewModel>> GetMapLists();
+        Task<List<MatchMapListViewModel>> GetMapListByMatchId(int matchId);
     }
 }

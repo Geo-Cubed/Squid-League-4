@@ -19,6 +19,15 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(player);
         }
 
+        public Task<IReadOnlyList<Player>> GetAllPlayersByTeamId(int teamId)
+        {
+            var players = this._dbContext.Players
+                .Where(x => x.TeamId == teamId)
+                .ToList();
+
+            return Task.FromResult(players as IReadOnlyList<Player>);
+        }
+
         public Task<IReadOnlyList<Player>> GetAllPlayersWithTeams()
         {
             var players = this._dbContext.Players.Include(p => p.Team).ToList();

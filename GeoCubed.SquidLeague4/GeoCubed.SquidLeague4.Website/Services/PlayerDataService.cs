@@ -70,6 +70,15 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedPlayer;
         }
 
+        public async Task<List<AdminPlayerViewModel>> GetPlayersByTeamId(int teamId)
+        {
+            await this.AddBearerToken();
+
+            var players = await this._client.GetPlayersByTeamIdAsync(teamId);
+            var mappedPlayers = this._mapper.Map<List<AdminPlayerViewModel>>(players);
+            return mappedPlayers;
+        }
+
         public async Task<ApiResponse<int>> UpdatePlayer(AdminPlayerViewModel playerDetailViewModel)
         {
             try

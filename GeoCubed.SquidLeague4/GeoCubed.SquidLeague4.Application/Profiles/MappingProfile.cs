@@ -32,6 +32,7 @@ using GeoCubed.SquidLeague4.Application.Features.Modes.Queries.GetAllModes;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
+using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
@@ -169,6 +170,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.GameSettingId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.Map, opt => opt.MapFrom(x => x.GameMap))
                 .ForMember(x => x.Mode, opt => opt.MapFrom(x => x.GameMode));
+
+            CreateMap<Player, MinimumPlayerInfoVm>();
         }
     }
 }

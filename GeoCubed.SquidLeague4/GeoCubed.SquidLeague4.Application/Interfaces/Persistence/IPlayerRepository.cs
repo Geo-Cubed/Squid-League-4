@@ -11,5 +11,6 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
         Task<IReadOnlyList<Player>> GetAllPlayersWithTeams();
 
         Task<Player> GetByIdWithTeam(int id);
+        Task<IReadOnlyList<Player>> GetAllPlayersByTeamId(int teamId);
     }
 }

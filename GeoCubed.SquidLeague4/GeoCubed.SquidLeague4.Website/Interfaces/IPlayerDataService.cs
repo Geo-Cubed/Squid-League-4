@@ -13,5 +13,6 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
         Task<ApiResponse<int>> CreatePlayer(AdminPlayerViewModel playerDetailViewModel);
         Task<ApiResponse<int>> UpdatePlayer(AdminPlayerViewModel playerDetailViewModel);
         Task<ApiResponse<int>> DeletePlayer(int id);
+        Task<List<AdminPlayerViewModel>> GetPlayersByTeamId(int teamId);
     }
 }
