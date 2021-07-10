@@ -15,6 +15,7 @@ using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.CreateGam
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapsByMatchId;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.CreateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Commands.UpdateHelpfulPerson;
 using GeoCubed.SquidLeague4.Application.Features.HelpfulPeople.Queries.GetHelpfulPersonById;
@@ -163,6 +164,11 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<BracketKnockout, LowerBracketVm>();
             CreateMap<BracketKnockout, CreateKnockoutMatchCommand>().ReverseMap();
             CreateMap<BracketKnockout, BracketCommandDto>().ReverseMap();
+
+            CreateMap<GameSetting, MatchMapListVm>()
+                .ForMember(x => x.GameSettingId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.Map, opt => opt.MapFrom(x => x.GameMap))
+                .ForMember(x => x.Mode, opt => opt.MapFrom(x => x.GameMode));
         }
     }
 }

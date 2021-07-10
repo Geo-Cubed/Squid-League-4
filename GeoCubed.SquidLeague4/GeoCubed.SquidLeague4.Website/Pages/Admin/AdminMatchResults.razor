@@ -4,7 +4,7 @@
 
 <div class="text-center">
     <h3 class="m-2">Match Results</h3>
-    <select class="form-control mb-3">
+    <select class="form-control mb-3" @onchange="OnMatchSelect">
         @foreach (var match in this.matches)
         {
             <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>

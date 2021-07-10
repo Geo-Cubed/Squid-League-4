@@ -9,5 +9,7 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
         Task<bool> DoesGameSettingExist(int id);
 
         Task<IReadOnlyList<GameSetting>> GetMapLists();
+
+        Task<IReadOnlyList<GameSetting>> GetMapListByMatchId(int matchId);
     }
 }

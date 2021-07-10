@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.DeleteGam
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapsByMatchId;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,20 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var mapLists = await this._mediator.Send(new GetMapListsQuery());
             return Ok(mapLists);
+        }
+
+        [HttpGet("byMatchId", Name = "GetMapsByMatchId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<MatchMapListVm>>> GetMapsByMatchId(int matchId)
+        {
+            var maps = await this._mediator.Send(new GetMapsByMatchIdQuery(matchId));
+            if (maps.Count > 0)
+            {
+                return Ok(maps);
+            }
+
+            return BadRequest();
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

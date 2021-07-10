@@ -19,6 +19,11 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(game != null);
         }
 
+        public Task<IReadOnlyList<Game>> GetFullSetInfo(int matchId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<IReadOnlyList<Game>> GetGamesByMatchId(int matchId)
         {
             var games = this._dbContext.Games
