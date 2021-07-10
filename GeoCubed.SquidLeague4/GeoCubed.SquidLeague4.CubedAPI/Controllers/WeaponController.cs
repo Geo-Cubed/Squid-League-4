@@ -1,4 +1,5 @@
-﻿using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
+﻿using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetBasicWeaponInfo;
+using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,14 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var weapons = await this._mediator.Send(new GetWeaponListQuery());
             return weapons;
+        }
+
+        [HttpGet("basic", Name = "GetBasicWeaponInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<BasicWeaponInfoVm>>> GetBasicWeaponInfo()
+        {
+            var weapons = await this._mediator.Send(new GetBasicWeaponInfoQuery());
+            return Ok(weapons);
         }
     }
 }

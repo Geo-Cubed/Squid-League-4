@@ -1,4 +1,5 @@
 ﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
@@ -22,10 +23,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         [Inject]
         private IPlayerDataService playerDataService { get; set; }
 
+        [Inject]
+        private IWeaponDataService weaponDataService { get; set; }
+
         protected BasicMatchInfo selectedMatch { get; set; }
 
         protected IEnumerable<BasicMatchInfo> matches { get; set; }
             = new List<BasicMatchInfo>();
+
+        protected IEnumerable<BasicWeaponInfo> allWeapons { get; set; }
+            = new List<BasicWeaponInfo>();
 
         protected IEnumerable<AdminGameFullInfoViewModel> games { get; set; }
             = new List<AdminGameFullInfoViewModel>();
@@ -42,6 +49,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             this.matches = await this.matchDataService.GetBasicMatchInfo();
+            this.allWeapons = await this.weaponDataService.GetBasicWeaponInfo();
         }
 
         protected async Task OnMatchSelectAsync(ChangeEventArgs e)

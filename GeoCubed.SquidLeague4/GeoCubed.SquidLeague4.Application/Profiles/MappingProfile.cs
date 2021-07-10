@@ -44,6 +44,7 @@ using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.UpdateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList;
+using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetBasicWeaponInfo;
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using System.Linq;
@@ -172,6 +173,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.Mode, opt => opt.MapFrom(x => x.GameMode));
 
             CreateMap<Player, MinimumPlayerInfoVm>();
+            CreateMap<Weapon, BasicWeaponInfoVm>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.WeaponName));
         }
     }
 }
