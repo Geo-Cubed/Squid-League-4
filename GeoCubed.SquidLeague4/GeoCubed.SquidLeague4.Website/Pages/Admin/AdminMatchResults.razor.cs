@@ -28,6 +28,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected BasicMatchInfo selectedMatch { get; set; }
 
+        protected List<AdminResultsModel> setInformation { get; set; }
+            = new List<AdminResultsModel>();
+
         protected IEnumerable<BasicMatchInfo> matches { get; set; }
             = new List<BasicMatchInfo>();
 
@@ -49,7 +52,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             this.matches = await this.matchDataService.GetBasicMatchInfo();
-            this.allWeapons = await this.weaponDataService.GetBasicWeaponInfo();
+            this.allWeapons = (await this.weaponDataService.GetBasicWeaponInfo()).OrderBy(x => x.Name);
         }
 
         protected async Task OnMatchSelectAsync(ChangeEventArgs e)
@@ -77,6 +80,17 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected string GetMatchText(string HomeTeam, string AwayTeam)
         {
             return string.Format("{0} vs. {1}", HomeTeam, AwayTeam);
+        }
+
+        protected string GetGameText(int gameNumber)
+        {
+            var map = this.maps.ElementAt(gameNumber);
+            if (map == null)
+            {
+                return string.Empty;
+            }
+
+            return string.Format("Game {0} on {1} {2}", gameNumber + 1, map.Mode.ModeName, map.Map.MapName);
         }
     }
 }

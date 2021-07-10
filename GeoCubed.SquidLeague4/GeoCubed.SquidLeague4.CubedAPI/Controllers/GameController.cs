@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Commands.UpdateGame;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetAllGames;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByMatchId;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByTeamId;
+using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +53,17 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var games = await this._mediator.Send(new GetGamesByTeamIdQuery() { TeamId = teamId });
             return Ok(games);
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpGet("gameinfo", Name = "GetGameInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<List<SetInformationVm>>> GetSetInfo(int matchId)
+        {
+            var setInfo = await this._mediator.Send(new GetSetInfoQuery(matchId));
+            return Ok(setInfo);
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]

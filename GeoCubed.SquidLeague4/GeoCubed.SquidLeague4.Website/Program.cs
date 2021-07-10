@@ -40,6 +40,7 @@ namespace GeoCubed.SquidLeague4.Website
             builder.Services.AddScoped<IMapDataService, MapDataService>();
             builder.Services.AddScoped<IModeDataService, ModeDataService>();
             builder.Services.AddScoped<IBracketKnockoutDataService, BracketKnockoutDataService>();
+            builder.Services.AddScoped<IWeaponDataService, WeaponDataService>();
 
             await builder.Build().RunAsync();
         }
