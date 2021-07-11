@@ -81,5 +81,15 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         {
             return string.Format("{0} vs. {1}", HomeTeam, AwayTeam);
         }
+
+        protected async Task SaveGameInformationAsync(AdminResultsModel gameInfo)
+        {
+
+        }
+
+        protected async Task DeleteGameInformationAsync(AdminResultsModel gameInfo)
+        {
+
+        }
     }
 }
