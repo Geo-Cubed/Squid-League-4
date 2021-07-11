@@ -58,11 +58,17 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpGet("gameinfo", Name = "GetGameInfo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<List<SetInformationVm>>> GetSetInfo(int matchId)
         {
             var setInfo = await this._mediator.Send(new GetSetInfoQuery(matchId));
+            if (setInfo == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(setInfo);
         }
 

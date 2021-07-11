@@ -26,6 +26,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         [Inject]
         private IWeaponDataService weaponDataService { get; set; }
 
+        [Inject]
+        private IGameDataService gameDataService { get; set; }
+
         protected BasicMatchInfo selectedMatch { get; set; }
 
         protected List<AdminResultsModel> setInformation { get; set; }
@@ -68,12 +71,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
                 this.maps = await this.gameSettingDataService.GetMapListByMatchId(MatchId);
                 this.homeTeamPlayers = await this.playerDataService.GetPlayersByTeamId(this.selectedMatch.HomeTeamId);
                 this.awayTeamPlayers = await this.playerDataService.GetPlayersByTeamId(this.selectedMatch.AwayTeamId);
+                this.setInformation = await this.gameDataService.GetResultsInfo(this.selectedMatch.Id);
             }
             catch
             {
                 this.maps = new List<MatchMapListViewModel>();
                 this.homeTeamPlayers = new List<AdminPlayerViewModel>();
                 this.awayTeamPlayers = new List<AdminPlayerViewModel>();
+                this.setInformation = new List<AdminResultsModel>();
             }
         }
 

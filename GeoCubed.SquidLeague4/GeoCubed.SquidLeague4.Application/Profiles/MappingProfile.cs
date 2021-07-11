@@ -11,6 +11,7 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Commands.UpdateGame;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetAllGames;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByMatchId;
 using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetGamesByTeamId;
+using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.CreateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Commands.UpdateGameSetting;
 using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetGameSettingsForAdmin;
@@ -47,6 +48,7 @@ using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayer
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetBasicWeaponInfo;
 using GeoCubed.SquidLeague4.Application.Features.Weapons.Queries.GetWeaponList;
 using GeoCubed.SquidLeague4.Domain.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GeoCubed.SquidLeague4.Application.Profiles
@@ -175,6 +177,30 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Player, MinimumPlayerInfoVm>();
             CreateMap<Weapon, BasicWeaponInfoVm>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.WeaponName));
+
+            // This is going to be a horrendous map :( .
+            CreateMap<WeaponPlayed, BasicPlayerWeapon>();
+            CreateMap<Game, SetInformationVm>()
+                .ForMember(x => x.GameId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.SortOrder, opt => opt.MapFrom(x => x.GameSetting.SortOrder))
+                .ForMember(x => x.HomePlayer1, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 1)))
+                .ForMember(x => x.HomePlayer2, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 2)))
+                .ForMember(x => x.HomePlayer3, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 3)))
+                .ForMember(x => x.HomePlayer4, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 4)))
+                .ForMember(x => x.AwayPlayer1, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 1)))
+                .ForMember(x => x.AwayPlayer2, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 2)))
+                .ForMember(x => x.AwayPlayer3, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 3)))
+                .ForMember(x => x.AwayPlayer4, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 4)));
+        }
+
+        private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)
+        {
+            if (played.Count() > playerNum)
+            {
+                return played.ElementAt(playerNum - 1);
+            }
+
+            return new WeaponPlayed();
         }
     }
 }

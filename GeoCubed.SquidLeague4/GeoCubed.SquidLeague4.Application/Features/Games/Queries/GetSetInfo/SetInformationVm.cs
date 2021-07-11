@@ -6,9 +6,11 @@
 
         public int MatchId { get; set; }
 
-        public double HomeTeamScore { get; set; }
+        public int SortOrder { get; set; }
 
-        public double AwayTeamScore { get; set; }
+        public double HomeTeamScore { get; set; } = 0;
+
+        public double AwayTeamScore { get; set; } = 0;
 
         public BasicPlayerWeapon HomePlayer1 { get; set; }
             = new BasicPlayerWeapon();

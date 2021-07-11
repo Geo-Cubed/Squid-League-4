@@ -54,6 +54,15 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedGames.ToList();
         }
 
+        public async Task<List<AdminResultsModel>> GetResultsInfo(int matchId)
+        {
+            await this.AddBearerToken();
+
+            var setInfo = await this._client.GetGameInfoAsync(matchId);
+            var mappedSetInfo = this._mapper.Map<ICollection<AdminResultsModel>>(setInfo);
+            return mappedSetInfo.ToList();
+        }
+
         public async Task<ApiResponse<int>> UpdateGame(AdminGameViewModel gameViewModel)
         {
             try
