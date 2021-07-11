@@ -25,6 +25,8 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
                 .Where(x => x.MatchId == matchId)
                 .Include(x => x.WeaponPlayeds)
                 .Include(x => x.GameSetting)
+                .ThenInclude(x => x.GameMap)
+                .Include(x => x.GameSetting.GameMode)
                 .ToList();
 
             return Task.FromResult(games as IReadOnlyList<Game>);

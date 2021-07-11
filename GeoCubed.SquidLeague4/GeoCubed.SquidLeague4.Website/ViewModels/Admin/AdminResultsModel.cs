@@ -1,4 +1,6 @@
-﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.Admin
+﻿using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
+
+namespace GeoCubed.SquidLeague4.Website.ViewModels.Admin
 {
     public class AdminResultsModel
     {
@@ -9,6 +11,10 @@
         public double HomeTeamScore { get; set; }
 
         public double AwayTeamScore { get; set; }
+
+        public MapListMapDto Map { get; set; }
+
+        public MapListModeDto Mode { get; set; }
 
         public AdminPlayerWeaponViewModel HomePlayer1 { get; set; }
 

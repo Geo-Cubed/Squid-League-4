@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using MediatR;
@@ -49,12 +50,15 @@ namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
                 }
                 else
                 {
+                    var mapMode = maps.ElementAt(i - 1);
                     orderedSetInfo.Add(
                         new SetInformationVm() 
                         { 
                             GameId = -1,
                             MatchId = request.MatchId,
-                            SortOrder = i
+                            SortOrder = i,
+                            Map = new MapListMapVm(mapMode.GameMap.MapName, mapMode.GameMap.PicturePath),
+                            Mode = new MapListModeVm(mapMode.GameMode.ModeName, mapMode.GameMode.PicturePath)
                         });
                 }
             }

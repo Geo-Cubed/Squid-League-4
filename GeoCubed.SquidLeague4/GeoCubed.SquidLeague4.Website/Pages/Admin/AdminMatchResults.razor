@@ -13,89 +13,89 @@
     </select>
 
     <div class="d-flex flex-wrap justify-content-center">
-        @if (this.maps.Count() == 0)
+        @if (this.setInformation.Count() == 0)
         {
             <h3>This match has not been associated with a bracket yet.</h3>
         }
 
-        @for (int i = 0; i < this.maps.Count(); ++i)
+        @foreach (var game in this.setInformation)
         {
             <div class="card m-2" style="width:100%;">
                 <div class="card-header">
-                    <h4>@GetGameText(i)</h4>
+                    <h4>@string.Format("Game {0} on {1} {2}", (this.setInformation.FindIndex(x => x == game) + 1), game.Mode.ModeName, game.Map.MapName)</h4>
                 </div>
                 <div class="card-body">
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row justify-content-lg-between">
                             <div class="d-flex flex-row">
                                 <h5 class="mr-3">@this.selectedMatch.HomeTeam</h5>
-                                <input type="number" min="0" max="100" class="form-control" @bind-value="this.setInformation.ElementAt(i).HomeTeamScore" />
+                                <input type="number" min="0" max="100" class="form-control" @bind-value="game.HomeTeamScore" />
                             </div>
                             <div class="d-flex flex-row">
-                                <input type="number" min="0" max="100" class="form-control" @bind-value="this.setInformation.ElementAt(i).AwayTeamScore" />
+                                <input type="number" min="0" max="100" class="form-control" @bind-value="game.AwayTeamScore" />
                                 <h5 class="ml-3">@this.selectedMatch.AwayTeam</h5>
                             </div>
                         </div>
                         <div class="d-flex flex-row justify-content-lg-between">
                             <div class="d-flex flex-column">
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer1.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.HomePlayer1.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.homeTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer1.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                    <select class="form-control" @bind="game.HomePlayer1.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer2.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.HomePlayer2.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.homeTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer2.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                    <select class="form-control" @bind="game.HomePlayer2.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer3.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.HomePlayer3.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.homeTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer3.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                    <select class="form-control" @bind="game.HomePlayer3.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer4.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.HomePlayer4.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.homeTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).HomePlayer4.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                    <select class="form-control" @bind="game.HomePlayer4.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
@@ -104,68 +104,68 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column align-items-center">
-                                <img src="@this.maps.ElementAt(i).Map.PicturePath" style="height:200px;width:355px;" />
-                                <img src="@this.maps.ElementAt(i).Mode.PicturePath" style="height:64px;width:64px;" />
+                                <img src="@game.Map.PicturePath" style="height:200px;width:355px;" />
+                                <img src="@game.Mode.PicturePath" style="height:64px;width:64px;" />
                             </div>
                             <div class="d-flex flex-column">
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer1.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.AwayPlayer1.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer1.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                    <select class="form-control" @bind="game.AwayPlayer1.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.awayTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer2.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.AwayPlayer2.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer2.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                    <select class="form-control" @bind="game.AwayPlayer2.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.awayTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer3.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.AwayPlayer3.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer3.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                    <select class="form-control" @bind="game.AwayPlayer3.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.awayTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>
                                         }
                                     </select>
                                 </div>
-                                <div class="d-flex flex-row">
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer4.WeaponId">
-                                        <option value="-1" selected>No Weapon</option>
+                                <div class="d-flex flex-row m-2">
+                                    <select class="form-control mr-2" @bind="game.AwayPlayer4.WeaponId">
+                                        <option value="0" selected>No Weapon</option>
                                         @foreach (var weapon in this.allWeapons)
                                         {
                                             <option value="@weapon.Id">@weapon.Name</option>
                                         }
                                     </select>
-                                    <select class="form-control" @bind="this.setInformation.ElementAt(i).AwayPlayer4.PlayerId">
-                                        <option value="-1" selected>No Player</option>
+                                    <select class="form-control" @bind="game.AwayPlayer4.PlayerId">
+                                        <option value="0" selected>No Player</option>
                                         @foreach (var player in this.awayTeamPlayers)
                                         {
                                             <option value="@player.Id">@player.InGameName</option>

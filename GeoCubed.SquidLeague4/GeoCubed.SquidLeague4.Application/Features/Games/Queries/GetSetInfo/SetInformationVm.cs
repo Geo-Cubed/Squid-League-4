@@ -1,4 +1,6 @@
-﻿namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
+﻿using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
+
+namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
 {
     public class SetInformationVm
     {
@@ -11,6 +13,10 @@
         public double HomeTeamScore { get; set; } = 0;
 
         public double AwayTeamScore { get; set; } = 0;
+
+        public MapListMapVm Map { get; set; }
+
+        public MapListModeVm Mode { get; set; }
 
         public BasicPlayerWeapon HomePlayer1 { get; set; }
             = new BasicPlayerWeapon();

@@ -43,9 +43,6 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected IEnumerable<AdminGameFullInfoViewModel> games { get; set; }
             = new List<AdminGameFullInfoViewModel>();
 
-        protected IEnumerable<MatchMapListViewModel> maps { get; set; }
-            = new List<MatchMapListViewModel>();
-
         protected IEnumerable<AdminPlayerViewModel> homeTeamPlayers { get; set; }
             = new List<AdminPlayerViewModel>();
 
@@ -68,14 +65,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             this.selectedMatch = this.matches.FirstOrDefault(x => x.Id == MatchId);
             try
             {
-                this.maps = await this.gameSettingDataService.GetMapListByMatchId(MatchId);
                 this.homeTeamPlayers = await this.playerDataService.GetPlayersByTeamId(this.selectedMatch.HomeTeamId);
                 this.awayTeamPlayers = await this.playerDataService.GetPlayersByTeamId(this.selectedMatch.AwayTeamId);
                 this.setInformation = await this.gameDataService.GetResultsInfo(this.selectedMatch.Id);
             }
             catch
             {
-                this.maps = new List<MatchMapListViewModel>();
                 this.homeTeamPlayers = new List<AdminPlayerViewModel>();
                 this.awayTeamPlayers = new List<AdminPlayerViewModel>();
                 this.setInformation = new List<AdminResultsModel>();
@@ -85,17 +80,6 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected string GetMatchText(string HomeTeam, string AwayTeam)
         {
             return string.Format("{0} vs. {1}", HomeTeam, AwayTeam);
-        }
-
-        protected string GetGameText(int gameNumber)
-        {
-            var map = this.maps.ElementAt(gameNumber);
-            if (map == null)
-            {
-                return string.Empty;
-            }
-
-            return string.Format("Game {0} on {1} {2}", gameNumber + 1, map.Mode.ModeName, map.Map.MapName);
         }
     }
 }

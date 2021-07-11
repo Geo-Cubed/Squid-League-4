@@ -183,6 +183,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Game, SetInformationVm>()
                 .ForMember(x => x.GameId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.SortOrder, opt => opt.MapFrom(x => x.GameSetting.SortOrder))
+                .ForMember(x => x.Map, opt => opt.MapFrom(x => x.GameSetting.GameMap))
+                .ForMember(x => x.Mode, opt => opt.MapFrom(x => x.GameSetting.GameMode))
                 .ForMember(x => x.HomePlayer1, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 1)))
                 .ForMember(x => x.HomePlayer2, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 2)))
                 .ForMember(x => x.HomePlayer3, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == true).ToList(), 3)))
