@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Results\Commands\UpdateGameInfo\" />
     <Folder Include="Features\Weapons\Commands\" />
   </ItemGroup>
 

@@ -35,12 +35,29 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
-        [HttpPut(Name = "SaveGameInfo")]
+        [HttpPost(Name = "SaveGameInfo")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult> SaveGameInfo([FromBody] SaveGameInfoCommand gameInfo)
+        {
+            var response = await this._mediator.Send(gameInfo);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest();
+        }
+
+        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
+        [HttpPut(Name = "UpdateGameInfo")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> UpdateGameInfo([FromBody] UpdateGameInfoCommand gameInfo)
         {
             var response = await this._mediator.Send(gameInfo);
             if (response.Success)

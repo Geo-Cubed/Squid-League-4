@@ -13,6 +13,12 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
         }
 
+        public Task<bool> DoesWeaponExist(int weaponId)
+        {
+            var weapons = this._dbContext.Weapons.AsNoTracking().Any(x => x.Id == weaponId);
+            return Task.FromResult(weapons);
+        }
+
         public Task<IReadOnlyList<Weapon>> GetAllWeaponsAndSubSpecials()
         {
            var weapons = this._dbContext.Weapons

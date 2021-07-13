@@ -5,9 +5,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
 {
     public class SaveGameInfoCommand : IRequest<SaveGameInfoCommandResponse>
     {
-        public int GameId { get; set; }
-
         public int MatchId { get; set; }
+
+        public int GameSettingId { get; set; }
 
         public double HomeTeamScore { get; set; }
 
