@@ -10,7 +10,7 @@ bracket
 	> Upper Bracket
 	> Lower Bracket
 stats
-useful information
+useful information - DONE
 helpful people - DONE
 
 --Admin Pages--
@@ -28,5 +28,5 @@ user dashboard - DONE
 TODO:
 remove un used api functions
 sort out namespaces and models for website
-go through the controllers and make sure the responses are ok (remove the response from delete) (add might need a bad request resposne)
+go through the controllers and make sure the responses are ok (remove the response from delete) (add might need a bad request response)
 remove null checks on dependency injection things in core

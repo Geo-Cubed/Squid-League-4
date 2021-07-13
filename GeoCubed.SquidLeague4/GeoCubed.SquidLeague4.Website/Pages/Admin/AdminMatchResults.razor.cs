@@ -84,12 +84,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected async Task SaveGameInformationAsync(AdminResultsModel gameInfo)
         {
-
+            // Call the save method.
+            // If method was success - Reload match.
+            // Else display message.
         }
 
-        protected async Task DeleteGameInformationAsync(AdminResultsModel gameInfo)
+        protected async Task DeleteGameInformationAsync(int gameId)
         {
-
+            // Call the delete method.
+            // If metho was success - Reload match.
+            // Else display message.
         }
     }
 }

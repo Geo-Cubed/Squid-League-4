@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Results\Commands\" />
     <Folder Include="Features\Weapons\Commands\" />
   </ItemGroup>
 
