@@ -34,6 +34,7 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Commands.CreatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
+using GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameInfo;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
@@ -193,6 +194,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.AwayPlayer2, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 2)))
                 .ForMember(x => x.AwayPlayer3, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 3)))
                 .ForMember(x => x.AwayPlayer4, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 4)));
+
+            CreateMap<Game, SaveGameInfoCommand>().ReverseMap();
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)

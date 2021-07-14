@@ -7,20 +7,17 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
 {
     internal class SaveGameInfoCommandValidator : AbstractValidator<SaveGameInfoCommand>
     {
-        private readonly IGameRepository _gameRepository;
         private readonly IWeaponRepository _weaponRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IMatchRepository _matchRepository;
         private readonly IGameSettingRepository _gameSettingRepository;
 
-        public SaveGameInfoCommandValidator(
-            IGameRepository gameRepository, 
+        public SaveGameInfoCommandValidator( 
             IWeaponRepository weaponRepository, 
             IPlayerRepository playerRepository,
             IMatchRepository matchRepository,
             IGameSettingRepository gameSettingRepository)
         {
-            this._gameRepository = gameRepository;
             this._weaponRepository = weaponRepository;
             this._playerRepository = playerRepository;
             this._matchRepository = matchRepository;
@@ -39,7 +36,8 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
                 .MustAsync(DoesMatchExist).WithMessage("The match does not exist")
                 .MustAsync(DoesGameSettingExist).WithMessage("The game setting does not exist")
                 .MustAsync(DoPlayersExist).WithMessage("One or more players do not exist")
-                .MustAsync(DoWeaponsExist).WithMessage("One or more weapons do not exist");
+                .MustAsync(DoWeaponsExist).WithMessage("One or more weapons do not exist")
+                .Must(ArePlayerWeaponsCorrect).WithMessage("One or more players/weapons are missing from a pair");
         }
 
         private async Task<bool> DoesMatchExist(SaveGameInfoCommand e, CancellationToken token)
@@ -170,6 +168,59 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
             }
 
             return await this._weaponRepository.DoesWeaponExist(id);
+        }
+
+        private bool ArePlayerWeaponsCorrect(SaveGameInfoCommand e)
+        {
+            if ((e.HomePlayer1.PlayerId > 0 && e.HomePlayer1.WeaponId <= 0) 
+                || (e.HomePlayer1.PlayerId <= 0 && e.HomePlayer1.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.HomePlayer2.PlayerId > 0 && e.HomePlayer2.WeaponId <= 0)
+                || (e.HomePlayer2.PlayerId <= 0 && e.HomePlayer2.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.HomePlayer3.PlayerId > 0 && e.HomePlayer3.WeaponId <= 0)
+                || (e.HomePlayer3.PlayerId <= 0 && e.HomePlayer3.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.HomePlayer4.PlayerId > 0 && e.HomePlayer4.WeaponId <= 0)
+                || (e.HomePlayer4.PlayerId <= 0 && e.HomePlayer4.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.AwayPlayer1.PlayerId > 0 && e.AwayPlayer1.WeaponId <= 0)
+                || (e.AwayPlayer1.PlayerId <= 0 && e.AwayPlayer1.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.AwayPlayer2.PlayerId > 0 && e.AwayPlayer2.WeaponId <= 0)
+                || (e.AwayPlayer2.PlayerId <= 0 && e.AwayPlayer2.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.AwayPlayer3.PlayerId > 0 && e.AwayPlayer3.WeaponId <= 0)
+                || (e.AwayPlayer3.PlayerId <= 0 && e.AwayPlayer3.WeaponId > 0))
+            {
+                return false;
+            }
+
+            if ((e.AwayPlayer4.PlayerId > 0 && e.AwayPlayer4.WeaponId <= 0)
+                || (e.AwayPlayer4.PlayerId <= 0 && e.AwayPlayer4.WeaponId > 0))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
