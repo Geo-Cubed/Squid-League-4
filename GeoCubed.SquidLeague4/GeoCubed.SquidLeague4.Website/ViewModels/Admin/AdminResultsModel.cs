@@ -8,6 +8,8 @@ namespace GeoCubed.SquidLeague4.Website.ViewModels.Admin
 
         public int MatchId { get; set; }
 
+        public int GameSettingId { get; set; }
+
         public double HomeTeamScore { get; set; }
 
         public double AwayTeamScore { get; set; }

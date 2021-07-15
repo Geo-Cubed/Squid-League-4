@@ -1,5 +1,6 @@
 ﻿using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             var gameId = playerWeapons.FirstOrDefault().GameId;
             var isHomeTeam = playerWeapons.FirstOrDefault().IsHomeTeam;
             var oldPlayers = this._dbContext.WeaponPlayeds
+                .AsNoTracking()
                 .Where(x => x.GameId == gameId && x.IsHomeTeam == isHomeTeam)
                 .ToList();
             foreach (var player in oldPlayers)
@@ -31,10 +33,8 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             }
 
             // Insert the new players.
-            foreach (var player in playerWeapons)
-            {
-                await this.AddAsync(player);
-            }
+            await this._dbContext.WeaponPlayeds.AddRangeAsync(playerWeapons);
+            await this._dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> DeletePlayersByGameId(int gameId)

@@ -75,7 +75,8 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         public Task<bool> TryGetGameId(int matchId, int gameSettingid, out int gameId)
         {
             gameId = -1;
-            var game = this._dbContext.Games.FirstOrDefault(x => x.MatchId == matchId && x.GameSettingId == gameSettingid);
+            var game = this._dbContext.Games.AsNoTracking()
+                .FirstOrDefault(x => x.MatchId == matchId && x.GameSettingId == gameSettingid);
             if (game == null)
             {
                 return Task.FromResult(false);

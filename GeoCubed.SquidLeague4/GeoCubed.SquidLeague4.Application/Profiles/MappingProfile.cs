@@ -200,7 +200,7 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)
         {
-            if (played.Count() > playerNum)
+            if (played.Count() >= playerNum)
             {
                 return played.ElementAt(playerNum - 1);
             }

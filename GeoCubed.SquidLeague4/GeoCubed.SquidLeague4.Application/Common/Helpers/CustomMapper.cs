@@ -23,9 +23,10 @@ namespace GeoCubed.SquidLeague4.Application.Common.Helpers
                     IsHomeTeam = isHomeTeam,
                     PlayerId = x.PlayerId,
                     WeaponId = x.WeaponId
-                });
+                })
+                .ToList();
 
-            return convertedList as List<WeaponPlayed>;
+            return convertedList;
         }
     }
 }

@@ -4,10 +4,8 @@ using GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using GeoCubed.SquidLeague4.Domain.Entities;
 using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,7 +85,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
                     request.HomePlayer4);
 
                 var mappedHomeTeamPlayers = CustomMapper.ConvertToWeaponPlayed(homeTeamPlayers, gameId, true);
-                if (mappedHomeTeamPlayers.Count() > 0)
+                if (mappedHomeTeamPlayers != null && mappedHomeTeamPlayers.Count() > 0)
                 {
                     await this._weaponPlayedRepository.AddPlayersToGame(mappedHomeTeamPlayers);
                 }
@@ -100,7 +98,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameIn
                     request.AwayPlayer4);
 
                 var mappedAwayTeamPlayers = CustomMapper.ConvertToWeaponPlayed(awayTeamPlayers, gameId, false);
-                if (mappedAwayTeamPlayers.Count() > 0)
+                if (mappedAwayTeamPlayers != null && mappedAwayTeamPlayers.Count() > 0)
                 {
                     await this._weaponPlayedRepository.AddPlayersToGame(mappedAwayTeamPlayers);
                 }

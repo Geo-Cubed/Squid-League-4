@@ -8,6 +8,8 @@ namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
 
         public int MatchId { get; set; }
 
+        public int GameSettingId { get; set; }
+
         public int SortOrder { get; set; }
 
         public double HomeTeamScore { get; set; } = 0;

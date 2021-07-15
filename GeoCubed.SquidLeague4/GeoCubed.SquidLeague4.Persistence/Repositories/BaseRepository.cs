@@ -29,7 +29,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
                 await this._dbContext.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (System.Exception ex)
             {
                 return false;
             }

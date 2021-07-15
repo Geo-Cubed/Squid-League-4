@@ -18,9 +18,6 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         private IMatchDataService matchDataService { get; set; }
 
         [Inject]
-        private IGameSettingDataService gameSettingDataService { get; set; }
-
-        [Inject]
         private IPlayerDataService playerDataService { get; set; }
 
         [Inject]
@@ -85,15 +82,25 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected async Task SaveGameInformationAsync(AdminResultsModel gameInfo)
         {
             // Call the save method.
-            // If method was success - Reload match.
-            // Else display message.
+            var response = await this.gameDataService.SaveResultsInfo(gameInfo);
+            if (response.Success)
+            {
+                this.setInformation = await this.gameDataService.GetResultsInfo(this.selectedMatch.Id);
+            }
+
+            // TODO: Else display message.
         }
 
         protected async Task DeleteGameInformationAsync(int gameId)
         {
             // Call the delete method.
-            // If metho was success - Reload match.
-            // Else display message.
+            var response = await this.gameDataService.DeleteResultsInfo(gameId);
+            if (response.Success)
+            {
+                this.setInformation = await this.gameDataService.GetResultsInfo(this.selectedMatch.Id);
+            }
+
+            // TODO: Else display message.
         }
     }
 }

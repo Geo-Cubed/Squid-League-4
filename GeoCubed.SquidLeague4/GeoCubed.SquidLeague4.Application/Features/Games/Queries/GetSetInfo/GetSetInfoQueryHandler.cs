@@ -56,6 +56,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Games.Queries.GetSetInfo
                         { 
                             GameId = -1,
                             MatchId = request.MatchId,
+                            GameSettingId = mapMode.Id,
                             SortOrder = i,
                             Map = new MapListMapVm(mapMode.GameMap.MapName, mapMode.GameMap.PicturePath),
                             Mode = new MapListModeVm(mapMode.GameMode.ModeName, mapMode.GameMode.PicturePath)

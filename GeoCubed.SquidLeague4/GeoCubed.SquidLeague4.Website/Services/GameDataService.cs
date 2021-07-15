@@ -47,6 +47,20 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
+        public async Task<ApiResponse<int>> DeleteResultsInfo(int gameId)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                await this._client.DeleteGameInfoAsync(gameId);
+                return new ApiResponse<int>() { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
+        }
+
         public async Task<List<AdminGameViewModel>> GetAllGames()
         {
             var allGames = await this._client.GetAllGamesAsync();
@@ -61,6 +75,21 @@ namespace GeoCubed.SquidLeague4.Website.Services
             var setInfo = await this._client.GetGameInfoAsync(matchId);
             var mappedSetInfo = this._mapper.Map<ICollection<AdminResultsModel>>(setInfo);
             return mappedSetInfo.ToList();
+        }
+
+        public async Task<ApiResponse<int>> SaveResultsInfo(AdminResultsModel adminResultsModel)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                var saveGameInfoCommand = this._mapper.Map<SaveGameInfoCommand>(adminResultsModel);
+                await this._client.SaveGameInfoAsync(saveGameInfoCommand);
+                return new ApiResponse<int>() { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
         }
 
         public async Task<ApiResponse<int>> UpdateGame(AdminGameViewModel gameViewModel)
