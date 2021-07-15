@@ -178,7 +178,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-primary" @onclick="() => SaveGameInformationAsync(game)">Save</button>
-                    <button type="button" class="btn btn-danger @((game.GameId <= 0)? "disabled" : "")" @onclick="() => { DeleteGameInformationAsync(game.GameId); }">Delete</button>
+                    <button type="button" class="btn btn-danger @((game.GameId <= 0)? "disabled" : "")" @onclick="() => DeleteGameInformationAsync(game.GameId)">Delete</button>
                 </div>
             </div>
         }
