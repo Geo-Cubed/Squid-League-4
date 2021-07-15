@@ -93,6 +93,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
 
         protected async Task DeleteGameInformationAsync(int gameId)
         {
+            if (gameId <= 0)
+            {
+                return;
+            }
+
             // Call the delete method.
             var response = await this.gameDataService.DeleteResultsInfo(gameId);
             if (response.Success)

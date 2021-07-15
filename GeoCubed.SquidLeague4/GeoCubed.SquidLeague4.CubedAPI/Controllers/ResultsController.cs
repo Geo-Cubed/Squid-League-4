@@ -64,7 +64,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
                 return NoContent();
             }
 
-            return BadRequest();
+            return BadRequest(response);
         }
     }
 }

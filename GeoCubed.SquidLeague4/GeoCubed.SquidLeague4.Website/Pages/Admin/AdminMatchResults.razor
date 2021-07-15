@@ -5,14 +5,14 @@
 <div class="text-center">
     <h3 class="m-2">Match Results</h3>
     <select class="form-control mb-3" @onchange="OnMatchSelectAsync">
-        <option value="f" selected></option>
+        <option value="f" selected>Select a match:</option>
         @foreach (var match in this.matches)
         {
             <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
         }
     </select>
 
-    <div class="d-flex flex-wrap justify-content-center">
+    <div class="d-flex flex-wrap justify-content-center"> 
         @if (this.setInformation.Count() == 0)
         {
             <h3>This match has not been associated with a bracket yet.</h3>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-primary" @onclick="() => SaveGameInformationAsync(game)">Save</button>
-                    <button type="button" class="btn btn-danger @((game.GameId <= 0)? "disabled" : "")" @onclick="() => { if (game.GameId > 0) { DeleteGameInformationAsync(game.GameId); } }">Delete</button>
+                    <button type="button" class="btn btn-danger @((game.GameId <= 0)? "disabled" : "")" @onclick="() => { DeleteGameInformationAsync(game.GameId); }">Delete</button>
                 </div>
             </div>
         }

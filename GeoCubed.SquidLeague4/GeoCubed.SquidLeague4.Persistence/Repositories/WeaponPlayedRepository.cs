@@ -40,7 +40,8 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         public async Task<bool> DeletePlayersByGameId(int gameId)
         {
             var players = this._dbContext.WeaponPlayeds
-                .Where(x => x.GameId == gameId);
+                .Where(x => x.GameId == gameId)
+                .ToList();
 
             foreach (var weaponPlayed in players)
             {
