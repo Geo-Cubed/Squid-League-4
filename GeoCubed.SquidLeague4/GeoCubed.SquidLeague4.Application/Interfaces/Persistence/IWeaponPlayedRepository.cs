@@ -7,5 +7,7 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
     public interface IWeaponPlayedRepository : IAsyncRepository<WeaponPlayed>
     {
         Task AddPlayersToGame(List<WeaponPlayed> playerWeapons);
+
+        Task<bool> DeletePlayersByGameId(int gameId);
     }
 }

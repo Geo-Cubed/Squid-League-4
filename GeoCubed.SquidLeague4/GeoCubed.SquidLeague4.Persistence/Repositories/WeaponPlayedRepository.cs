@@ -36,5 +36,22 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
                 await this.AddAsync(player);
             }
         }
+
+        public async Task<bool> DeletePlayersByGameId(int gameId)
+        {
+            var players = this._dbContext.WeaponPlayeds
+                .Where(x => x.GameId == gameId);
+
+            foreach (var weaponPlayed in players)
+            {
+                var success = await this.DeleteAsync(weaponPlayed);
+                if (!success)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
