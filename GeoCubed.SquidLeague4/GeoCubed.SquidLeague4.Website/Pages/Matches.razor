@@ -1,0 +1,81 @@
+﻿@page "/matches"
+
+<div class="text-center">
+    <h1 class="text-center">Matches</h1>
+
+    <!-- Select box -->
+    <select class="form-control mb-3" @onchange="OnMatchSelectAsync">
+        <option value="f" selected>Select a match:</option>
+        @foreach (var match in this.matches)
+        {
+            <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
+        }
+    </select>
+
+    @if (this.selectedMatch == null)
+    {
+        <!-- If not selected then say -->
+    }
+    else if (this.setInformation.Count() == 0)
+    {
+        <!-- If match has no results then say -->
+        <h3>This match has no results yet.</h3>
+    }
+    else
+    {
+        <!-- If match has results then display -->
+        <div class="d-flex flex-wrap justify-content-center">
+            @if (this.selectedMatch != null && this.selectedMatch.Winner != "None")
+            {
+                <h3>@this.GenerateWinnerText()</h3>
+            }
+
+            @foreach (var game in this.setInformation)
+            {
+                <div class="card m-2" style="width:100%;">
+                    <div class="card-header">
+                        <h4>@string.Format("Game {0} on {1} {2}", game.SortOrder, game.Mode.ModeName, game.Map.MapName)</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row justify-content-lg-between">
+                                <div class="d-flex flex-row">
+                                    <h5 class="mr-3">@this.selectedMatch.HomeTeam</h5>
+                                    <input type="number" min="0" max="100" class="form-control" @bind-value="game.HomeTeamScore" />
+                                </div>
+                                <div class="d-flex flex-row">
+                                    <input type="number" min="0" max="100" class="form-control" @bind-value="game.AwayTeamScore" />
+                                    <h5 class="ml-3">@this.selectedMatch.AwayTeam</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row justify-content-lg-between">
+                                <div class="d-flex flex-column">
+                                    @foreach (var player in game.HomePlayers)
+                                    {
+                                        <div class="d-flex flex-row m-2">
+                                            <h5>@player.UserName</h5>
+                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:40px;width:40px;"/>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <img src="@game.Map.PicturePath" style="height:200px;width:355px;" />
+                                    <img src="@game.Mode.PicturePath" style="height:64px;width:64px;" />
+                                </div>
+                                <div class="d-flex flex-column">
+                                    @foreach (var player in game.AwayPlayers)
+                                    {
+                                        <div class="d-flex flex-row m-2">
+                                            <h5>@player.UserName</h5>
+                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:40px;width:40px;" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }  
+</div>

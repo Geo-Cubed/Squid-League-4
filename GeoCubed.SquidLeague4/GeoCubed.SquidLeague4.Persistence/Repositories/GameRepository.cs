@@ -24,6 +24,9 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             var games = this._dbContext.Games
                 .Where(x => x.MatchId == matchId)
                 .Include(x => x.WeaponPlayeds)
+                .ThenInclude(x => x.Weapon)
+                .Include(x => x.WeaponPlayeds)
+                .ThenInclude(x => x.Player)
                 .Include(x => x.GameSetting)
                 .ThenInclude(x => x.GameMap)
                 .Include(x => x.GameSetting.GameMode)

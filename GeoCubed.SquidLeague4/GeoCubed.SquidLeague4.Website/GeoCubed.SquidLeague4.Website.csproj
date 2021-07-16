@@ -52,6 +52,7 @@
     <None Include="Pages\HelpfulPeople.razor" />
     <None Include="Pages\Login.razor" />
     <None Include="Pages\MapList.razor" />
+    <None Include="Pages\Matches.razor" />
     <None Include="Pages\Statistics.razor" />
     <None Include="Pages\Teams.razor" />
     <None Include="Pages\UsefulInformation.razor" />

@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetAllMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetBasicMatchInfo;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchById;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInfo;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
@@ -80,6 +81,15 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             var matches = await this._mediator.Send(new GetAllMatchesForAdminQuery());
             return Ok(matches);
         }
+
+        [HttpGet("info", Name = "GetMatchInfo")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<MatchInfoVm>> GetMatchInfo()
+        {
+            var matches = await this._mediator.Send(new GetMatchInfoQuery());
+            return Ok(matches);
+        }
+
         
         [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpGet("basicInfo", Name = "GetBasicMatchInfo")]

@@ -22,11 +22,8 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             this._mediator = mediator;
         }
 
-        [Authorize(Roles = Roles.Admin + "," + Roles.Moderator)]
         [HttpGet("fullSetInfo", Name = "FullSetInfo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<List<FullSetInfo>>> GetFullSetInfo(int matchId)
         {
             var games = await this._mediator.Send(new GetFullSetInfoQuery(matchId));

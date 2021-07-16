@@ -35,6 +35,7 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Commands.UpdatePlayer;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail;
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameInfo;
+using GeoCubed.SquidLeague4.Application.Features.Results.Queries.GetFullSetInfo;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
@@ -194,6 +195,15 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.AwayPlayer2, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 2)))
                 .ForMember(x => x.AwayPlayer3, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 3)))
                 .ForMember(x => x.AwayPlayer4, opt => opt.MapFrom(x => this.GetWeaponPlayed(x.WeaponPlayeds.Where(wp => wp.IsHomeTeam == false).ToList(), 4)));
+            CreateMap<Weapon, WeaponInfoDto>();
+            CreateMap<WeaponPlayed, PlayerInfoDto>()
+                .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.Player.InGameName));
+            CreateMap<Game, FullSetInfo>()
+                .ForMember(x => x.AwayPlayers, opt => opt.MapFrom(x => x.WeaponPlayeds.Where(wp => !wp.IsHomeTeam).Take(4)))
+                .ForMember(x => x.HomePlayers, opt => opt.MapFrom(x => x.WeaponPlayeds.Where(wp => wp.IsHomeTeam).Take(4)))
+                .ForMember(x => x.Map, opt => opt.MapFrom(x => x.GameSetting.GameMap))
+                .ForMember(x => x.Mode, opt => opt.MapFrom(x => x.GameSetting.GameMode))
+                .ForMember(x => x.SortOrder, opt => opt.MapFrom(x => x.GameSetting.SortOrder));
 
             CreateMap<Game, SaveGameInfoCommand>().ReverseMap();
         }

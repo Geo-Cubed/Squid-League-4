@@ -1,5 +1,6 @@
 ﻿using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,5 +15,6 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
         Task<List<AdminResultsModel>> GetResultsInfo(int matchId);
         Task<ApiResponse<int>> SaveResultsInfo(AdminResultsModel adminResultsModel);
         Task<ApiResponse<int>> DeleteResultsInfo(int gameId);
+        Task<List<SetInformationViewModel>> GetSetInformation(int matchId);
     }
 }

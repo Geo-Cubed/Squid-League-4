@@ -14,13 +14,13 @@ useful information - DONE
 helpful people - DONE
 
 --Admin Pages--
-login - DONE
+login - DONE needs enter key adding
 casters - DONE
 game settings - DONE needs testing though - issues with adding modal (pre filling and combo box not filling)
 helpful people - DONE
 matches - DONE
 players - DONE
-results
+results - DONE needs some more testing though.
 system switches - DONE
 teams - DONE
 user dashboard - DONE

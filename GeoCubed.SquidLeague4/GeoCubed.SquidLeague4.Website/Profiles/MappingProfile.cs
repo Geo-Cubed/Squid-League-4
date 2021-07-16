@@ -6,6 +6,7 @@ using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
+using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System;
@@ -91,6 +92,10 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<BasicPlayerWeapon, AdminPlayerWeaponViewModel>().ReverseMap();
             CreateMap<SetInformationVm, AdminResultsModel>();
             CreateMap<AdminResultsModel, SaveGameInfoCommand>();
+            CreateMap<PlayerInfoDto, PlayerWeaponInfoDto>()
+                .ForMember(x => x.PicturePath, opt => opt.MapFrom(x => x.Weapon.PicturePath))
+                .ForMember(x => x.WeaponName, opt => opt.MapFrom(x => x.Weapon.WeaponName));
+            CreateMap<FullSetInfo, SetInformationViewModel>();
         }
     }
 }

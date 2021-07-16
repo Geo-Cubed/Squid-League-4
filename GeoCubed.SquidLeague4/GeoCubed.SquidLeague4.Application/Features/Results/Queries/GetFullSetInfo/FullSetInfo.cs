@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GeoCubed.SquidLeague4.Application.Features.GameSettings.Queries.GetMapLists;
+using System.Collections.Generic;
 
 namespace GeoCubed.SquidLeague4.Application.Features.Results.Queries.GetFullSetInfo
 {
@@ -10,11 +11,15 @@ namespace GeoCubed.SquidLeague4.Application.Features.Results.Queries.GetFullSetI
             this.AwayPlayers = new List<PlayerInfoDto>();
         }
 
-        public int GameId { get; set; }
+        public int SortOrder { get; set; }
 
         public double HomeTeamScore { get; set; }
 
         public double AwayTeamScore { get; set; }
+
+        public MapListMapVm Map { get; set; }
+
+        public MapListModeVm Mode { get; set; }
 
         public List<PlayerInfoDto> HomePlayers { get; set; }
 
