@@ -3,29 +3,29 @@
 <div class="text-center">
     <h1 class="text-center">Matches</h1>
 
-    <!-- Select box -->
-    <select class="form-control mb-3" @onchange="OnMatchSelectAsync">
+    <select class="form-control m-3" @onchange="OnMatchSelectAsync">
         <option value="f" selected>Select a match:</option>
         @foreach (var match in this.matches)
         {
-            <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
+            <option value="@match.MatchId">@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
         }
     </select>
 
     @if (this.selectedMatch == null)
     {
         <!-- If not selected then say -->
+        <h3 class="m-2">Please select a match</h3>
     }
     else if (this.setInformation.Count() == 0)
     {
         <!-- If match has no results then say -->
-        <h3>This match has no results yet.</h3>
+        <h3 class="m-2">This match has no results yet</h3>
     }
     else
     {
         <!-- If match has results then display -->
         <div class="d-flex flex-wrap justify-content-center">
-            @if (this.selectedMatch != null && this.selectedMatch.Winner != "None")
+            @if (this.selectedMatch != null && this.selectedMatch.Winner != "none")
             {
                 <h3>@this.GenerateWinnerText()</h3>
             }
@@ -40,12 +40,10 @@
                         <div class="d-flex flex-column">
                             <div class="d-flex flex-row justify-content-lg-between">
                                 <div class="d-flex flex-row">
-                                    <h5 class="mr-3">@this.selectedMatch.HomeTeam</h5>
-                                    <input type="number" min="0" max="100" class="form-control" @bind-value="game.HomeTeamScore" />
+                                    <h5 class="m-3">@string.Format("{0} - {1}", this.selectedMatch.HomeTeamName, this.selectedMatch.HomeTeamScore)</h5>
                                 </div>
                                 <div class="d-flex flex-row">
-                                    <input type="number" min="0" max="100" class="form-control" @bind-value="game.AwayTeamScore" />
-                                    <h5 class="ml-3">@this.selectedMatch.AwayTeam</h5>
+                                    <h5 class="m-3">@string.Format("{0} - {1}", this.selectedMatch.AwayTeamScore, this.selectedMatch.AwayTeamName)</h5>
                                 </div>
                             </div>
                             <div class="d-flex flex-row justify-content-lg-between">

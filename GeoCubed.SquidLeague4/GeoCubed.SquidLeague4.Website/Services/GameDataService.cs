@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +76,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             var setInfo = await this._client.GetGameInfoAsync(matchId);
             var mappedSetInfo = this._mapper.Map<ICollection<AdminResultsModel>>(setInfo);
             return mappedSetInfo.ToList();
+        }
+
+        public Task<List<SetInformationViewModel>> GetSetInformation(int matchId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<ApiResponse<int>> SaveResultsInfo(AdminResultsModel adminResultsModel)

@@ -26,6 +26,7 @@ using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.CreateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Commands.UpdateMatch;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetAllMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetBasicMatchInfo;
+using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInfo;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchList;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetTeamPlayedMatches;
 using GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetUpcommingMatchesList;
@@ -206,6 +207,10 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.SortOrder, opt => opt.MapFrom(x => x.GameSetting.SortOrder));
 
             CreateMap<Game, SaveGameInfoCommand>().ReverseMap();
+            CreateMap<Match, MatchInfoVm>()
+                .ForMember(x => x.MatchId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.HomeTeamName, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
+                .ForMember(x => x.AwayTeamName, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)
