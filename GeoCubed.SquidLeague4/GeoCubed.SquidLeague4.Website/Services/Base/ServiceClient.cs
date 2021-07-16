@@ -425,12 +425,12 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<MatchInfoVm> GetMatchInfoAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchInfoVm>> GetMatchInfoAsync();
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<MatchInfoVm> GetMatchInfoAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchInfoVm>> GetMatchInfoAsync(System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -4955,7 +4955,7 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<MatchInfoVm> GetMatchInfoAsync()
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchInfoVm>> GetMatchInfoAsync()
         {
             return GetMatchInfoAsync(System.Threading.CancellationToken.None);
         }
@@ -4963,7 +4963,7 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<MatchInfoVm> GetMatchInfoAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MatchInfoVm>> GetMatchInfoAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/Match/info");
@@ -5000,7 +5000,7 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<MatchInfoVm>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<MatchInfoVm>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -9289,8 +9289,8 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         [Newtonsoft.Json.JsonProperty("matchId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int MatchId { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("matchDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset MatchDate { get; set; }
+        [Newtonsoft.Json.JsonProperty("matchDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? MatchDate { get; set; }
     
         [Newtonsoft.Json.JsonProperty("matchVodLink", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string MatchVodLink { get; set; }

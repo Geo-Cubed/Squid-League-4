@@ -6,7 +6,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInf
     {
         public int MatchId { get; set; }
 
-        public DateTime MatchDate { get; set; }
+        public DateTime? MatchDate { get; set; }
 
         public string MatchVodLink { get; set; }
 

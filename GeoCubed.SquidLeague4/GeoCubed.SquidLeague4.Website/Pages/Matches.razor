@@ -34,16 +34,16 @@
             {
                 <div class="card m-2" style="width:100%;">
                     <div class="card-header">
-                        <h4>@string.Format("Game {0} on {1} {2}", game.SortOrder, game.Mode.ModeName, game.Map.MapName)</h4>
+                        <h3>@string.Format("Game {0} on {1} {2}", game.SortOrder, game.Mode.ModeName, game.Map.MapName)</h3>
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-column">
                             <div class="d-flex flex-row justify-content-lg-between">
                                 <div class="d-flex flex-row">
-                                    <h5 class="m-3">@string.Format("{0} - {1}", this.selectedMatch.HomeTeamName, this.selectedMatch.HomeTeamScore)</h5>
+                                    <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", this.selectedMatch.HomeTeamName, game.HomeTeamScore)</em></h4>
                                 </div>
                                 <div class="d-flex flex-row">
-                                    <h5 class="m-3">@string.Format("{0} - {1}", this.selectedMatch.AwayTeamScore, this.selectedMatch.AwayTeamName)</h5>
+                                    <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", game.AwayTeamScore, this.selectedMatch.AwayTeamName)</em></h4>
                                 </div>
                             </div>
                             <div class="d-flex flex-row justify-content-lg-between">
@@ -51,8 +51,8 @@
                                     @foreach (var player in game.HomePlayers)
                                     {
                                         <div class="d-flex flex-row m-2">
-                                            <h5>@player.UserName</h5>
-                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:40px;width:40px;"/>
+                                            <h5 class="mr-3" style="min-width:100px;">@player.UserName</h5>
+                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;"/>
                                         </div>
                                     }
                                 </div>
@@ -64,8 +64,8 @@
                                     @foreach (var player in game.AwayPlayers)
                                     {
                                         <div class="d-flex flex-row m-2">
-                                            <h5>@player.UserName</h5>
-                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:40px;width:40px;" />
+                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
+                                            <h5 class="ml-3" style="min-width:100px;">@player.UserName</h5>
                                         </div>
                                     }
                                 </div>

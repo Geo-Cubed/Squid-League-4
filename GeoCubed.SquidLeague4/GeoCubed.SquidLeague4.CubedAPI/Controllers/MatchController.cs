@@ -84,7 +84,7 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
 
         [HttpGet("info", Name = "GetMatchInfo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<MatchInfoVm>> GetMatchInfo()
+        public async Task<ActionResult<List<MatchInfoVm>>> GetMatchInfo()
         {
             var matches = await this._mediator.Send(new GetMatchInfoQuery());
             return Ok(matches);

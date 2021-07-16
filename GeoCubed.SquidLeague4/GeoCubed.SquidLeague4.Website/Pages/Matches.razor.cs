@@ -18,6 +18,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         private IMatchDataService matchDataService { get; set; }
 
         protected List<MatchInfoViewModel> matches { get; set; }
+            = new List<MatchInfoViewModel>();
 
         protected MatchInfoViewModel selectedMatch { get; set; }
 

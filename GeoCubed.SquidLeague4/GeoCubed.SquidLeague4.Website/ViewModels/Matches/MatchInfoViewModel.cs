@@ -9,7 +9,7 @@ namespace GeoCubed.SquidLeague4.Website.ViewModels.Matches
     {
         public int MatchId { get; set; }
         
-        public DateTime MatchDate { get; set; }
+        public DateTime? MatchDate { get; set; }
 
         public string HomeTeamName { get; set; }
 
