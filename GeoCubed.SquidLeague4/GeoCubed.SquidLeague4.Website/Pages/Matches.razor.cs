@@ -27,11 +27,10 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected override async Task OnInitializedAsync()
         {
             /* TODO:
-             * Use nswag.
-             * Get list of matches.
              * Try make the ui moblie friendly.
-             *
              */
+
+            this.matches = await this.matchDataService.GetMatchInfo();
         }
 
         protected async Task OnMatchSelectAsync(ChangeEventArgs e)

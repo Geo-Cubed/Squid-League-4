@@ -19,5 +19,6 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
         Task<ApiResponse<int>> CreateMatch(AdminMatchViewModel matchViewModel);
         Task<ApiResponse<int>> UpdateMatch(AdminMatchViewModel matchViewModel);
         Task<ApiResponse<int>> DeleteMatch(int id);
+        Task<List<MatchInfoViewModel>> GetMatchInfo();
     }
 }

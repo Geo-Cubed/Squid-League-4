@@ -79,6 +79,13 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedMatch;
         }
 
+        public async Task<List<MatchInfoViewModel>> GetMatchInfo()
+        {
+            var matches = await this._client.GetMatchInfoAsync();
+            var mappedMatches = this._mapper.Map<List<MatchInfoViewModel>>(matches);
+            return mappedMatches;
+        }
+
         public async Task<List<TeamMatchViewModel>> GetTemMatches(int teamId)
         {
             var matches = await this._client.GetTeamPlayedMatchesAsync(teamId);

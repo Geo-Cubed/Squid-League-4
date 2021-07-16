@@ -78,9 +78,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedSetInfo.ToList();
         }
 
-        public Task<List<SetInformationViewModel>> GetSetInformation(int matchId)
+        public async Task<List<SetInformationViewModel>> GetSetInformation(int matchId)
         {
-            throw new System.NotImplementedException();
+            var info = await this._client.FullSetInfoAsync(matchId);
+            var mappedInfo = this._mapper.Map<List<SetInformationViewModel>>(info);
+            return mappedInfo;
         }
 
         public async Task<ApiResponse<int>> SaveResultsInfo(AdminResultsModel adminResultsModel)

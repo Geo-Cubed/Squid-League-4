@@ -23,7 +23,7 @@ players - DONE
 results - DONE needs some more testing though.
 system switches - DONE
 teams - DONE
-user dashboard - DONE
+user dashboard - DONE need to kick out unauthorized users
 
 TODO:
 remove un used api functions
