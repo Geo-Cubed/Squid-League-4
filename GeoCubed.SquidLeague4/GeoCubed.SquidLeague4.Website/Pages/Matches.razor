@@ -1,79 +1,147 @@
 ﻿@page "/matches"
+@page "/matches/{id:int}"
+
+@using GeoCubed.SquidLeague4.Website.Common.Helpers
 
 <div class="text-center">
-    <h1 class="text-center">Matches</h1>
+    <h1>Matches</h1>
 
-    <select class="form-control m-3" @onchange="OnMatchSelectAsync">
-        <option value="f" selected>Select a match:</option>
-        @foreach (var match in this.matches)
+    <select class="form-control mb-3" @onchange="OnMatchSelectAsync">
+        @if (this.selectedMatch == null)
         {
-            <option value="@match.MatchId">@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
+            <option value="-1" selected>Select a match:</option>
+        }
+        @foreach (var match in this.matches.OrderByDescending(x => x.MatchDate ?? DateTime.MaxValue))
+        {
+            @if (this.selectedMatch != null && this.selectedMatch.MatchId == match.MatchId)
+            {
+                <option value="@match.MatchId" selected>@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
+            }
+            else
+            {
+                <option value="@match.MatchId">@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
+            }
         }
     </select>
 
     @if (this.selectedMatch == null)
     {
-        <!-- If not selected then say -->
         <h3 class="m-2">Please select a match</h3>
-    }
-    else if (this.setInformation.Count() == 0)
-    {
-        <!-- If match has no results then say -->
-        <h3 class="m-2">This match has no results yet</h3>
     }
     else
     {
-        <!-- If match has results then display -->
-        <div class="d-flex flex-wrap justify-content-center">
-            @if (this.selectedMatch != null && this.selectedMatch.Winner != "none")
-            {
-                <h3>@this.GenerateWinnerText()</h3>
-            }
-
-            @foreach (var game in this.setInformation)
-            {
+        <!-- Display caster info -->
+        @if (!string.IsNullOrEmpty(this.selectedMatch.Caster) || !string.IsNullOrEmpty(this.selectedMatch.MatchVodLink))
+        {
+            <div class="d-flex flex-column justify-content-center">
                 <div class="card m-2" style="width:100%;">
-                    <div class="card-header">
-                        <h3>@string.Format("Game {0} on {1} {2}", game.SortOrder, game.Mode.ModeName, game.Map.MapName)</h3>
-                    </div>
                     <div class="card-body">
-                        <div class="d-flex flex-column">
-                            <div class="d-flex flex-row justify-content-lg-between">
-                                <div class="d-flex flex-row">
-                                    <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", this.selectedMatch.HomeTeamName, game.HomeTeamScore)</em></h4>
-                                </div>
-                                <div class="d-flex flex-row">
-                                    <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", game.AwayTeamScore, this.selectedMatch.AwayTeamName)</em></h4>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row justify-content-lg-between">
-                                <div class="d-flex flex-column">
-                                    @foreach (var player in game.HomePlayers)
-                                    {
-                                        <div class="d-flex flex-row m-2">
-                                            <h5 class="mr-3" style="min-width:100px;">@player.UserName</h5>
-                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;"/>
-                                        </div>
-                                    }
-                                </div>
-                                <div class="d-flex flex-column align-items-center">
-                                    <img src="@game.Map.PicturePath" style="height:200px;width:355px;" />
-                                    <img src="@game.Mode.PicturePath" style="height:64px;width:64px;" />
-                                </div>
-                                <div class="d-flex flex-column">
-                                    @foreach (var player in game.AwayPlayers)
-                                    {
-                                        <div class="d-flex flex-row m-2">
-                                            <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
-                                            <h5 class="ml-3" style="min-width:100px;">@player.UserName</h5>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        <h3>@this.GetHeadderText()</h3>
+                        @if (!string.IsNullOrEmpty(this.selectedMatch.MatchVodLink))
+                        {
+                            <a href="@this.selectedMatch.MatchVodLink" target="_blank">
+                                <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(this.selectedMatch.MatchVodLink))" style="height:30px">
+                            </a>
+                        }
                     </div>
                 </div>
-            }
-        </div>
-    }  
+            </div>
+        }
+
+        @if (this.setInformation.Count() == 0)
+        {
+            <h3 class="m-2">This match has no results yet</h3>
+        }
+        else
+        {
+            <div class="d-flex flex-wrap justify-content-center">
+                @if (this.selectedMatch != null && this.selectedMatch.Winner != "none")
+                {
+                    <h3>@this.GenerateWinnerText()</h3>
+                }
+
+                @foreach (var game in this.setInformation)
+                {
+                    <div class="card m-2" style="width:100%;">
+                        <div class="card-header">
+                            <h3>@string.Format("Game {0} on {1} {2}", game.SortOrder, game.Mode.ModeName, game.Map.MapName)</h3>
+                        </div>
+                        <div class="card-body">
+                            <MediaQuery Media="@Breakpoints.LargeDown">
+                                <Matched>
+                                    <div class="d-flex flex-row flex-wrap justify-content-center">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <img src="@game.Map.PicturePath" style="width:100%;" />
+                                            <img src="@game.Mode.PicturePath" style="height:64px;width:64px;" />
+                                        </div>
+                                        <div class="d-flex flex-column align-baseline align-items-center">
+                                            <div class="d-flex flex-column flex-wrap align-content-center">
+                                                <h4 class="m-3 border-bottom"><em>@this.selectedMatch.HomeTeamName</em></h4>
+                                                <h4><em>@game.HomeTeamScore</em></h4>
+                                            </div>
+                                            <div class="d-flex flex-row flex-wrap align-content-center">
+                                                @foreach (var player in game.HomePlayers)
+                                                {
+                                                    <div class="d-flex flex-column flex-wrap m-2 align-items-center">
+                                                        <h5 style="min-width:100px;">@player.UserName</h5>
+                                                        <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-baseline align-items-center">
+                                            <div class="d-flex flex-column flex-wrap align-content-center">
+                                                <h4 class="m-3 border-bottom"><em>@this.selectedMatch.AwayTeamName</em></h4>
+                                                <h4><em>@game.AwayTeamScore</em></h4>
+                                            </div>
+                                            <div class="d-flex flex-row flex-wrap align-content-center">
+                                                @foreach (var player in game.AwayPlayers)
+                                                {
+                                                    <div class="d-flex flex-column flex-wrap m-2 align-items-center">
+                                                        <h5 style="min-width:100px;">@player.UserName</h5>
+                                                        <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Matched>
+                                <Unmatched>
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex flex-row flex-wrap justify-content-lg-between">
+                                            <div class="d-flex flex-column">
+                                                <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", this.selectedMatch.HomeTeamName, game.HomeTeamScore)</em></h4>
+                                                @foreach (var player in game.HomePlayers)
+                                                {
+                                                    <div class="d-flex flex-row m-2">
+                                                        <h5 class="mr-3" style="min-width:100px;">@player.UserName</h5>
+                                                        <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="d-flex flex-column align-items-center">
+                                                <img src="@game.Map.PicturePath" style="width:100%;" />
+                                                <img src="@game.Mode.PicturePath" style="height:64px;width:64px;" />
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <h4 class="m-3 border-bottom"><em>@string.Format("{0} - {1}", game.AwayTeamScore, this.selectedMatch.AwayTeamName)</em></h4>
+                                                @foreach (var player in game.AwayPlayers)
+                                                {
+                                                    <div class="d-flex flex-row m-2">
+                                                        <img src="@player.PicturePath" alt="@player.WeaponName" style="height:35px;width:35px;" />
+                                                        <h5 class="ml-3" style="min-width:100px;">@player.UserName</h5>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Unmatched>
+                            </MediaQuery>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        }
+    }
 </div>

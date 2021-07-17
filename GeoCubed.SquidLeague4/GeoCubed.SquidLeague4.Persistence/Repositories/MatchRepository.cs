@@ -24,7 +24,9 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
             var matches = this._dbContext.Matches
                 .Include(m => m.HomeTeam)
-                .Include(m => m.AwayTeam).ToList();
+                .Include(m => m.AwayTeam)
+                .Include(m => m.CasterProfile)
+                .Include(m => m.SecondaryCasterProfile).ToList();
 
             return Task.FromResult((IReadOnlyList<Match>)matches);
         }

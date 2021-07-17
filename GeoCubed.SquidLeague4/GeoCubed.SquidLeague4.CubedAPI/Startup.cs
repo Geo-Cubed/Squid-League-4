@@ -70,11 +70,13 @@ namespace GeoCubed.SquidLeague4.CubedAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("https://localhost/geocubed/swagger/v1/swagger.json", "GeoCubed.SquidLeague4.CubedAPI v1"));
+#if DEBUG
+    app.UseDeveloperExceptionPage();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("https://localhost/geocubed/swagger/v1/swagger.json", "GeoCubed.SquidLeague4.CubedAPI v1"));
+#endif
             }
 
             app.UseHttpsRedirection();

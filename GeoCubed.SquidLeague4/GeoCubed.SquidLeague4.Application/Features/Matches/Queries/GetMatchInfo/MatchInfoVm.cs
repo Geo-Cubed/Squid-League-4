@@ -19,5 +19,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInf
         public int AwayTeamScore { get; set; }
 
         public string Winner { get; set; }
+
+        public string Caster { get; set; }
+
+        public string CoCaster { get; set; }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GeoCubed.SquidLeague4.Website.ViewModels.Matches
 {
@@ -10,6 +7,8 @@ namespace GeoCubed.SquidLeague4.Website.ViewModels.Matches
         public int MatchId { get; set; }
         
         public DateTime? MatchDate { get; set; }
+
+        public string MatchVodLink { get; set; }
 
         public string HomeTeamName { get; set; }
 
@@ -20,5 +19,9 @@ namespace GeoCubed.SquidLeague4.Website.ViewModels.Matches
         public int AwayTeamScore { get; set; }
 
         public string Winner { get; set; }
+
+        public string Caster { get; set; }
+
+        public string CoCaster { get; set; }
     }
 }

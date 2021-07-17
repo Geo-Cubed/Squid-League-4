@@ -1,17 +1,19 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <div class="main">
-        <div class="content px-4" style="flex-grow:1;">
-            @Body
+    <MediaQueryList>
+        <div class="sidebar">
+            <NavMenu />
         </div>
 
-        <footer>
-            <PageFooter />
-        </footer>    
-    </div>
+        <div class="main">
+            <div class="content px-4" style="flex-grow:1;">
+                @Body
+            </div>
+
+            <footer>
+                <PageFooter />
+            </footer>    
+        </div>
+    </MediaQueryList>
 </div>

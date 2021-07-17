@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         [Inject]
         private IMatchDataService matchDataService { get; set; }
 
+        [Inject]
+        private NavigationManager navigationManager { get; set; }
+
+        [Parameter]
+        public int id { get; set; }
+
         protected List<MatchInfoViewModel> matches { get; set; }
             = new List<MatchInfoViewModel>();
 
@@ -27,11 +34,21 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            /* TODO:
-             * Try make the ui moblie friendly.
-             */
-
             this.matches = await this.matchDataService.GetMatchInfo();
+            this.selectedMatch = this.matches.FirstOrDefault(x => x.MatchId == id);
+            if (this.selectedMatch != null)
+            {
+                await this.GetMatchGames();
+            }
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            this.selectedMatch = this.matches.FirstOrDefault(x => x.MatchId == id);
+            if (this.selectedMatch != null)
+            {
+                await this.GetMatchGames();
+            }
         }
 
         protected async Task OnMatchSelectAsync(ChangeEventArgs e)
@@ -42,10 +59,25 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                 return;
             }
 
-            this.selectedMatch = this.matches.FirstOrDefault(x => x.MatchId == matchId);
+            if (matchId <= 0)
+            {
+                this.selectedMatch = null;
+                return;
+            }
+
+            this.navigationManager.NavigateTo($"matches/{matchId}");
+        }
+
+        protected async Task GetMatchGames()
+        {
+            if (selectedMatch == null)
+            {
+                return;
+            }
+
             try
             {
-                this.setInformation = await this.gameDataService.GetSetInformation(matchId);
+                this.setInformation = await this.gameDataService.GetSetInformation(this.selectedMatch.MatchId);
             }
             catch
             {
@@ -79,6 +111,18 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected string GetMatchText(string homeTeam, string awayTeam)
         {
             return string.Format("{0} vs. {1}", homeTeam, awayTeam);
+        }
+
+        protected string GetHeadderText()
+        {
+            if (this.selectedMatch == null)
+            {
+                return string.Empty;
+            }
+
+            var baseStr = (string.IsNullOrEmpty(this.selectedMatch.Caster)) ? string.Empty : string.Format("Casted by: {0}", this.selectedMatch.Caster);
+            baseStr = (string.IsNullOrEmpty(this.selectedMatch.CoCaster)) ? baseStr : string.Format("{0} and {1}", baseStr, this.selectedMatch.CoCaster);
+            return (this.selectedMatch.MatchDate.HasValue && this.selectedMatch.MatchDate.Value > new DateTime(2021, 1, 1)) ? string.Format("{0} {1} BST", baseStr, this.selectedMatch.MatchDate.Value) : baseStr;
         }
     }
 }

@@ -1,4 +1,5 @@
 using Blazored.LocalStorage;
+using BlazorPro.BlazorSize;
 using GeoCubed.SquidLeague4.Website.Auth;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services;
@@ -21,11 +22,12 @@ namespace GeoCubed.SquidLeague4.Website
 
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddMediaQueryService();
 
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
-            builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost/geocubed/"));
+            builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://cubedapi.azurewebsites.net/"));
 
             builder.Services.AddScoped<IPlayerDataService, PlayerDataService>();
             builder.Services.AddScoped<ITeamDataService, TeamDataService>();

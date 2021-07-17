@@ -1,9 +1,9 @@
 --Standard Pages--
-home - DONE
+home - DONE (needs more nav links)
 404 - DONE
 teams - DONE
 casters - DONE
-matches
+matches - DONE
 map list - DONE
 bracket
 	> Swiss - DONE
@@ -12,6 +12,7 @@ bracket
 stats
 useful information - DONE
 helpful people - DONE
+loading bar
 
 --Admin Pages--
 login - DONE needs enter key adding

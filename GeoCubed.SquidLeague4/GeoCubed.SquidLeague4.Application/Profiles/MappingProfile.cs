@@ -210,7 +210,9 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Match, MatchInfoVm>()
                 .ForMember(x => x.MatchId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.HomeTeamName, opt => opt.MapFrom(x => x.HomeTeam.TeamName))
-                .ForMember(x => x.AwayTeamName, opt => opt.MapFrom(x => x.AwayTeam.TeamName));
+                .ForMember(x => x.AwayTeamName, opt => opt.MapFrom(x => x.AwayTeam.TeamName))
+                .ForMember(x => x.Caster, opt => opt.MapFrom(x => x.CasterProfile.CasterName))
+                .ForMember(x => x.CoCaster, opt => opt.MapFrom(x => x.SecondaryCasterProfile.CasterName));
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)

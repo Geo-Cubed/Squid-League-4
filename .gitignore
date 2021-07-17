@@ -1,4 +1,10 @@
 /config.json
+/appsettings.json
+*.arm.json
+*.pubxml
+*.CubedApi - Web Deploy.json
+*.json
+.config/
 *.nswag
 *.dll
 *.gz
@@ -217,3 +223,4 @@ project.lock.json
 *.feature.cs
 *.feature.xlsx.*
 *.Specs_*.html
+GeoCubed.SquidLeague4/GeoCubed.SquidLeague4.CubedAPI/appsettings.json
