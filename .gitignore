@@ -3,12 +3,9 @@
 *.arm.json
 *.pubxml
 *.CubedApi - Web Deploy.json
-*.json
 .config/
 *.nswag
-*.dll
-*.gz
-Build/
+Build\
 
 # found this online at https://gist.github.com/kmorcinek/2710267 works better than writing my own
 
@@ -109,12 +106,6 @@ DocProject/Help/*.hhk
 DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
-
-# Click-Once directory
-publish/
-
-# Publish Web Output
-*.Publish.xml
 
 # Windows Azure Build Output
 csx

@@ -1,5 +1,5 @@
 --Standard Pages--
-home - DONE (needs more nav links)
+home - DONE
 404 - DONE
 teams - DONE
 casters - DONE
@@ -12,7 +12,7 @@ bracket
 stats
 useful information - DONE
 helpful people - DONE
-loading bar
+loading bar - DONE?
 
 --Admin Pages--
 login - DONE needs enter key adding

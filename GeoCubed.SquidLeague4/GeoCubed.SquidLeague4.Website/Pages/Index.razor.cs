@@ -10,6 +10,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages
     public partial class Index
     {
         [Inject]
+        private NavigationManager navigationManager { get; set; }
+
+        [Inject]
         public IMatchDataService MatchDataService { get; set; }
 
         public IEnumerable<UpcommingMatchViewModel> UpcommingMatches { get; set; }
@@ -18,6 +21,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected async override Task OnInitializedAsync()
         {
             this.UpcommingMatches = (await this.MatchDataService.GetUpcommingMatches()).OrderBy(x => x.MatchDate.Value);
+        }
+
+        protected void NavigateTo(string url)
+        {
+            this.navigationManager.NavigateTo(url);
         }
     }
 }

@@ -8,32 +8,59 @@
     @if (this.UpcommingMatches.Count() == 0)
     {
         <h2 class="mb-2">There are no upcomming matches</h2>
-        <!-- TODO: Add mini nav menu-->
-    }
-    else
-    {
-        <h2 class="mb-2">Upcomming Matches</h2>
-
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            @foreach (var dayOfMatches in this.UpcommingMatches.Where(m => m.MatchDate.HasValue).GroupBy(m => m.MatchDate.Value.ToShortDateString()))
-            {
-                <h3>@dayOfMatches.FirstOrDefault().MatchDate.Value.ToLongDateString()</h3>
-                @foreach (var match in dayOfMatches)
-                {
-                    <div class="card m-2" style="width:18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">@string.Format("{0} vs. {1}", match.HomeTeam, match.AwayTeam)</h5>
-                            <p class="card-text">@string.Format("{0} BST", match.MatchDate.Value)</p>
-                            @if (!string.IsNullOrEmpty(match.MatchVodLink))
-                            {
-                                <a href="@match.MatchVodLink" target="_blank">
-                                    <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
-                                </a>
-                            }
-                        </div>
+        <h3>Why not check out these instead?</h3>
+        <div class="d-flex flex-wrap justify-content-center flex-wrap">
+            <div class="card m-3 adminCard" style="width:18rem;" @onclick='() => NavigateTo("teams")'>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Teams</h5>
+                    <div class="px-3">
+                        <span class="oi oi-people"></span>
                     </div>
-                }
-            }
+                </div>
+            </div>
+
+            <div class="card m-3 adminCard" style="width:18rem;" @onclick='() => NavigateTo("matches")'>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Matches</h5>
+                    <div class="px-3">
+                        <span class="oi oi-calendar"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card m-3 adminCard" style="width:18rem;" @onclick='() => NavigateTo("bracket")'>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Bracket</h5>
+                    <div class="px-3">
+                        <span class="oi oi-fork"></span>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
+        }
+        else
+        {
+            <h2 class="mb-2">Upcomming Matches</h2>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                @foreach (var dayOfMatches in this.UpcommingMatches.Where(m => m.MatchDate.HasValue).GroupBy(m => m.MatchDate.Value.ToShortDateString()))
+                {
+                    <h3>@dayOfMatches.FirstOrDefault().MatchDate.Value.ToLongDateString()</h3>
+                    @foreach (var match in dayOfMatches)
+                    {
+                        <div class="card m-2" style="width:18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@string.Format("{0} vs. {1}", match.HomeTeam, match.AwayTeam)</h5>
+                                <p class="card-text">@string.Format("{0} BST", match.MatchDate.Value)</p>
+                                @if (!string.IsNullOrEmpty(match.MatchVodLink))
+                                {
+                                    <a href="@match.MatchVodLink" target="_blank">
+                                        <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
 </div>
