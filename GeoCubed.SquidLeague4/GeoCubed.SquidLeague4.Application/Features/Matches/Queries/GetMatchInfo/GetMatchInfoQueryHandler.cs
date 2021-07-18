@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInf
 
         public async Task<List<MatchInfoVm>> Handle(GetMatchInfoQuery request, CancellationToken cancellationToken)
         {
-            var matches = await this._matchRepository.GetAllMatchesAsync();
+            var matches = (await this._matchRepository.GetAllMatchesAsync()).Where(x => x.HomeTeam.TeamName != "BYE" && x.AwayTeam.TeamName != "BYE");
             var mappedMatches = this._mapper.Map<List<MatchInfoVm>>(matches);
             return mappedMatches;
         }

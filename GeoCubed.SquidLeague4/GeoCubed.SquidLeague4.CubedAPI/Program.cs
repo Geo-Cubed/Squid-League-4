@@ -28,9 +28,9 @@ namespace GeoCubed.SquidLeague4.CubedAPI
 
 #if DEBUG
     // Create a root user and assign admin so I can create my user account before deleting.
-    await Identity.RootUser.CreateRootUser.SeedAsync(userManager);
-    await Identity.RootUser.CreateRootRoles.AddUserToRolesync(userManager, "slRoot", "Admin");
-    await Identity.RootUser.CreateRootRoles.AddUserToRolesync(userManager, "GeoCubed", "Admin");
+    //await Identity.RootUser.CreateRootUser.SeedAsync(userManager);
+    //await Identity.RootUser.CreateRootRoles.AddUserToRolesync(userManager, "slRoot", "Admin");
+    //await Identity.RootUser.CreateRootRoles.AddUserToRolesync(userManager, "GeoCubed", "Admin");
 #endif
                 }
                 catch (Exception ex)

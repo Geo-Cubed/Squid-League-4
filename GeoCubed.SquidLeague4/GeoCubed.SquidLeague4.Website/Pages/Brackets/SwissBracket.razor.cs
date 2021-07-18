@@ -34,6 +34,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
             var standings = new List<SwissStandingsViewModel>();
             foreach (var team in teams)
             {
+                // This is a really bad fix but with the time limits it'll do.
+                if (team == "BYE")
+                {
+                    continue;
+                }
+
                 standings.Add(new SwissStandingsViewModel()
                 {
                     TeamName = team,

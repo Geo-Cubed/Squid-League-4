@@ -27,7 +27,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterLi
 
         public async Task<List<CasterVm>> Handle(GetCasterListQuery request, CancellationToken cancellationToken)
         {
-            var casters = await this._casterRepository.GetAllAsync();
+            var casters = (await this._casterRepository.GetAllAsync()).Where(x => x.IsActive);
             return this._mapper.Map<List<CasterVm>>(casters);
         }
     }

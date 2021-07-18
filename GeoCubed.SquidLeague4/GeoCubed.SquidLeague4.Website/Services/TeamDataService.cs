@@ -49,6 +49,13 @@ namespace GeoCubed.SquidLeague4.Website.Services
             }
         }
 
+        public async Task<List<BasicTeamViewModel>> GetActiveTeams()
+        {
+            var teams = await this._client.GetActiveTeamsAsync();
+            var mappedTeams = this._mapper.Map<ICollection<BasicTeamViewModel>>(teams);
+            return mappedTeams.ToList();
+        }
+
         public async Task<List<AdminTeamViewModel>> GetAllTeamsForAdmin()
         {
             await this.AddBearerToken();
@@ -57,11 +64,11 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedTeams.ToList();
         }
 
-        public async Task<List<TeamDetailViewModel>> GetAllTeamsWithPlayers()
+        public async Task<TeamDetailViewModel> GetAllTeamsWithPlayers(int teamId)
         {
-            var allTeams = await this._client.GetAllTeamsAndPlayersAsync();
-            var mappedTeams = this._mapper.Map<ICollection<TeamDetailViewModel>>(allTeams);
-            return mappedTeams.ToList();
+            var allTeams = await this._client.GetTeamAndPlayerAsync(teamId);
+            var mappedTeams = this._mapper.Map<TeamDetailViewModel>(allTeams);
+            return mappedTeams;
         }
 
         public async Task<TeamDetailViewModel> GetTeamById(int id)

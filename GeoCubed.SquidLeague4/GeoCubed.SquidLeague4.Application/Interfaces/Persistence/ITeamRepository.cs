@@ -1,5 +1,4 @@
 ﻿using GeoCubed.SquidLeague4.Domain.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
@@ -8,6 +7,6 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
     {
         Task<bool> DoesTeamExist(int id);
 
-        Task<IReadOnlyList<Team>> GetAllTeamsWithPlayers();
+        Task<Team> GetTeamWithPlayers(int TeamId);
     }
 }

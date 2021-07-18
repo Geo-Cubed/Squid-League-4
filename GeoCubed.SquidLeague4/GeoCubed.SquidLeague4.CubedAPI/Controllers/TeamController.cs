@@ -1,6 +1,7 @@
 ﻿using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.CreateTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.DeleteTeam;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Commands.UpdateTeam;
+using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetActiveTeams;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamById;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamList;
 using GeoCubed.SquidLeague4.Application.Features.Teams.Queries.GetTeamWithPlayersList;
@@ -35,6 +36,14 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             return teams;
         }
 
+        [HttpGet("allactive", Name = "GetActiveTeams")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<TeamVm>>> GetActiveTeams()
+        {
+            var teams = await this._mediator.Send(new GetActiveTeamsQuery());
+            return teams;
+        }
+
         [HttpGet("teambyid", Name = "GetTeamById")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -53,11 +62,11 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             }
         }
 
-        [HttpGet("allteamsandplayers", Name = "GetAllTeamsAndPlayers")]
+        [HttpGet("allteamsandplayers", Name = "GetTeamAndPlayer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<TeamWithPlayersVm>>> GetAllTeamsAndPlayers()
+        public async Task<ActionResult<TeamWithPlayersVm>> GetAllTeamsAndPlayers(int teamId)
         {
-            var teams = await this._mediator.Send(new GetTeamWithPlayersListQuery());
+            var teams = await this._mediator.Send(new GetTeamWithPlayersQuery(teamId));
             return teams;
         }
 

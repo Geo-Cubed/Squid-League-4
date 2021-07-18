@@ -98,7 +98,7 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<FullSetInfo, SetInformationViewModel>();
             CreateMap<MatchInfoVm, MatchInfoViewModel>()
                 .ForMember(m => m.MatchDate, opt => opt.MapFrom(x => x.MatchDate.Value.UtcDateTime.ConvertFromUtcToBst())).ReverseMap();
-
+            CreateMap<TeamVm, BasicTeamViewModel>();
         }
     }
 }

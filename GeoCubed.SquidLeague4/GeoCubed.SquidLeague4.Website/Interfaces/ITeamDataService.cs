@@ -9,7 +9,8 @@ namespace GeoCubed.SquidLeague4.Website.Interfaces
     public interface ITeamDataService
     {
         Task<List<AdminTeamViewModel>> GetAllTeamsForAdmin();
-        Task<List<TeamDetailViewModel>> GetAllTeamsWithPlayers();
+        Task<TeamDetailViewModel> GetAllTeamsWithPlayers(int teamId);
+        Task<List<BasicTeamViewModel>> GetActiveTeams();
         Task<TeamDetailViewModel> GetTeamById(int id);
         Task<ApiResponse<int>> CreateTeam(AdminTeamViewModel teamDetail);
         Task<ApiResponse<int>> UpdateTeam(AdminTeamViewModel teamDetail);
