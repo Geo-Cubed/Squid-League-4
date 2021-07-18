@@ -5,7 +5,11 @@
 *.CubedApi - Web Deploy.json
 .config/
 *.nswag
-Build\
+Build/
+*.dll
+*.json
+*.gz
+*.dat
 
 # found this online at https://gist.github.com/kmorcinek/2710267 works better than writing my own
 
