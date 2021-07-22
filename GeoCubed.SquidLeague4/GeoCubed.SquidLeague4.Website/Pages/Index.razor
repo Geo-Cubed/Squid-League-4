@@ -7,7 +7,7 @@
     <h1 class="mb-2">Squid League 4</h1>
     @if (this.UpcommingMatches.Count() == 0)
     {
-        <h2 class="mb-2">There are no upcomming matches</h2>
+        <h2 class="mb-2">There are no upcoming matches</h2>
         <h3>Why not check out these instead?</h3>
         <div class="d-flex flex-wrap justify-content-center flex-wrap">
             <div class="card m-3 adminCard" style="width:18rem;" @onclick='() => NavigateTo("teams")'>
@@ -40,7 +40,7 @@
         }
         else
         {
-            <h2 class="mb-2">Upcomming Matches</h2>
+            <h2 class="mb-2">Upcoming Matches</h2>
             <div class="d-flex flex-column justify-content-center align-items-center">
                 @foreach (var dayOfMatches in this.UpcommingMatches.Where(m => m.MatchDate.HasValue).GroupBy(m => m.MatchDate.Value.ToShortDateString()))
                 {
