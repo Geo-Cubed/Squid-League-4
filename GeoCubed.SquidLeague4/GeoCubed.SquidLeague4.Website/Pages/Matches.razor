@@ -60,7 +60,7 @@
                     <h3>@this.GenerateWinnerText()</h3>
                 }
 
-                @foreach (var game in this.setInformation)
+                @foreach (var game in this.setInformation.OrderBy(x => x.SortOrder))
                 {
                     <div class="card m-2" style="width:100%;">
                         <div class="card-header">
