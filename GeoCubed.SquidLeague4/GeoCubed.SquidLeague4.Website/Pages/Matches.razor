@@ -11,16 +11,21 @@
         {
             <option value="-1" selected>Select a match:</option>
         }
-        @foreach (var match in this.matches.OrderByDescending(x => x.MatchDate ?? DateTime.MaxValue))
+        @foreach (var matchStage in this.matches.OrderByDescending(x => x.MatchDate ?? DateTime.MaxValue).GroupBy(x => x.Stage))
         {
-            @if (this.selectedMatch != null && this.selectedMatch.MatchId == match.MatchId)
-            {
-                <option value="@match.MatchId" selected>@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
-            }
-            else
-            {
-                <option value="@match.MatchId">@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
-            }
+            <optgroup label="@matchStage.FirstOrDefault().Stage">
+                @foreach (var match in matchStage)
+                {
+                    @if (this.selectedMatch != null && this.selectedMatch.MatchId == match.MatchId)
+                    {
+                        <option value="@match.MatchId" selected>@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
+                    }
+                    else
+                    {
+                        <option value="@match.MatchId">@this.GetMatchText(match.HomeTeamName, match.AwayTeamName)</option>
+                    }
+                }
+            </optgroup>
         }
     </select>
 

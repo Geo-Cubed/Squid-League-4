@@ -9487,6 +9487,9 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         [Newtonsoft.Json.JsonProperty("coCaster", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string CoCaster { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("stage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Stage { get; set; }
+    
     
     }
     

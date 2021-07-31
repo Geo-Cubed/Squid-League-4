@@ -23,5 +23,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInf
         public string Caster { get; set; }
 
         public string CoCaster { get; set; }
+
+        public string Stage { get; set; }
     }
 }

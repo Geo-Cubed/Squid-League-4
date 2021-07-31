@@ -42,6 +42,31 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(match);
         }
 
+        public Task<string> GetStage(int id)
+        {
+            var stage = this._dbContext.BracketSwisses
+                .Where(x => x.MatchId == id)
+                .Select(x => x.MatchWeek)
+                .FirstOrDefault();
+
+            if (stage >= 1)
+            {
+                return Task.FromResult(stage.ToString());
+            }
+
+            var knockoutStage = this._dbContext.BracketKnockouts
+                .Where(x => x.MatchId == id)
+                .Select(x => x.Stage)
+                .FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(knockoutStage))
+            {
+                return Task.FromResult(knockoutStage);
+            }
+
+            return Task.FromResult(string.Empty);
+        }
+
         public Task<IReadOnlyList<Match>> GetTeamPlayedMatches(int teamId)
         {
             var matches = this._dbContext.Matches

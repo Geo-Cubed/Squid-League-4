@@ -23,6 +23,11 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetMatchInf
         {
             var matches = (await this._matchRepository.GetAllMatchesAsync()).Where(x => x.HomeTeam.TeamName != "BYE" && x.AwayTeam.TeamName != "BYE");
             var mappedMatches = this._mapper.Map<List<MatchInfoVm>>(matches);
+            foreach (var match in mappedMatches)
+            {
+                match.Stage = await this._matchRepository.GetStage(match.MatchId);
+            }
+
             return mappedMatches;
         }
     }
