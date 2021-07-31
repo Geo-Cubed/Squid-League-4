@@ -51,7 +51,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
             if (stage >= 1)
             {
-                return Task.FromResult(stage.ToString());
+                return Task.FromResult(string.Format("Week: {0}", stage.ToString()));
             }
 
             var knockoutStage = this._dbContext.BracketKnockouts
