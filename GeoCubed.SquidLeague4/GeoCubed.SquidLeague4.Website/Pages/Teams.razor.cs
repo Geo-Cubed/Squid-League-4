@@ -15,6 +15,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         [Inject]
         public IMatchDataService MatchDataService { get; set; }
 
+        [Inject]
+        private NavigationManager navigationManager { get; set; }
+
+        [Parameter]
+        public int id { get; set; }
+
         public IEnumerable<BasicTeamViewModel> ActiveTeams { get; set; }
             = new List<BasicTeamViewModel>();
 
@@ -27,9 +33,29 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected async override Task OnInitializedAsync()
         {
-            this.SelectedTeam = null;
-            this.SelectedTeamId = 0;
             this.ActiveTeams = (await this.TeamDataService.GetActiveTeams()).OrderBy(x => x.TeamName);
+            await this.SetGame();
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await this.SetGame();
+        }
+
+        protected async Task SetGame()
+        {
+            if (this.ActiveTeams.Where(x => x.Id == id).Any())
+            {
+                this.SelectedTeamId = id;
+                this.SelectedTeam = await this.TeamDataService.GetAllTeamsWithPlayers(id);
+                this.TeamMatches = await this.MatchDataService.GetTemMatches(id);
+            }
+            else
+            {
+                this.SelectedTeam = null;
+                this.SelectedTeamId = 0;
+                this.TeamMatches = null;
+            }
         }
 
         protected async Task OnTeamSelectAsync(ChangeEventArgs e)
@@ -42,10 +68,13 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                 return;
             }
 
-            this.SelectedTeamId = teamId;
-            this.SelectedTeam = await this.TeamDataService.GetAllTeamsWithPlayers(this.SelectedTeamId);
-            // Load team games
-            this.TeamMatches = await this.MatchDataService.GetTemMatches(this.SelectedTeamId);
+            if (teamId <= 0)
+            {
+                this.SelectedTeam = null;
+                return;
+            }
+
+            this.navigationManager.NavigateTo($"teams/{teamId}");
         }
     }
 }

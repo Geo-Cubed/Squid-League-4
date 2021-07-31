@@ -1,4 +1,6 @@
 ﻿@page "/teams"
+@page "/teams/{id:int}"
+
 @using GeoCubed.SquidLeague4.Website.Common.Helpers;
 
 <div class="text-center">
@@ -9,12 +11,19 @@
         {
             @if (this.SelectedTeam == null)
             {
-                <option value="f">Select Team:</option>
+                <option value="-1">Select Team:</option>
             }
 
             @foreach (var team in ActiveTeams)
             {
-                <option value="@team.Id">@team.TeamName</option>
+                if (team.Id == this.SelectedTeamId)
+                {
+                    <option value="@team.Id" selected>@team.TeamName</option>
+                }
+                else
+                {
+                    <option value="@team.Id">@team.TeamName</option>
+                }
             }
         }
     </select>
@@ -29,7 +38,7 @@
             {
                 <h4 class="text-center">@string.Format("{0} Currently has no players", this.SelectedTeam.TeamName)</h4>
             }
-                
+
             <div class="d-flex flex-wrap justify-content-center">
                 @foreach (var player in this.SelectedTeam.Players)
                 {
@@ -74,8 +83,8 @@
                         </div>
                     }
                 </div>
-            } 
+            }
         </div>
-    } 
+    }
 </div>
 
