@@ -69,7 +69,7 @@
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     @foreach (var match in this.TeamMatches)
                     {
-                        <div class="card m-2" style="min-width:200px">
+                        <div class="card m-2 @((!MatchHelper.IsMatchBye(match))? "adminCard" : string.Empty)" style="min-width:200px;@((!MatchHelper.IsMatchBye(match))? "cursor:pointer;" : string.Empty)" @onclick="() => NavigateTo(match)">
                             <div class="card-body">
                                 <div class="d-flex flex-row pb-2">
                                     <div class="flex-grow-1 pr-2">@match.HomeTeam</div>

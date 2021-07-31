@@ -1,4 +1,5 @@
-﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+﻿using GeoCubed.SquidLeague4.Website.Common.Helpers;
+using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.ViewModels.Teams;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -75,6 +76,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             }
 
             this.navigationManager.NavigateTo($"teams/{teamId}");
+        }
+
+        protected void NavigateTo(TeamMatchViewModel match)
+        {
+            if (!MatchHelper.IsMatchBye(match))
+            {
+                this.navigationManager.NavigateTo($"matches/{match.MatchId}");
+            }
         }
     }
 }

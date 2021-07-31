@@ -1,4 +1,5 @@
 ﻿@using System.Linq
+@using GeoCubed.SquidLeague4.Website.Common.Helpers
 
 <div class="text-center">
     <h2>Swiss Stage</h2>
@@ -9,7 +10,7 @@
         <div class="d-flex flex-wrap justify-content-center">
             @foreach (var match in week)
             {
-                <div class="card m-2" style="min-width:200px">
+                <div class="card m-2 @((MatchHelper.IsMatchBye(match))? string.Empty : "adminCard")" style="min-width:200px;@((MatchHelper.IsMatchBye(match))? string.Empty : "cursor:pointer;")" @onclick="() => NavigateTo(match)">
                     <div class="card-body">
                         <div class="d-flex flex-row pb-2">
                             <div class="flex-grow-1 pr-2">@match.Match.HomeTeam</div>

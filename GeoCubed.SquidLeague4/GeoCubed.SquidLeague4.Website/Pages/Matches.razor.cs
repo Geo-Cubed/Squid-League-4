@@ -2,7 +2,6 @@
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;

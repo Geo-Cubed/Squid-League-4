@@ -1,4 +1,5 @@
-﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+﻿using GeoCubed.SquidLeague4.Website.Common.Helpers;
+using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.ViewModels.SwissMatches;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
     {
         [Inject]
         public ISwissDataService SwissDataService { get; set; }
+
+        [Inject]
+        private NavigationManager navigationManager { get; set; }
 
         public IEnumerable<SwissMatchDetailsViewModel> SwissMatches { get; set; }
             = new List<SwissMatchDetailsViewModel>();
@@ -59,6 +63,14 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
 
             this.SwissStandings = standingsOrdered;
             return Task.CompletedTask;
+        }
+
+        protected void NavigateTo(SwissMatchDetailsViewModel match)
+        {
+            if (!MatchHelper.IsMatchBye(match))
+            {
+                this.navigationManager.NavigateTo($"matches/{match.MatchId}");
+            }
         }
     }
 }
