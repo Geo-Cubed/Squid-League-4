@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using GeoCubed.SquidLeague4.Website.ViewModels.Stats;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages
     {
         //[Inject]
         //public IStatisticDataService StatisticDataService { get; set; }
+
+        public List<StatsOptionsViewModel> StatsOptions { get; set; }
+            = new List<StatsOptionsViewModel>();
 
         protected async override Task OnInitializedAsync()
         {

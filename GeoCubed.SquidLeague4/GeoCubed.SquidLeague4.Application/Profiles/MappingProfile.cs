@@ -37,6 +37,8 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameInfo;
 using GeoCubed.SquidLeague4.Application.Features.Results.Queries.GetFullSetInfo;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStats;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStatsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Queries.GetSwissMatchesList;
@@ -213,6 +215,9 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
                 .ForMember(x => x.AwayTeamName, opt => opt.MapFrom(x => x.AwayTeam.TeamName))
                 .ForMember(x => x.Caster, opt => opt.MapFrom(x => x.CasterProfile.CasterName))
                 .ForMember(x => x.CoCaster, opt => opt.MapFrom(x => x.SecondaryCasterProfile.CasterName));
+
+            CreateMap<Statistic, StatsInfoVm>();
+            CreateMap<Statistic, AdminStatsVm>();
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)

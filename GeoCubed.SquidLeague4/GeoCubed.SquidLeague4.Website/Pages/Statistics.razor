@@ -4,6 +4,10 @@
     <h1 class="mb-3 mt-1">Teams</h1>
 
     <select class="form-control mb-3" @onchange="OnStatsSelectAsync">
-
+        <option value="-1">Select Statistic:</option>
+        @foreach (var statsOpt in this.StatsOptions)
+        {
+            <option value="@statsOpt.Id">@statsOpt.Alias</option>
+        }
     </select>
 </div>
