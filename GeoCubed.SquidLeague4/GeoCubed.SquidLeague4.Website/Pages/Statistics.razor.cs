@@ -15,5 +15,10 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         {
             // Do Stats stuff.
         }
+
+        protected async Task OnStatsSelectAsync(ChangeEventArgs e)
+        {
+            // Load the correct stats page.
+        }
     }
 }
