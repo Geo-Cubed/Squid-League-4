@@ -1,3 +1,38 @@
 ﻿@page "/admin/stats"
 
-<h3>AdminStatistics</h3>
+<div class="text-center">
+    <h3>Stats</h3>
+
+    <div class="d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-primary" @onclick="OpenAddStats">
+            <span class="oi oi-plus"></span> Add Stats
+        </button>
+        <button class="btn btn-primary ml-2 mr-2 @((this.selectedStatsId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedStatsId > 0) OpenEditStats(); })">
+            <span class="oi oi-pencil"></span> Edit Stats
+        </button>
+        <button class="btn btn-primary @((this.selectedStatsId > 0) ? string.Empty : "disabled")" @onclick="(() => { if (this.selectedStatsId > 0) OpenDeleteStats(); })">
+            <span class="oi oi-trash"></span> Delete Stats
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <table class="table table-bordered table-hover">
+            <caption>List of players</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Alias</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stat in this.allStats.OrderBy(s => s.Alias))
+                {
+                    <tr class="@((this.selectedStatsId == stat.Id) ? "table-secondary" : string.Empty)" @onclick="(() => { if (this.selectedStatsId == stat.Id) { OpenEditStats(); } else { this.selectedStatsId = stat.Id; } })">
+                        <td scope="row">@stat.Id</td>
+                        <td>@stat.Alias</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
