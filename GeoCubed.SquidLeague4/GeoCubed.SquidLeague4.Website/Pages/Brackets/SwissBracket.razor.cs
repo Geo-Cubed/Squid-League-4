@@ -49,7 +49,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
                     TeamName = team,
                     Wins = matches.Where(x => (x.HomeTeam == team && x.Winner == "home") || (x.AwayTeam == team && x.Winner == "away")).Count(),
                     Losses = matches.Where(x => (x.HomeTeam == team && x.Winner == "away") || (x.AwayTeam == team && x.Winner == "home")).Count(),
-                    Points = matches.Where(x => x.HomeTeam == team).Sum(x => x.HomeTeamScore) + matches.Where(x => x.AwayTeam == team).Sum(x => x.AwayTeamScore)
+                    Points = this.CalculatePoints(team, matches)
                 });
             }
 
@@ -63,6 +63,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Brackets
 
             this.SwissStandings = standingsOrdered;
             return Task.CompletedTask;
+        }
+
+        private int CalculatePoints(string team, IEnumerable<MatchDetailsDto> matches)
+        {
+            var homePoints = matches.Where(x => x.HomeTeam == team).Sum(x => x.HomeTeamScore);
+            var awayPoints = matches.Where(x => x.AwayTeam == team).Sum(x => x.AwayTeamScore);
+            var homeNonByePoints = matches.Where(x => x.HomeTeam == team && x.AwayTeam != "BYE" && x.Winner == "home").Count();
+            var awayNonByePoints = matches.Where(x => x.AwayTeam == team && x.HomeTeam != "BYE" && x.Winner == "away").Count();
+
+            return homePoints + awayPoints + homeNonByePoints + awayNonByePoints;
         }
 
         protected void NavigateTo(SwissMatchDetailsViewModel match)
