@@ -36,3 +36,68 @@
         </table>
     </div>
 </div>
+
+<Modal @ref="addModal">
+    <Title>Add</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Alias</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Alias" placeholder="Statistic Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Sql</label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control" rows="50" @bind="this.model.Sql" placeholder="Sql Query"></textarea>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="AddStats">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.addModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="editModal">
+    <Title>Edit</Title>
+    <Body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Id" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Alias</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="this.model.Alias" placeholder="Statistic Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Sql</label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control" rows="50" @bind="this.model.Sql" placeholder="Sql Query"></textarea>
+                </div>
+            </div>
+        </form>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-primary" @onclick="EditStats">Save Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="(() => this.editModal.Close())">Cancel</button>
+    </Footer>
+</Modal>
+
+<Modal @ref="deleteModal">
+    <Title>Delete</Title>
+    <Body>
+        <span><em>@string.Format("Are you sure you want to delete '{0}'?", this.model.Alias)</em></span>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-danger" @onclick="DeleteStats">Delete</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="(() => this.deleteModal.Close())">Cancel</button>
+    </Footer>
+</Modal>

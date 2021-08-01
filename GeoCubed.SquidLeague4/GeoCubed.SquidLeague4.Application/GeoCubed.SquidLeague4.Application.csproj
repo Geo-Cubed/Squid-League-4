@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Stats\Commands\CreateStats\" />
+    <Folder Include="Features\Stats\Commands\DeleteStats\" />
+    <Folder Include="Features\Stats\Commands\UpdateStats\" />
     <Folder Include="Features\Weapons\Commands\" />
   </ItemGroup>
 
