@@ -15,6 +15,11 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
         }
 
+        public Task<bool> IsAliasUnique(string alias)
+        {
+            return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Alias.ToUpper() == alias.Trim().ToUpper()));
+        }
+
         public Task<List<StatsModel>> RunStatistic(string statisticSql)
         {
             var result = new List<StatsModel>();

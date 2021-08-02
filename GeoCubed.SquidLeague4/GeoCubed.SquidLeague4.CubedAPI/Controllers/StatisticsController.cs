@@ -1,4 +1,5 @@
-﻿using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStats;
+﻿using GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStats;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStatsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetStatsData;
 using GeoCubed.SquidLeague4.Domain.Authorization;
@@ -53,6 +54,40 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
             }
 
             return BadRequest();
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost(Name = "AddStats")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> AddPlayer([FromBody] CreateStatsCommand createStatsCommand)
+        {
+            var response = await this._mediator.Send(createStatsCommand);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(response);
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPut(Name = "UpdateStats")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult> UpdatePlayer([FromBody] UpdateStatsCommand updateStatsCommand)
+        {
+            var response = await this._mediator.Send(updateStatsCommand);
+            if (response.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(response);
         }
     }
 }
