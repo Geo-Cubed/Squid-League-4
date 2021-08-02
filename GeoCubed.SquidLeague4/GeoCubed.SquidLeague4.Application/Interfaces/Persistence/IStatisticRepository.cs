@@ -9,5 +9,7 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
     {
         Task<List<StatsModel>> RunStatistic(string statisticSql);
         Task<bool> IsAliasUnique(string alias);
+        Task<bool> DoesStatExist(int id);
+        Task<bool> IsAliasUnique(int id, string alias);
     }
 }

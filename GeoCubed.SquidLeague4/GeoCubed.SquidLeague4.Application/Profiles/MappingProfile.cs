@@ -37,6 +37,8 @@ using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayerDetail
 using GeoCubed.SquidLeague4.Application.Features.Players.Queries.GetPlayersByTeamId;
 using GeoCubed.SquidLeague4.Application.Features.Results.Commands.SaveGameInfo;
 using GeoCubed.SquidLeague4.Application.Features.Results.Queries.GetFullSetInfo;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Commands.UpdateStats;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStats;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStatsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Swiss.Commands.CreateSwissMatch;
@@ -218,6 +220,8 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
 
             CreateMap<Statistic, StatsInfoVm>();
             CreateMap<Statistic, AdminStatsVm>();
+            CreateMap<Statistic, CreateStatsCommand>().ReverseMap();
+            CreateMap<Statistic, UpdateStatsCommand>().ReverseMap();
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)

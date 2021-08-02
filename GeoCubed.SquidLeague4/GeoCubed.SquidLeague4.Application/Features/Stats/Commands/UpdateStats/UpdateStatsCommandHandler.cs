@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
+using GeoCubed.SquidLeague4.Domain.Entities;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,11 +19,31 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.UpdateStats
             this._statsRepository = statisticRepository;
         }
 
-        public Task<UpdateStatsCommandResponse> Handle(UpdateStatsCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateStatsCommandResponse> Handle(UpdateStatsCommand request, CancellationToken cancellationToken)
         {
             var response = new UpdateStatsCommandResponse();
 
             var validator = new UpdateStatsCommandValidator(this._statsRepository);
+            var validation = await validator.ValidateAsync(request);
+            if (validation.Errors.Count > 0)
+            {
+                response.Success = false;
+                response.ValidationErrors = new List<string>();
+                foreach (var error in validation.Errors)
+                {
+                    response.ValidationErrors.Add(error.ErrorMessage);
+                }
+            }
+
+            if (response.Success)
+            {
+                var statToEdit = this._mapper.Map<Statistic>(request);
+                response.Success = await this._statsRepository.UpdateAsync(statToEdit);
+                if (!response.Success)
+                {
+                    response.Message = "There was an issue updating the statistic";
+                }
+            }
 
             return response;
         }

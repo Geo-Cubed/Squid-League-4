@@ -2,7 +2,6 @@
 using GeoCubed.SquidLeague4.Domain.Entities;
 using GeoCubed.SquidLeague4.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,9 +14,19 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
         {
         }
 
+        public Task<bool> DoesStatExist(int id)
+        {
+            return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Id == id));
+        }
+
         public Task<bool> IsAliasUnique(string alias)
         {
             return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Alias.ToUpper() == alias.Trim().ToUpper()));
+        }
+
+        public Task<bool> IsAliasUnique(int id, string alias)
+        {
+            return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Alias.ToUpper() == alias.Trim().ToUpper() && x.Id == id))
         }
 
         public Task<List<StatsModel>> RunStatistic(string statisticSql)
