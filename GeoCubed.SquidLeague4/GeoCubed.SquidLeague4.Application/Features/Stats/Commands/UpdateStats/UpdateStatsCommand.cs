@@ -9,5 +9,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.UpdateStats
         public string Alias { get; set; }
 
         public string Sql { get; set; }
+
+        public string Modifier { get; set; }
     }
 }

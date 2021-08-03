@@ -7,5 +7,7 @@
         public string Alias { get; set; }
 
         public string Sql { get; set; }
+
+        public string Modifier { get; set; }
     }
 }

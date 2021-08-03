@@ -1,5 +1,8 @@
 ﻿using FluentValidation;
+using GeoCubed.SquidLeague4.Application.Common.Enums;
+using GeoCubed.SquidLeague4.Application.Common.Helpers;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +23,9 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats
             RuleFor(e => e.Sql)
                 .NotEmpty().WithMessage("Stat must have sql");
 
+            RuleFor(e => e.Modifier)
+                .Must(IsValidModifier).WithMessage("Invalid modifier");
+
             RuleFor(e => e)
                 .MustAsync(IsAliasUnique).WithMessage("Alias must be unique");
         }
@@ -27,6 +33,19 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats
         private async Task<bool> IsAliasUnique(CreateStatsCommand e, CancellationToken token)
         {
             return await this._statsRepository.IsAliasUnique(e.Alias);
+        }
+
+        private bool IsValidModifier(string modifier)
+        {
+            foreach (StatsModifiers modEnum in Enum.GetValues(typeof(StatsModifiers)))
+            {
+                if (modifier == modEnum.GetDescription())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace GeoCubed.SquidLeague4.Application.Models.Enums
+namespace GeoCubed.SquidLeague4.Application.Common.Enums
 {
     public enum StatsModifiers
     {

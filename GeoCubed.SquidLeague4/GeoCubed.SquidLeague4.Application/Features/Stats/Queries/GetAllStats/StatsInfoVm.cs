@@ -5,5 +5,7 @@
         public int Id { get; set; }
 
         public string Alias { get; set; }
+
+        public string Modifier { get; set; }
     }
 }

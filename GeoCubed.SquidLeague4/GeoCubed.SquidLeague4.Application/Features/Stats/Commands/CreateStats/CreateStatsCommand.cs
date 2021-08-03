@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using GeoCubed.SquidLeague4.Application.Common.Enums;
+using MediatR;
 
 namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats
 {
@@ -7,5 +8,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.CreateStats
         public string Alias { get; set; }
 
         public string Sql { get; set; }
+
+        public string Modifier { get; set; }
     }
 }
