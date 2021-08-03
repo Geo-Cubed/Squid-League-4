@@ -26,7 +26,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<bool> IsAliasUnique(int id, string alias)
         {
-            return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Alias.ToUpper() == alias.Trim().ToUpper() && x.Id == id))
+            return Task.FromResult(this._dbContext.Statistics.AsNoTracking().Any(x => x.Alias.ToUpper() == alias.Trim().ToUpper() && x.Id == id));
         }
 
         public Task<List<StatsModel>> RunStatistic(string statisticSql)
