@@ -1,4 +1,5 @@
-﻿using GeoCubed.SquidLeague4.Website.ViewModels.Stats;
+﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.ViewModels.Stats;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,17 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 {
     partial class Statistics
     {
-        //[Inject]
-        //public IStatisticDataService StatisticDataService { get; set; }
+        [Inject]
+        public IStatsDataService StatisticDataService { get; set; }
 
         public List<StatsOptionsViewModel> StatsOptions { get; set; }
             = new List<StatsOptionsViewModel>();
+
+        public int SelectedStatsId { get; set; }
+
+        public StatsOptionsViewModel SelectedStats { get; set; }
+
+
 
         protected async override Task OnInitializedAsync()
         {

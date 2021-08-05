@@ -4,6 +4,7 @@ using GeoCubed.SquidLeague4.Application.Features.Stats.Commands.UpdateStats;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStats;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetAllStatsForAdmin;
 using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetStatsData;
+using GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetStatsModifiers;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +43,14 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         {
             var stats = await this._mediator.Send(new GetAllStatsForAdminQuery());
             return Ok(stats);
+        }
+
+        [HttpGet("modifiers", Name = "GetStatsModifiers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<StatsModifiersVm>> GetStatsModifiers()
+        {
+            var modifiers = await this._mediator.Send(new GetStatsModifiersQuery());
+            return Ok(modifiers);
         }
 
         [HttpGet("stats", Name = "GetStatsDataById")]

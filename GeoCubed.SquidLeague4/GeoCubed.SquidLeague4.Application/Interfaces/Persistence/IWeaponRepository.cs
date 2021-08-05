@@ -11,5 +11,7 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
         Task<IReadOnlyList<Weapon>> GetPlayerWeapons(int playerId);
 
         Task<bool> DoesWeaponExist(int weaponId);
+
+        Task<IReadOnlyList<Weapon>> GetWeaponsPlayed();
     }
 }
