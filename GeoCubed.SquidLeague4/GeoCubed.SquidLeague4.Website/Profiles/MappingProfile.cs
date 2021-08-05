@@ -103,6 +103,8 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
 
             CreateMap<StatsInfoVm, StatsOptionsViewModel>().ReverseMap();
             CreateMap<AdminStatsVm, AdminStatsViewModel>().ReverseMap();
+            CreateMap<AdminStatsViewModel, CreateStatsCommand>().ReverseMap();
+            CreateMap<AdminStatsViewModel, UpdateStatsCommand>().ReverseMap();
         }
     }
 }

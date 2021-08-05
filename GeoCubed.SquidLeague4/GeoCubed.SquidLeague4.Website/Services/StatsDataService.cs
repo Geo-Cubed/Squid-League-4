@@ -19,6 +19,36 @@ namespace GeoCubed.SquidLeague4.Website.Services
         {
             this._mapper = mapper;
         }
+
+        public async Task<ApiResponse<int>> CreateStats(AdminStatsViewModel adminStatsViewModel)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                var createStatsCommand = this._mapper.Map<CreateStatsCommand>(adminStatsViewModel);
+                await this._client.AddStatsAsync(createStatsCommand);
+                return new ApiResponse<int>() { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
+        }
+
+        public async Task<ApiResponse<int>> DeleteStats(int id)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                await this._client.DeleteStatsAsync(id);
+                return new ApiResponse<int>() { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
+        }
+
         public async Task<List<StatsOptionsViewModel>> GetAllStats()
         {
             var stats = await this._client.GetAllStatsAsync();
@@ -32,6 +62,21 @@ namespace GeoCubed.SquidLeague4.Website.Services
             var stats = await this._client.GetAllStatsForAdminAsync();
             var mappedStats = this._mapper.Map<ICollection<AdminStatsViewModel>>(stats);
             return mappedStats.ToList();
+        }
+
+        public async Task<ApiResponse<int>> UpdateStats(AdminStatsViewModel adminStatsViewModel)
+        {
+            try
+            {
+                await this.AddBearerToken();
+                var updateStatsCommand = this._mapper.Map<UpdateStatsCommand>(adminStatsViewModel);
+                await this._client.UpdateStatsAsync(updateStatsCommand);
+                return new ApiResponse<int> { Success = true };
+            }
+            catch (ApiException ex)
+            {
+                return ConvertApiExceptions(ex);
+            }
         }
     }
 }

@@ -99,7 +99,7 @@
 
         <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/stats"); } }'>
             <div class="card-body">
-                <h5 class="card-title text-center">System Switches</h5>
+                <h5 class="card-title text-center">Statistics</h5>
                 <div class="px-3">
                     <span class="oi oi-pie-chart"></span>
                 </div>

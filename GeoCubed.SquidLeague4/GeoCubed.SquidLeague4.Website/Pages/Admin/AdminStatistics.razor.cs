@@ -1,4 +1,6 @@
-﻿using GeoCubed.SquidLeague4.Website.Interfaces;
+﻿using GeoCubed.SquidLeague4.Website.Common.Helpers;
+using GeoCubed.SquidLeague4.Website.Interfaces;
+using GeoCubed.SquidLeague4.Website.Models.Enums;
 using GeoCubed.SquidLeague4.Website.Shared;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using Microsoft.AspNetCore.Components;
@@ -42,7 +44,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             { 
                 Id = -1, 
                 Alias = string.Empty, 
-                Sql = string.Empty
+                Sql = string.Empty,
+                Modifier = StatsModifiers.None.GetDescription()
             };
 
             this.addModal.Open();
@@ -51,7 +54,13 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected async Task AddStats()
         {
             this.message = string.Empty;
-
+            var response = await this.statsDataService.CreateStats(this.model);
+            if (response.Success)
+            {
+                this.addModal.Close();
+                this.model = new AdminStatsViewModel();
+                this.allStats = await this.statsDataService.GetAllStatsForAdmin();
+            }
         }
 
         protected void OpenEditStats()
@@ -62,7 +71,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
             {
                 Id = statsToEdit.Id,
                 Alias = statsToEdit.Alias,
-                Sql = statsToEdit.Sql
+                Sql = statsToEdit.Sql,
+                Modifier = statsToEdit.Modifier
             };
 
             this.editModal.Open();
@@ -71,6 +81,13 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected async Task EditStats()
         {
             this.message = string.Empty;
+            var response = await this.statsDataService.UpdateStats(this.model);
+            if (response.Success)
+            {
+                this.editModal.Close();
+                this.model = new AdminStatsViewModel();
+                this.allStats = await this.statsDataService.GetAllStatsForAdmin();
+            }
 
         }
 
@@ -88,7 +105,12 @@ namespace GeoCubed.SquidLeague4.Website.Pages.Admin
         protected async Task DeleteStats()
         {
             this.message = string.Empty;
-
+            var response = await this.statsDataService.DeleteStats(this.selectedStatsId);
+            if (response.Success)
+            {
+                this.deleteModal.Close();
+                this.allStats = await this.statsDataService.GetAllStatsForAdmin();
+            }
         }
     }
 }
