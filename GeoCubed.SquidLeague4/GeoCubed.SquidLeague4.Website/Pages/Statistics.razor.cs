@@ -11,16 +11,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages
     partial class Statistics
     {
         [Inject]
-        public IStatsDataService StatisticDataService { get; set; }
+        private IStatsDataService StatisticDataService { get; set; }
 
-        public List<StatsOptionsViewModel> StatsOptions { get; set; }
+        protected List<StatsOptionsViewModel> StatsOptions { get; set; }
             = new List<StatsOptionsViewModel>();
 
-        public int SelectedStatsId { get; set; }
+        protected int SelectedStatsId { get; set; }
 
-        public StatsOptionsViewModel SelectedStats { get; set; }
+        protected StatsOptionsViewModel SelectedStats { get; set; }
 
-
+        protected StatsModifersViewModel StatsModifiersVm { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -30,6 +30,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected async Task OnStatsSelectAsync(ChangeEventArgs e)
         {
             // Load the correct stats page.
+        }
+
+        protected async Task OnModifierChanged(ChangeEventArgs e)
+        {
+            // Load stats 
         }
     }
 }

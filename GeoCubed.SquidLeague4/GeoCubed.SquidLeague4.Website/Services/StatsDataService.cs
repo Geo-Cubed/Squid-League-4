@@ -64,6 +64,13 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return mappedStats.ToList();
         }
 
+        public async Task<StatsModifiersViewModel> GetStatsModifiers()
+        {
+            var statsModifiers = await this._client.GetStatsModifiersAsync();
+            var mapped = this._mapper.Map<StatsModifiersViewModel>(statsModifiers);
+            return mapped;
+        }
+
         public async Task<ApiResponse<int>> UpdateStats(AdminStatsViewModel adminStatsViewModel)
         {
             try

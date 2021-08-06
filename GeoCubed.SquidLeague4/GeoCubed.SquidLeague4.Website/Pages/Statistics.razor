@@ -1,5 +1,8 @@
 ﻿@page "/statistics"
 
+@using GeoCubed.SquidLeague4.Website.Models.Enums
+@using GeoCubed.SquidLeague4.Website.Common.Helpers
+
 <div class="text-center">
     <h1 class="mb-3 mt-1">Teams</h1>
 
@@ -11,5 +14,28 @@
         }
     </select>
 
-    @if (this.) 
+    <div class="m-2">
+        @if (this.SelectedStats == null)
+        {
+            <h2>Please select a statistic to view</h2>
+        }
+        else 
+        {
+            if (this.SelectedStats.Modifier == StatsModifiers.Mode.GetDescription())
+            {
+                <h2>Modifier</h2>
+                <select class="form-control mb-3" @onchange="OnModifierChange">
+                    <option value="-1">None</option>
+                    @foreach (var mode in this.StatsModifiersVm.Modes)
+                    {
+                        <option value="@mode.Key">@mode.Value</option>
+                    }
+                </select>
+            }
+            else if (this.SelectedStats.Modifier == StatsModifiers.Weapon.GetDescription())
+            {
+
+            }
+        }
+    </div>
 </div>
