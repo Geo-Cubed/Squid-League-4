@@ -56,9 +56,9 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         [HttpGet("stats", Name = "GetStatsDataById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<List<StatsDataVm>>> GetStatsDataById(int statsId)
+        public async Task<ActionResult<List<StatsDataVm>>> GetStatsDataById(int statsId, int modifierId)
         {
-            var response = await this._mediator.Send(new GetStatsDataQuery(statsId, "idk"));
+            var response = await this._mediator.Send(new GetStatsDataQuery(statsId, modifierId));
             if (response != null)
             {
                 return Ok(response);

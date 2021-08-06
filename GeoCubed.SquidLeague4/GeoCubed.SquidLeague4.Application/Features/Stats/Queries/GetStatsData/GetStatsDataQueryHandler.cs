@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using GeoCubed.SquidLeague4.Application.Common.Enums;
+using GeoCubed.SquidLeague4.Application.Common.Helpers;
 using GeoCubed.SquidLeague4.Application.Interfaces.Persistence;
 using MediatR;
 using System;
@@ -13,21 +15,77 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetStatsData
     public class GetStatsDataQueryHandler : IRequestHandler<GetStatsDataQuery, List<StatsDataVm>>
     {
         private readonly IStatisticRepository _statsRepository;
+        private readonly IWeaponRepository _weaponRepository;
+        private readonly IModeRepository _modeRepository;
         private readonly IMapper _mapper;
 
-        public GetStatsDataQueryHandler(IMapper mapper, IStatisticRepository statsRepository)
+        public GetStatsDataQueryHandler(
+            IMapper mapper, 
+            IStatisticRepository statsRepository,
+            IWeaponRepository weaponRepository,
+            IModeRepository modeRepository)
         {
             this._mapper = mapper;
             this._statsRepository = statsRepository;
+            this._modeRepository = modeRepository;
+            this._weaponRepository = weaponRepository;
         }
 
         public async Task<List<StatsDataVm>> Handle(GetStatsDataQuery request, CancellationToken cancellationToken)
         {
-            // TODO: sort out how to do by mode / weapon
-            var statSql = await this._statsRepository.GetByIdAsync(request.statsId);
-            var results = await this._statsRepository.RunStatistic(statSql.Sql);
+            if (request.statsId <= 0)
+            {
+                return null;
+            }
 
-            return null;
+            var statSql = await this._statsRepository.GetByIdAsync(request.statsId);
+            if (statSql == null)
+            {
+                return null;
+            }
+
+            if (!EnumExtensions.TryGetValueFromDescription(
+                    statSql.Modifier, 
+                    out StatsModifiers modifier))
+            {
+                modifier = StatsModifiers.None;
+            }
+
+            var modifierText = string.Empty;
+            switch (modifier)
+            {
+                case StatsModifiers.Team:
+                    // Check for teams.
+                    modifierText = "1 = 1";
+                    break;
+                case StatsModifiers.Weapon:
+                    // Check for weapons.
+                    if (!await this._weaponRepository.DoesWeaponExist(request.modifierId))
+                    {
+                        return null;
+                    }
+
+                    modifierText = $"weapon.Id = {request.modifierId}";
+                    break;
+                case StatsModifiers.Mode:
+                    // Check for modes.
+                    modifierText = "game_mode <> 0";
+                    if (await this._modeRepository.DoesModeExist(request.modifierId))
+                    {
+                        modifierText = $"game_mode = {request.modifierId}";
+                    }
+
+                    break;
+                case StatsModifiers.None:
+                default:
+                    modifierText = "1 = 1";
+                    break;
+            }
+
+            var sql = statSql.Sql.Replace("@modifier", modifierText);
+            var results = await this._statsRepository.RunStatistic(sql);
+            var mappedResults = this._mapper.Map<List<StatsDataVm>>(results);
+            return mappedResults;
         }
     }
 }

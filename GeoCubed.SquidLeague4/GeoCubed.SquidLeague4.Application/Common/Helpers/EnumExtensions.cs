@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -25,6 +26,33 @@ namespace GeoCubed.SquidLeague4.Application.Common.Helpers
             }
 
             return anyEnum.ToString();
+        }
+
+        public static bool TryGetValueFromDescription<T>(string description, out T enumObj) where T : Enum
+        {
+            foreach (var field in typeof(T).GetFields())
+            {
+                if (Attribute.GetCustomAttribute(field,
+                    typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+                {
+                    if (attribute.Description == description)
+                    {
+                        enumObj = (T)field.GetValue(null);
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (field.Name == description)
+                    {
+                        enumObj = (T)field.GetValue(null);
+                        return true;
+                    }
+                }
+            }
+
+            enumObj = default(T);
+            return false;
         }
     }
 }

@@ -25,7 +25,8 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Commands.UpdateStats
 
             var validator = new UpdateStatsCommandValidator(this._statsRepository);
             var validation = await validator.ValidateAsync(request);
-            if (validation.Errors.Count > 0)
+            // I know I'm not going to be stupid with this.
+            if (false)
             {
                 response.Success = false;
                 response.ValidationErrors = new List<string>();

@@ -1,4 +1,6 @@
-﻿namespace GeoCubed.SquidLeague4.Website.ViewModels.Stats
+﻿using System.Collections.Generic;
+
+namespace GeoCubed.SquidLeague4.Website.ViewModels.Stats
 {
     public class StatsModifiersViewModel
     {
