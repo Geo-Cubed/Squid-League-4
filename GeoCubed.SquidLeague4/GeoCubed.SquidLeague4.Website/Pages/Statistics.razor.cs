@@ -63,12 +63,16 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             {
                 this.SelectedStats = null;
             }
+            
 
             this.SelectedStatsId = statsId;
             this.SelectedStats = this.StatsOptions.FirstOrDefault(x => x.Id == statsId);
+            if (statsId == -1)
+            {
+                return;
+            }
 
             // Refresh the stats.
-
             await this.OnModifierSelectAsync(new ChangeEventArgs() { Value = -1 });
             if (this.SelectedStats.Modifier == "mode")
             {
@@ -91,6 +95,11 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             }
 
             var data = await this.StatisticDataService.GetStatsData(this.SelectedStatsId, modifierId);
+            if (data == null)
+            {
+                return;
+            }
+
             this.StrongDataType = data.FirstOrDefault().ValueStrongType;
             switch (this.StrongDataType)
             {
@@ -134,7 +143,17 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected void GenerateGraphTitle(int modifierId)
         {
-            var baseTitle = "Top 10 " + this.SelectedStats.Alias;
+            var baseTitle = string.Empty;
+            if (this.fullData.Count >= 10)
+            {
+                baseTitle += "Top 10 ";
+            }
+            else
+            {
+                baseTitle += string.Format("Top {0} ", this.fullData.Count);
+            }
+            
+            baseTitle += this.SelectedStats.Alias;
             var modifier = this.SelectedStats.Modifier;
 
             if (string.IsNullOrEmpty(modifier) || modifier == "none")
@@ -150,7 +169,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                     case StatsModifiers.Mode:
                         if (this.statsModifiersVm.Modes.Any(x => x.Key == modifierId))
                         {
-                            addon = this.statsModifiersVm.Modes.FirstOrDefault(x => x.Key == modifierId).Value;
+                            addon = "in " + this.statsModifiersVm.Modes.FirstOrDefault(x => x.Key == modifierId).Value;
                         }
                         else
                         {
@@ -161,7 +180,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                     case StatsModifiers.Weapon:
                         if (this.statsModifiersVm.Weapons.Any(x => x.Key == modifierId))
                         {
-                            addon = this.statsModifiersVm.Weapons.FirstOrDefault(x => x.Key == modifierId).Value;
+                            addon = "with " + this.statsModifiersVm.Weapons.FirstOrDefault(x => x.Key == modifierId).Value;
                         }
                         else
                         {
@@ -173,7 +192,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                         break;
                 }
 
-                this.tableTitle = baseTitle.Replace($"by {char.ToUpper(modifier[0]) + modifier.Substring(1)}", $"in {addon}");
+
+                this.tableTitle = baseTitle.Replace($"by {char.ToUpper(modifier[0]) + modifier.Substring(1)}", addon);
             }
         }
     }

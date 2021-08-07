@@ -60,12 +60,12 @@ namespace GeoCubed.SquidLeague4.Application.Features.Stats.Queries.GetStatsData
                     break;
                 case StatsModifiers.Weapon:
                     // Check for weapons.
-                    if (!await this._weaponRepository.DoesWeaponExist(request.modifierId))
-                    {
-                        return null;
+                    modifierText = "weapon <> 0";
+                    if (await this._weaponRepository.DoesWeaponExist(request.modifierId))
+                    { 
+                        modifierText = $"weapon = {request.modifierId}";
                     }
 
-                    modifierText = $"weapon.Id = {request.modifierId}";
                     break;
                 case StatsModifiers.Mode:
                     // Check for modes.
