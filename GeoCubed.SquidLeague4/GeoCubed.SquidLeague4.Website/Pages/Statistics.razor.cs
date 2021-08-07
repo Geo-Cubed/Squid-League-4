@@ -3,6 +3,7 @@ using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Models.Enums;
 using GeoCubed.SquidLeague4.Website.ViewModels.Stats;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace GeoCubed.SquidLeague4.Website.Pages
     {
         [Inject]
         private IStatsDataService StatisticDataService { get; set; }
+
+        [Inject]
+        private IJSRuntime JSRuntime { get; set; }
+
+        private ElementReference selectModeModifier;
+
+        private ElementReference selectWeaponModifier;
 
         protected List<StatsOptionsViewModel> StatsOptions { get; set; }
             = new List<StatsOptionsViewModel>();
@@ -27,7 +35,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected string dataValues { get; set; }
             = string.Empty;
 
-        protected string dataLabels { get; set; }
+        protected string dataLabelsTruncated { get; set; }
             = string.Empty;
 
         protected string tableTitle { get; set; }
@@ -35,6 +43,9 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected string StrongDataType { get; set; }
             = string.Empty;
+
+        protected List<StatsDataViewModel> fullData { get; set; }
+            = new List<StatsDataViewModel>();
 
         protected async override Task OnInitializedAsync()
         {
@@ -57,13 +68,23 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             this.SelectedStats = this.StatsOptions.FirstOrDefault(x => x.Id == statsId);
 
             // Refresh the stats.
-            this.OnModifierSelectAsync(new ChangeEventArgs() { Value = -1 });
+
+            await this.OnModifierSelectAsync(new ChangeEventArgs() { Value = -1 });
+            if (this.SelectedStats.Modifier == "mode")
+            {
+                await this.JSRuntime.InvokeVoidAsync("helpers.selectElement", this.selectModeModifier);
+            }
+            else if (this.SelectedStats.Modifier == "weapon")
+            {
+                await this.JSRuntime.InvokeVoidAsync("helpers.selectElement", this.selectWeaponModifier);
+            }
         }
 
         protected async Task OnModifierSelectAsync(ChangeEventArgs e)
         {
-            this.dataLabels = string.Empty;
+            this.dataLabelsTruncated = string.Empty;
             this.dataValues = string.Empty;
+            this.fullData = new List<StatsDataViewModel>();
             if (!int.TryParse(e.Value.ToString(), out int modifierId))
             { 
                 modifierId = -1;
@@ -92,6 +113,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                     break;
             }
 
+            this.fullData = data;
             this.ConvertDataToGraph(data.Take(10).ToList());
             this.GenerateGraphTitle(modifierId);
         }
@@ -99,7 +121,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         protected void ConvertDataToGraph(List<StatsDataViewModel> data)
         {
             this.dataValues = string.Join(',', data.Select(x => x.Value));
-            this.dataLabels = string.Join(',', data.Select(x => 
+            this.dataLabelsTruncated = string.Join(',', data.Select(x => 
                 {
                     if (x.Key.Length <= 12)
                     {

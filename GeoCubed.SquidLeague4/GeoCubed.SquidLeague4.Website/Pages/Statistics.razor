@@ -24,7 +24,7 @@
             if (this.SelectedStats.Modifier == StatsModifiers.Mode.GetDescription())
             {
                 <h2>Game Modes</h2>
-                <select class="form-control mb-3" @onchange="OnModifierSelectAsync">
+                <select class="form-control mb-3" @ref="this.selectModeModifier" @onchange="OnModifierSelectAsync">
                     <option value="-1">All Modes</option>
                     @foreach (var mode in this.statsModifiersVm.Modes)
                     {
@@ -35,7 +35,7 @@
             else if (this.SelectedStats.Modifier == StatsModifiers.Weapon.GetDescription())
             {
                 <h2>Weapons</h2>
-                <select class="form-control mb-3" @onchange="OnModifierSelectAsync">
+                <select class="form-control mb-3" @ref="this.selectWeaponModifier" @onchange="OnModifierSelectAsync">
                     <option value="-1">All Weapons</option>
                     @foreach (var weapon in this.statsModifiersVm.Weapons)
                     {
@@ -44,16 +44,37 @@
                 </select>
             }
 
-            @if (string.IsNullOrEmpty(this.dataLabels) || string.IsNullOrEmpty(this.dataValues))
+            @if (string.IsNullOrEmpty(this.dataLabelsTruncated) || string.IsNullOrEmpty(this.dataValues))
             {
                 <h2>This has no data</h2>
             }
             else
             {
                 <h2>@this.tableTitle</h2>
-                <div width="18rem">
-                    <VerticalBarChart InputData="@this.dataValues" InputLabels="@this.dataLabels">
-                    </VerticalBarChart>
+                <div style="margin:auto;max-width:700px;">
+                    @if (this.StrongDataType == "double")
+                    {
+                        <VerticalBarChart InputData="@this.dataValues" InputLabels="@this.dataLabelsTruncated">
+                        </VerticalBarChart>
+                    }
+                    else if (this.StrongDataType == "int")
+                    {
+                        <DonutChart InputData="@this.dataValues" InputLabels="@this.dataLabelsTruncated">
+                        </DonutChart>    
+                    }
+                    else
+                    {
+                        <h3>Idk what chart to use here</h3>
+                    }
+                </div>
+                <div style="margin:auto;max-width:400px">
+                    <h3>Full Data</h3>
+                    <ul class="list-group">
+                        @foreach (var data in this.fullData)
+                        {
+                            <li class="list-group-item">@string.Format("{0} - {1}", data.Key, data.Value)</li>
+                        }
+                    </ul>
                 </div>
             }
         }
