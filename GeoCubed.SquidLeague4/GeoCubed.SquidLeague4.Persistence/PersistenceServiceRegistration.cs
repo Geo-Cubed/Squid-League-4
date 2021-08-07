@@ -29,6 +29,7 @@ namespace GeoCubed.SquidLeague4.Persistence
             services.AddScoped<IModeRepository, ModeRepository>();
             services.AddScoped<IBracketKnockoutRepository, BracketKnockoutRepository>();
             services.AddScoped<IWeaponPlayedRepository, WeaponPlayedRepository>();
+            services.AddScoped<IStatisticRepository, StatisticRepository>();
 
             return services;
         }

@@ -18,12 +18,15 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
     <PackageReference Include="BlazorPro.BlazorSize" Version="5.0.0" />
+    <PackageReference Include="DonutChart" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+    <PackageReference Include="VerticalBarChart" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +42,7 @@
     <None Include="Pages\Admin\AdminMatchResults.razor" />
     <None Include="Pages\Admin\AdminPlayers.razor" />
     <None Include="Pages\Admin\AdminRoot.razor" />
+    <None Include="Pages\Admin\AdminStatistics.razor" />
     <None Include="Pages\Admin\AdminSystemSwitches.razor" />
     <None Include="Pages\Admin\AdminTeams.razor" />
     <None Include="Pages\Admin\Brackets\AdminLowerBracket.razor" />

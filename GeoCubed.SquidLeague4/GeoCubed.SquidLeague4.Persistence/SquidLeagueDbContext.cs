@@ -1,4 +1,5 @@
 ﻿using GeoCubed.SquidLeague4.Domain.Entities;
+using GeoCubed.SquidLeague4.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeoCubed.SquidLeague4.Persistence
@@ -27,6 +28,9 @@ namespace GeoCubed.SquidLeague4.Persistence
         public virtual DbSet<WeaponPlayed> WeaponPlayeds { get; set; }
         public virtual DbSet<WeaponSpecial> WeaponSpecials { get; set; }
         public virtual DbSet<WeaponSub> WeaponSubs { get; set; }
+        public virtual DbSet<Statistic> Statistics { get; set; }
+
+        public virtual DbSet<StatsModel> StatsModel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +43,7 @@ namespace GeoCubed.SquidLeague4.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SquidLeagueDbContext).Assembly);
+            modelBuilder.Entity<StatsModel>().HasNoKey();
         }
     }
 }

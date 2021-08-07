@@ -62,5 +62,19 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
             return Task.FromResult((IReadOnlyList<Weapon>)weapons);
         }
+
+        public Task<IReadOnlyList<Weapon>> GetWeaponsPlayed()
+        {
+            var weapons = this._dbContext.Weapons
+                .FromSqlRaw("select distinct w.* " +
+                    "from `weapon_played` as wp " +
+                    "inner join `weapon` as w on wp.`weapon_id` = w.`id` " +
+                    "group by w.`id`, wp.`player_id` " +
+                    "having count(*) > 2 " +
+                    "order by w.`weapon_name`;"
+                ).ToList();
+
+            return Task.FromResult((IReadOnlyList<Weapon>)weapons);
+        }
     }
 }

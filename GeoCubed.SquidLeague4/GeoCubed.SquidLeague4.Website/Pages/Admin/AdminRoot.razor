@@ -52,7 +52,7 @@
                 <p></p>
             </div>
         </div>
-        
+
         <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/bracket")'>
             <div class="card-body">
                 <h5 class="card-title text-center">Bracket</h5>
@@ -63,7 +63,7 @@
                 <p></p>
             </div>
         </div>
-        
+
         <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/gamesettings")'>
             <div class="card-body">
                 <h5 class="card-title text-center">Map Lists</h5>
@@ -74,7 +74,7 @@
                 <p></p>
             </div>
         </div>
-        
+
         <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/casters")'>
             <div class="card-body">
                 <h5 class="card-title text-center">Casters</h5>
@@ -85,7 +85,7 @@
                 <p></p>
             </div>
         </div>
-        
+
         <div class="card m-3 adminCard" style="width:18rem;min-height:220px;" @onclick='() => NavigateTo("admin/helpfulpeople")'>
             <div class="card-body">
                 <h5 class="card-title text-center">Helpful People</h5>
@@ -96,7 +96,21 @@
                 <p></p>
             </div>
         </div>
-        
+
+        <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/stats"); } }'>
+            <div class="card-body">
+                <h5 class="card-title text-center">Statistics</h5>
+                <div class="px-3">
+                    <span class="oi oi-pie-chart"></span>
+                </div>
+                <p>Edit the statistics</p>
+                @if (!isAdmin)
+                {
+                    <p class="text-danger">This Requires the Admin Role</p>
+                }
+            </div>
+        </div>
+
         <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/systemswitches"); } }'>
             <div class="card-body">
                 <h5 class="card-title text-center">System Switches</h5>
@@ -110,7 +124,7 @@
                 }
             </div>
         </div>
-        
+
         <div class="card m-3 @((this.isAdmin) ? "adminCard" : string.Empty)" style="width:18rem;min-height:220px;@((this.isAdmin) ? string.Empty : "opacity:.4;")" @onclick='() => { if (this.isAdmin) { NavigateTo("admin/userdashboard"); } }'>
             <div class="card-body">
                 <h5 class="card-title text-center">User Dashboard</h5>
