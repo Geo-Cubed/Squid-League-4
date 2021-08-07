@@ -70,9 +70,9 @@
                 <div style="margin:auto;max-width:400px">
                     <h3>Full Data</h3>
                     <ul class="list-group">
-                        @foreach (var data in this.fullData)
+                        @for (int i = 0; i < this.fullData.Count; ++i)
                         {
-                            <li class="list-group-item">@string.Format("{0} - {1}", data.Key, data.Value)</li>
+                            <li class="list-group-item">@string.Format("{0}. {1} - {2}", i + 1, this.fullData[i].Key, this.fullData[i].Value)</li>
                         }
                     </ul>
                 </div>
