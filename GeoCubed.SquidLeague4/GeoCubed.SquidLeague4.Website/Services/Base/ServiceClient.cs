@@ -588,12 +588,12 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, int? modifierId);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, int? modifierId, System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -6725,21 +6725,25 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId)
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, int? modifierId)
         {
-            return GetStatsDataByIdAsync(statsId, System.Threading.CancellationToken.None);
+            return GetStatsDataByIdAsync(statsId, modifierId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StatsDataVm>> GetStatsDataByIdAsync(int? statsId, int? modifierId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/Statistics/stats?");
             if (statsId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("statsId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(statsId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (modifierId != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("modifierId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(modifierId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
     

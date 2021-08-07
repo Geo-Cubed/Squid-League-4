@@ -25,7 +25,7 @@
             {
                 <h2>Game Modes</h2>
                 <select class="form-control mb-3" @onchange="OnModifierSelectAsync">
-                    <option value="-1">None</option>
+                    <option value="-1">All Modes</option>
                     @foreach (var mode in this.statsModifiersVm.Modes)
                     {
                         <option value="@mode.Key">@mode.Value</option>
@@ -36,12 +36,25 @@
             {
                 <h2>Weapons</h2>
                 <select class="form-control mb-3" @onchange="OnModifierSelectAsync">
-                    <option value="-1">None</option>
+                    <option value="-1">All Weapons</option>
                     @foreach (var weapon in this.statsModifiersVm.Weapons)
                     {
                         <option value="@weapon.Key">@weapon.Value</option>
                     }
                 </select>
+            }
+
+            @if (string.IsNullOrEmpty(this.dataLabels) || string.IsNullOrEmpty(this.dataValues))
+            {
+                <h2>This has no data</h2>
+            }
+            else
+            {
+                <h2>@this.tableTitle</h2>
+                <div width="18rem">
+                    <VerticalBarChart InputData="@this.dataValues" InputLabels="@this.dataLabels">
+                    </VerticalBarChart>
+                </div>
             }
         }
     </div>

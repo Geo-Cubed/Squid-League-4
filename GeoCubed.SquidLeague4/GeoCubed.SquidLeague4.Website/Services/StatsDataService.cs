@@ -66,7 +66,7 @@ namespace GeoCubed.SquidLeague4.Website.Services
 
         public async Task<List<StatsDataViewModel>> GetStatsData(int statsId, int modifierId)
         {
-            var data = await this._client.GetStatsDataByIdAsync(statsId/*, modifierId*/);
+            var data = await this._client.GetStatsDataByIdAsync(statsId, modifierId);
             var mappedData = this._mapper.Map<ICollection<StatsDataViewModel>>(data);
             return mappedData.ToList();
         }
