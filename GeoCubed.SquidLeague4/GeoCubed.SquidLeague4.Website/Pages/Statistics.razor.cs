@@ -168,10 +168,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages
         }
 
         protected void GenerateGraphTitle(int modifierId)
-        {
-            var baseTitle = "Top ";
-            
-            baseTitle += this.SelectedStats.Alias;
+        {           
+            var baseTitle = this.SelectedStats.Alias;
             var modifier = this.SelectedStats.Modifier;
 
             if (string.IsNullOrEmpty(modifier) || modifier == "none")
