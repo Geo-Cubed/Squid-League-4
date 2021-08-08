@@ -9,7 +9,7 @@ bracket
 	> Swiss - DONE
 	> Upper Bracket
 	> Lower Bracket
-stats
+stats > DONE
 useful information - DONE
 helpful people - DONE
 loading bar - DONE?

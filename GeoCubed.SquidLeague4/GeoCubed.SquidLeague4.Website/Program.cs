@@ -1,4 +1,7 @@
 using Blazored.LocalStorage;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using BlazorPro.BlazorSize;
 using GeoCubed.SquidLeague4.Website.Auth;
 using GeoCubed.SquidLeague4.Website.Interfaces;
@@ -23,6 +26,13 @@ namespace GeoCubed.SquidLeague4.Website
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddMediaQueryService();
+            builder.Services
+              .AddBlazorise(options =>
+              {
+                  options.ChangeTextOnKeyPress = true;
+              })
+              .AddBootstrapProviders()
+              .AddFontAwesomeIcons();
 
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();

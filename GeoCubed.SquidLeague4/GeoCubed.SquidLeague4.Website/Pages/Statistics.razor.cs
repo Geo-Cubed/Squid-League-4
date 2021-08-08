@@ -129,7 +129,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected void ConvertDataToGraph(List<StatsDataViewModel> data)
         {
-            this.dataValues = string.Join(',', data.Select(x => x.Value));
+            this.dataValues = string.Join(',', data.Select(x => Math.Round(double.Parse(x.Value)).ToString()));
             this.dataLabelsTruncated = string.Join(',', data.Select(x => 
                 {
                     if (x.Key.Length <= 12)
