@@ -23,6 +23,8 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         private ElementReference selectWeaponModifier;
 
+        private ElementReference selectPlayerModifier;
+
         protected List<StatsOptionsViewModel> StatsOptions { get; set; }
             = new List<StatsOptionsViewModel>();
 
@@ -86,6 +88,10 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             else if (this.SelectedStats.Modifier == "weapon")
             {
                 await this.JSRuntime.InvokeVoidAsync("helpers.selectElement", this.selectWeaponModifier);
+            }
+            else if (this.SelectedStats.Modifier == "player")
+            {
+                await this.JSRuntime.InvokeVoidAsync("helpers.selectElement", this.selectPlayerModifier);
             }
         }
 
@@ -192,6 +198,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                             addon = "All Modes";
                         }
 
+                        this.tableTitle = baseTitle.Replace($"by {char.ToUpper(modifier[0]) + modifier.Substring(1)}", addon);
                         break;
                     case StatsModifiers.Weapon:
                         if (this.statsModifiersVm.Weapons.Any(x => x.Key == modifierId))
@@ -203,13 +210,23 @@ namespace GeoCubed.SquidLeague4.Website.Pages
                             addon = "All Weapons";
                         }
 
+                        this.tableTitle = baseTitle.Replace($"by {char.ToUpper(modifier[0]) + modifier.Substring(1)}", addon);
+                        break;
+                    case StatsModifiers.Player:
+                        if (this.statsModifiersVm.Players.Any(x => x.Key == modifierId))
+                        {
+                            addon = this.statsModifiersVm.Players.FirstOrDefault(x => x.Key == modifierId).Value;
+                        }
+                        else
+                        {
+                            addon = "All Players";
+                        }
+
+                        this.tableTitle = $"Weapons Played by {addon}";
                         break;
                     default:
                         break;
                 }
-
-
-                this.tableTitle = baseTitle.Replace($"by {char.ToUpper(modifier[0]) + modifier.Substring(1)}", addon);
             }
         }
     }

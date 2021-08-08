@@ -14,6 +14,9 @@ namespace GeoCubed.SquidLeague4.Website.Models.Enums
         Weapon,
 
         [Description("team")]
-        Team
+        Team,
+
+        [Description("player")]
+        Player
     }
 }

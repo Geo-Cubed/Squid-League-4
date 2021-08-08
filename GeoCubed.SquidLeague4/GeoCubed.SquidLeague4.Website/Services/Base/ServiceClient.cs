@@ -10634,6 +10634,9 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         [Newtonsoft.Json.JsonProperty("weapons", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IDictionary<string, string> Weapons { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("players", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, string> Players { get; set; }
+    
     
     }
     

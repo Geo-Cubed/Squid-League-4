@@ -39,5 +39,16 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             var player = this._dbContext.Players.Where(p => p.Id == id).Include(p => p.Team).FirstOrDefault();
             return Task.FromResult(player);
         }
+
+        public Task<IReadOnlyList<Player>> GetPlayersWhoPlayed()
+        {
+            var players = this._dbContext.Players
+                .FromSqlRaw("select distinct p.* " +
+                "from `player` as p " +
+                "inner join `weapon_played` as wp on wp.`player_id` = p.`id`" +
+                "order by p.`in_game_name`;").ToList();
+
+            return Task.FromResult((IReadOnlyList<Player>)players);
+        }
     }
 }

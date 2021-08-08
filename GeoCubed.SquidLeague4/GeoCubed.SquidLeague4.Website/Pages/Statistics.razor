@@ -19,7 +19,7 @@
         {
             <h2>Please select a statistic to view</h2>
         }
-        else 
+        else
         {
             if (this.SelectedStats.Modifier == StatsModifiers.Mode.GetDescription())
             {
@@ -43,6 +43,17 @@
                     }
                 </select>
             }
+            else if (this.SelectedStats.Modifier == StatsModifiers.Player.GetDescription())
+            {
+                <h2>Players</h2>
+                <select class="form-control mb-3" @ref="this.selectPlayerModifier" @onchange="OnModifierSelectAsync">
+                    <option value="-1">All Players</option>
+                    @foreach (var player in this.statsModifiersVm.Players)
+                    {
+                        <option value="@player.Key">@player.Value</option>
+                    }
+                </select>
+            }
 
             @if (this.dataValues.Count == 0)
             {
@@ -52,7 +63,7 @@
             {
                 <h2>@this.tableTitle</h2>
                 <div style="margin:auto;max-width:700px;">
-                    @if (this.StrongDataType == "double")
+                    @if (this.StrongDataType == "double" || this.StrongDataType == "int")
                     {
                         <MediaQuery Media="@Breakpoints.LargeDown">
                             @* Mobile view *@
@@ -66,7 +77,7 @@
                                         </TooltipTemplate>
                                     </RadzenColumnSeries>
                                     <RadzenLegend Visible="false" />
-                                    <RadzenValueAxis Min="0" Max="100" Step="20">
+                                    <RadzenValueAxis Min="0" Max="@(((int)Math.Ceiling(this.dataValues.Max(x => x.Value) / 10.0d)) * 10)" Step="@(((((int)Math.Ceiling(this.dataValues.Max(x => x.Value) / 10.0d)) * 10) < 20)? 10 : 20)">
                                         <RadzenGridLines Visible="true" />
                                     </RadzenValueAxis>
                                     <RadzenCategoryAxis Formatter="@truncateString" />
@@ -84,7 +95,7 @@
                                         </TooltipTemplate>
                                     </RadzenColumnSeries>
                                     <RadzenLegend Visible="false" />
-                                    <RadzenValueAxis Min="0" Max="100" Step="10">
+                                    <RadzenValueAxis Min="0" Max="@(((int)Math.Ceiling(this.dataValues.Max(x => x.Value) / 10.0d)) * 10)" Step="10">
                                         <RadzenGridLines Visible="true" />
                                     </RadzenValueAxis>
                                     <RadzenCategoryAxis Formatter="@truncateString" />
@@ -92,10 +103,6 @@
                                 </RadzenChart>
                             </Unmatched>
                         </MediaQuery>
-                    }
-                    else if (this.StrongDataType == "int")
-                    {
-                        <h3>Idk what chart to use here</h3>
                     }
                     else
                     {
@@ -113,5 +120,7 @@
                 </div>
             }
         }
+
+        <h3 class="m-2">Disclaimer: A weapon has to be played at least 3 times to be counted in the 'Top Players By Weapon' Statistic</h3>
     </div>
 </div>

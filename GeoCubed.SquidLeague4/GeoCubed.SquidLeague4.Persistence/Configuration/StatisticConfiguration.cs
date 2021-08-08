@@ -23,7 +23,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Configuration
                 .HasColumnName("sql");
 
             builder.Property(e => e.Modifier)
-                .HasColumnType("enum('none','mode','weapon','team')")
+                .HasColumnType("enum('none','mode','weapon','team','player')")
                 .HasColumnName("modifier");
         }
     }
