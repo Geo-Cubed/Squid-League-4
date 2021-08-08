@@ -44,7 +44,7 @@
                 </select>
             }
 
-            @if (string.IsNullOrEmpty(this.dataLabelsTruncated) || string.IsNullOrEmpty(this.dataValues))
+            @if (this.dataValues.Count == 0)
             {
                 <h2>This has no data</h2>
             }
@@ -54,14 +54,48 @@
                 <div style="margin:auto;max-width:700px;">
                     @if (this.StrongDataType == "double")
                     {
-                        <p>@this.dataValues</p>
-                        <p>@this.dataLabelsTruncated</p>
-                        <Chart @ref="this.DoubleChart" Type="ChartType.Bar" TItem="double"/>
+                        <MediaQuery Media="@Breakpoints.LargeDown">
+                            @* Mobile view *@
+                            <Matched>
+                                <RadzenChart>
+                                    <RadzenColumnSeries Data="@dataValues.Take(5)" CategoryProperty="Key" ValueProperty="Value" Title="@seriesTitle">
+                                        <TooltipTemplate Context="data">
+                                            <div>
+                                                <span>@data.Key</span> : <span>@data.Value</span>
+                                            </div>
+                                        </TooltipTemplate>
+                                    </RadzenColumnSeries>
+                                    <RadzenLegend Visible="false" />
+                                    <RadzenValueAxis Min="0" Max="100" Step="20">
+                                        <RadzenGridLines Visible="true" />
+                                    </RadzenValueAxis>
+                                    <RadzenCategoryAxis Formatter="@truncateString" />
+                                    <RadzenColumnOptions Radius="5" />
+                                </RadzenChart>
+                            </Matched>
+                            @* Website view *@
+                            <Unmatched>
+                                <RadzenChart>
+                                    <RadzenColumnSeries Data="@dataValues" CategoryProperty="Key" ValueProperty="Value" Title="@seriesTitle">
+                                        <TooltipTemplate Context="data">
+                                            <div>
+                                                <span>@data.Key</span> : <span>@data.Value</span>
+                                            </div>
+                                        </TooltipTemplate>
+                                    </RadzenColumnSeries>
+                                    <RadzenLegend Visible="false" />
+                                    <RadzenValueAxis Min="0" Max="100" Step="10">
+                                        <RadzenGridLines Visible="true" />
+                                    </RadzenValueAxis>
+                                    <RadzenCategoryAxis Formatter="@truncateString" />
+                                    <RadzenColumnOptions Radius="5" />
+                                </RadzenChart>
+                            </Unmatched>
+                        </MediaQuery>
                     }
                     else if (this.StrongDataType == "int")
                     {
-                        <DonutChart InputData="@this.dataValues" InputLabels="@this.dataLabelsTruncated">
-                        </DonutChart>    
+                        <h3>Idk what chart to use here</h3>
                     }
                     else
                     {

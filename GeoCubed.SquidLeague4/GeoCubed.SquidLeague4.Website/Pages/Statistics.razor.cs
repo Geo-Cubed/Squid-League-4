@@ -32,17 +32,22 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected StatsModifiersViewModel statsModifiersVm;
 
-        protected string dataValues { get; set; }
-            = string.Empty;
+        protected class DataItem 
+        {
+            public string Key { get; set; }
+            public double Value { get; set; }
+        }
 
-        protected string dataLabelsTruncated { get; set; }
-            = string.Empty;
+        protected List<DataItem> dataValues { get; set; }
+            = new List<DataItem>();
 
         protected string tableTitle { get; set; }
             = string.Empty;
 
         protected string StrongDataType { get; set; }
             = string.Empty;
+
+        protected string seriesTitle { get; set; }
 
         protected List<StatsDataViewModel> fullData { get; set; }
             = new List<StatsDataViewModel>();
@@ -86,8 +91,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
 
         protected async Task OnModifierSelectAsync(ChangeEventArgs e)
         {
-            this.dataLabelsTruncated = string.Empty;
-            this.dataValues = string.Empty;
+            this.dataValues = new List<DataItem>();
             this.fullData = new List<StatsDataViewModel>();
             if (!int.TryParse(e.Value.ToString(), out int modifierId))
             { 
@@ -125,33 +129,47 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             this.fullData = data;
             this.ConvertDataToGraph(data.Take(10).ToList());
             this.GenerateGraphTitle(modifierId);
+            this.GenrateSeriesName(this.tableTitle);
         }
 
         protected void ConvertDataToGraph(List<StatsDataViewModel> data)
         {
-            this.dataValues = string.Join(',', data.Select(x => Math.Round(double.Parse(x.Value)).ToString()));
-            this.dataLabelsTruncated = string.Join(',', data.Select(x => 
-                {
-                    if (x.Key.Length <= 12)
-                    {
-                        return x.Key;
-                    }
+            this.dataValues = data.Select(x => new DataItem() 
+            { 
+                Key = x.Key, 
+                Value = double.Parse(x.Value)
+            }).ToList();
+        }
 
-                    return x.Key.Substring(0, 12) + "...";
-                }));
+        protected void GenrateSeriesName(string title)
+        {
+            this.seriesTitle = string.Empty;
+            if (title.ToLower().Contains("pick rate"))
+            {
+                this.seriesTitle = "Pick Rate";
+            }
+
+            if (title.ToLower().Contains("win rate"))
+            {
+                this.seriesTitle = "Win Rate";
+            }
+
+        }
+
+        protected string truncateString(object str)
+        {
+            var value = (str == null) ? string.Empty : str.ToString();
+            if (value.Length <= 4)
+            {
+                return value;
+            }
+
+            return value.Substring(0, 4) + "...";
         }
 
         protected void GenerateGraphTitle(int modifierId)
         {
-            var baseTitle = string.Empty;
-            if (this.fullData.Count >= 10)
-            {
-                baseTitle += "Top 10 ";
-            }
-            else
-            {
-                baseTitle += string.Format("Top {0} ", this.fullData.Count);
-            }
+            var baseTitle = "Top ";
             
             baseTitle += this.SelectedStats.Alias;
             var modifier = this.SelectedStats.Modifier;
