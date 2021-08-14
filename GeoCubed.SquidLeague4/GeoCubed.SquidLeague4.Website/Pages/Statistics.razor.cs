@@ -105,7 +105,7 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             }
 
             var data = await this.StatisticDataService.GetStatsData(this.SelectedStatsId, modifierId);
-            if (data == null)
+            if (data == null || !data.Any())
             {
                 return;
             }
