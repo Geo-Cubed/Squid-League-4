@@ -1,7 +1,7 @@
 use `squid_league_4`;
 
 select 
-	RankTbl.`Rank` as 'Rank',
+	cast(RankTbl.`Rank` as char(2)) as 'Rank',
     count(*) as 'Occurances'
 from
 	(
