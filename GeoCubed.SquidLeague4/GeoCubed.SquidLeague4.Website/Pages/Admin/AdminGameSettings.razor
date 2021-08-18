@@ -53,7 +53,7 @@
                 <label class="col-sm-2 col-form-label">Bracket Stage</label>
                 <div class="col-sm-10">
                     <select class="form-control" @bind="this.model.BracketStage">
-                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "U_KNOCKOUT_STAGE" || s.Name == "L_KNOCKOUT_STAGE").Select(x => x.Value).OrderBy(x => x))
+                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "KNOCKOUT_STAGE_U" || s.Name == "KNOCKOUT_STAGE_L").Select(x => x.Value).OrderBy(x => x))
                         {
                             <option value="@stage">@stage</option>
                         }
@@ -116,7 +116,7 @@
                 <label class="col-sm-2 col-form-label">Bracket Stage</label>
                 <div class="col-sm-10">
                     <select class="form-control" @bind="this.model.BracketStage">
-                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "U_KNOCKOUT_STAGE" || s.Name == "L_KNOCKOUT_STAGE").Select(x => x.Value).OrderBy(x => x))
+                        @foreach (var stage in this.allSwitches.Where(s => s.Name == "SWISS_STAGE" || s.Name == "KNOCKOUT_STAGE_U" || s.Name == "KNOCKOUT_STAGE_L").Select(x => x.Value).OrderBy(x => x))
                         {
                             <option value="@stage">@stage</option>
                         }

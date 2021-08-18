@@ -49,6 +49,22 @@ a, .btn-link {
     background-color: grey;
 }
 
+rounds .round {
+    float: left;
+    text-align: center;
+    line-height: 15px;
+    background-color: black;
+    border-right: 1px solid #808080;
+}
+
+.icon rect {
+    fill: white;
+}
+
+.round-headder {
+    fill: black;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

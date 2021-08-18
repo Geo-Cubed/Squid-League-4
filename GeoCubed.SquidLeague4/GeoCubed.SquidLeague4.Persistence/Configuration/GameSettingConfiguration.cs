@@ -20,7 +20,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Configuration
 
             builder.Property(e => e.BracketStage)
                 .IsRequired()
-                .HasMaxLength(2)
+                .HasMaxLength(8)
                 .HasColumnName("bracket_stage");
 
             builder.Property(e => e.GameMapId)

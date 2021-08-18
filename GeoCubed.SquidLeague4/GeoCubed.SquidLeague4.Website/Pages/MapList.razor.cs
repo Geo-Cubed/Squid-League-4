@@ -31,5 +31,31 @@ namespace GeoCubed.SquidLeague4.Website.Pages
             this.lowerMapLists = mapLists.Where(x => x.BracketStage.ToUpper().StartsWith('L'));
         }
 
+        protected string GetKnockoutStageName(string stage)
+        {
+            // TODO: for next squid league put the bracket stages in a seperate table so I can store alias and bo with the stage.
+            switch (stage)
+            {
+                case "UR1":
+                    return "Upper Round 1";
+                case "UQF":
+                    return "Upper Quarter Finals";
+                case "USF":
+                    return "Upper Semi Finals";
+                case "UGF":
+                    return "Upper Grand Finals";
+                case "LR1":
+                    return "Lower Round 1";
+                case "LQF":
+                    return "Lower Quarter Finals";
+                case "LSF":
+                    return "Lower Semi Finals";
+                case "LGF":
+                    return "Lower Grand Finals";
+                default:
+                    return string.Empty;
+            }
+        }
+
     }
 }
