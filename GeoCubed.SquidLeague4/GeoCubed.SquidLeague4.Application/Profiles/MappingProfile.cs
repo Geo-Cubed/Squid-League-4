@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Commands.CreateKnockoutMatch;
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLowerBracket;
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllUpperBracket;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetKnockoutMatchInfo;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.CreateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Commands.UpdateCaster;
 using GeoCubed.SquidLeague4.Application.Features.Casters.Queries.GetCasterById;
@@ -225,6 +226,13 @@ namespace GeoCubed.SquidLeague4.Application.Profiles
             CreateMap<Statistic, CreateStatsCommand>().ReverseMap();
             CreateMap<Statistic, UpdateStatsCommand>().ReverseMap();
             CreateMap<StatsModel, StatsDataVm>();
+
+            CreateMap<BracketKnockout, KnockoutMatchInfo>()
+                .ForMember(x => x.MatchId, opt => opt.MapFrom(x => x.MatchId))
+                .ForMember(x => x.HomeTeamName, opt => opt.MapFrom(x => x.Match.HomeTeam.TeamName))
+                .ForMember(x => x.AwayTeamName, opt => opt.MapFrom(x => x.Match.AwayTeam.TeamName))
+                .ForMember(x => x.HomeTeamScore, opt => opt.MapFrom(x => x.Match.HomeTeamScore))
+                .ForMember(x => x.AwayTeamScore, opt => opt.MapFrom(x => x.Match.AwayTeamScore));
         }
 
         private WeaponPlayed GetWeaponPlayed(List<WeaponPlayed> played, int playerNum)

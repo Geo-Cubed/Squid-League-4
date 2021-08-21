@@ -11,5 +11,7 @@ namespace GeoCubed.SquidLeague4.Application.Interfaces.Persistence
         Task<IReadOnlyList<BracketKnockout>> GetUpperBracket();
 
         Task<IReadOnlyList<BracketKnockout>> GetLowerBracket();
+
+        Task<IReadOnlyList<BracketKnockout>> GetKnockoutInformation(bool isUpper);
     }
 }

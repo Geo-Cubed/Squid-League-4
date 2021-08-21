@@ -2,6 +2,7 @@
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Commands.DeleteKnockoutMatch;
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLowerBracket;
 using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllUpperBracket;
+using GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetKnockoutMatchInfo;
 using GeoCubed.SquidLeague4.Domain.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,22 @@ namespace GeoCubed.SquidLeague4.CubedAPI.Controllers
         public KnockoutController(IMediator mediator)
         {
             this._mediator = mediator;
+        }
+
+        [HttpGet("uppermatches", Name = "GetUpperMatches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<KnockoutMatchInfo>>> GetUpperMatches()
+        {
+            var upper = await this._mediator.Send(new GetKnockoutMatchInfoQuery(true));
+            return Ok(upper);
+        }
+        
+        [HttpGet("lowermatches", Name = "GetLowerMatches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<KnockoutMatchInfo>>> GetLowerMatches()
+        {
+            var lower = await this._mediator.Send(new GetKnockoutMatchInfoQuery(false));
+            return Ok(lower);
         }
 
         [HttpGet("allupper", Name = "GetAllUpperBracket")]

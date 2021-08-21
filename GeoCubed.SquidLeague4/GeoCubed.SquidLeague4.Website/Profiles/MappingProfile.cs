@@ -5,6 +5,7 @@ using GeoCubed.SquidLeague4.Website.ViewModels;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
 using GeoCubed.SquidLeague4.Website.ViewModels.Caster;
 using GeoCubed.SquidLeague4.Website.ViewModels.GameSettings;
+using GeoCubed.SquidLeague4.Website.ViewModels.KnockoutMatches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Matches;
 using GeoCubed.SquidLeague4.Website.ViewModels.Results;
 using GeoCubed.SquidLeague4.Website.ViewModels.Stats;
@@ -107,6 +108,8 @@ namespace GeoCubed.SquidLeague4.Website.Profiles
             CreateMap<AdminStatsViewModel, UpdateStatsCommand>().ReverseMap();
             CreateMap<StatsModifiersVm, StatsModifiersViewModel>().ReverseMap();
             CreateMap<StatsDataVm, StatsDataViewModel>().ReverseMap();
+
+            CreateMap<KnockoutMatchInfo, KnockoutInfoViewModel>().ReverseMap();
         }
     }
 }

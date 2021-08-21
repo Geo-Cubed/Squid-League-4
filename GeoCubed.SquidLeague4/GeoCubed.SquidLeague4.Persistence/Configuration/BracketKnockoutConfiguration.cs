@@ -22,7 +22,7 @@ namespace GeoCubed.SquidLeague4.Persistence.Configuration
 
             builder.Property(e => e.Stage)
                 .IsRequired()
-                .HasColumnType("enum('Q1','Q2','Q3','Q4','S1','S2','F','T')")
+                .HasColumnType("varchar(8)")
                 .HasColumnName("stage");
 
             builder.HasOne(d => d.Match)

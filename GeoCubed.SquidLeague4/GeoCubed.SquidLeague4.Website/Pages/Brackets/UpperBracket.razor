@@ -2,5 +2,94 @@
     <h3 class="m-4">Upper Bracket</h3>
 
     <iframe src="https://challonge.com/SL2021upper/module" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+
+    <h4 class="m-2">Matches</h4>
+    @if (this.ur1.Any())
+    {
+        <h4 class="m-2"><em>Round 1</em></h4>
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach (var match in this.ur1)
+            {
+                <div class="card m-2 adminCard" style="min-width:200px;cursor:pointer;" @onclick="() => this.NavigateTo(match)">
+                    <div class="card-body">
+                        <div class="d-flex flex-row pb-2">
+                            <div class="flex-grow-1 pr-2">@match.HomeTeamName</div>
+                            <div class="border-left pl-2">@match.HomeTeamScore</div>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1 pr-2">@match.AwayTeamName</div>
+                            <div class="border-left pl-2">@match.AwayTeamScore</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (this.uqf.Any())
+    {
+        <h4 class="m-2"><em>Quarter Finals</em></h4>
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach (var match in this.uqf)
+            {
+                <div class="card m-2 adminCard" style="min-width:200px;cursor:pointer;" @onclick="() => this.NavigateTo(match)">
+                    <div class="card-body">
+                        <div class="d-flex flex-row pb-2">
+                            <div class="flex-grow-1 pr-2">@match.HomeTeamName</div>
+                            <div class="border-left pl-2">@match.HomeTeamScore</div>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1 pr-2">@match.AwayTeamName</div>
+                            <div class="border-left pl-2">@match.AwayTeamScore</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (this.usf.Any())
+    {
+        <h4 class="m-2"><em>Semi Finals</em></h4>
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach (var match in this.usf)
+            {
+                <div class="card m-2 adminCard" style="min-width:200px;cursor:pointer;" @onclick="() => this.NavigateTo(match)">
+                    <div class="card-body">
+                        <div class="d-flex flex-row pb-2">
+                            <div class="flex-grow-1 pr-2">@match.HomeTeamName</div>
+                            <div class="border-left pl-2">@match.HomeTeamScore</div>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1 pr-2">@match.AwayTeamName</div>
+                            <div class="border-left pl-2">@match.AwayTeamScore</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (this.ugf.Any())
+    {
+        <h4 class="m-2"><em>Grand Finals</em></h4>
+        <div class="d-flex flex-wrap justify-content-center">
+            @foreach (var match in this.ugf)
+            {
+                <div class="card m-2 adminCard" style="min-width:200px;cursor:pointer;" @onclick="() => this.NavigateTo(match)">
+                    <div class="card-body">
+                        <div class="d-flex flex-row pb-2">
+                            <div class="flex-grow-1 pr-2">@match.HomeTeamName</div>
+                            <div class="border-left pl-2">@match.HomeTeamScore</div>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1 pr-2">@match.AwayTeamName</div>
+                            <div class="border-left pl-2">@match.AwayTeamScore</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>
 

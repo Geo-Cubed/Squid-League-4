@@ -20,7 +20,7 @@ namespace GeoCubed.SquidLeague4.Application.Features.Bracket.Queries.GetAllLower
 
         public async Task<List<LowerBracketVm>> Handle(GetAllLowerBracketQuery request, CancellationToken cancellationToken)
         {
-            var lower = await this._bracketRepository.GetUpperBracket();
+            var lower = await this._bracketRepository.GetLowerBracket();
             var mappedLower = this._mapper.Map<List<LowerBracketVm>>(lower);
             return mappedLower;
         }

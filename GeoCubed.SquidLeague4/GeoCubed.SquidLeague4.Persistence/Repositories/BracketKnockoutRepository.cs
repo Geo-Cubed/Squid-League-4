@@ -21,12 +21,21 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
             return Task.FromResult(bracketMatches.Any());
         }
 
+        public Task<IReadOnlyList<BracketKnockout>> GetKnockoutInformation(bool isUpper)
+        {
+            var stages = this.GetKnockoutStages(isUpper).Result;
+            var matches = this._dbContext.BracketKnockouts
+                .Include(x => x.Match.HomeTeam)
+                .Include(x => x.Match.AwayTeam)
+                .Where(x => stages.Contains(x.Stage))
+                .ToList();
+
+            return Task.FromResult((IReadOnlyList<BracketKnockout>)matches);
+        }
+
         public Task<IReadOnlyList<BracketKnockout>> GetLowerBracket()
         {
-            var lowerStages = this._dbContext.SystemSwitches
-                .ToList()
-                .Where(x => x.Name == SystemSwitchHelper.LowerStage)
-                .Select(x => x.Value);
+            var lowerStages = this.GetKnockoutStages(false).Result;
 
             var lowerMatches = this._dbContext.BracketKnockouts
                 .Where(x => lowerStages.Contains(x.Stage))
@@ -37,16 +46,24 @@ namespace GeoCubed.SquidLeague4.Persistence.Repositories
 
         public Task<IReadOnlyList<BracketKnockout>> GetUpperBracket()
         {
-            var upperStages = this._dbContext.SystemSwitches
-                .ToList()
-                .Where(x => x.Name == SystemSwitchHelper.UpperStage)
-                .Select(x => x.Value);
+            var upperStages = this.GetKnockoutStages(true).Result;
 
             var upperMatches = this._dbContext.BracketKnockouts
                 .Where(x => upperStages.Contains(x.Stage))
                 .ToList();
 
             return Task.FromResult((IReadOnlyList<BracketKnockout>)upperMatches);
+        }
+
+        private Task<IEnumerable<string>> GetKnockoutStages(bool isUpper)
+        {
+            var switchName = (isUpper) ? SystemSwitchHelper.UpperStage : SystemSwitchHelper.LowerStage;
+            var stages = this._dbContext.SystemSwitches
+                .ToList()
+                .Where(x => x.Name == switchName)
+                .Select(x => x.Value);
+
+            return Task.FromResult(stages);
         }
     }
 }

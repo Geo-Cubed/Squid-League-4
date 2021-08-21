@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using GeoCubed.SquidLeague4.Website.Interfaces;
 using GeoCubed.SquidLeague4.Website.Services.Base;
 using GeoCubed.SquidLeague4.Website.ViewModels.Admin;
+using GeoCubed.SquidLeague4.Website.ViewModels.KnockoutMatches;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,12 +58,26 @@ namespace GeoCubed.SquidLeague4.Website.Services
             return lowerMapped.ToList();
         }
 
+        public async Task<List<KnockoutInfoViewModel>> GetLowerMatches()
+        {
+            var lower = await this._client.GetLowerMatchesAsync();
+            var lowerMapped = this._mapper.Map<ICollection<KnockoutInfoViewModel>>(lower);
+            return lowerMapped.ToList();
+        }
+
         public async Task<List<AdminKnockoutMatchViewModel>> GetUpperBracketMatches()
         {
             await this.AddBearerToken();
 
             var upper = await this._client.GetAllUpperBracketAsync();
             var upperMapped = this._mapper.Map<ICollection<AdminKnockoutMatchViewModel>>(upper);
+            return upperMapped.ToList();
+        }
+
+        public async Task<List<KnockoutInfoViewModel>> GetUpperMatches()
+        {
+            var upper = await this._client.GetUpperMatchesAsync();
+            var upperMapped = this._mapper.Map<ICollection<KnockoutInfoViewModel>>(upper);
             return upperMapped.ToList();
         }
     }
