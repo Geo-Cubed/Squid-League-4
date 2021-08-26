@@ -11,5 +11,7 @@
         public int AwayTeamId { get; set; }
 
         public string AwayTeam { get; set; }
+
+        public string Stage { get; set; }
     }
 }

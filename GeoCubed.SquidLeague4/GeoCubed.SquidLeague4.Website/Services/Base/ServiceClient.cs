@@ -10404,7 +10404,8 @@ namespace GeoCubed.SquidLeague4.Website.Services.Base
         [Newtonsoft.Json.JsonProperty("awayTeam", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string AwayTeam { get; set; }
     
-    
+        [Newtonsoft.Json.JsonProperty("stage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]    
+        public string Stage { get; set; }
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.4.6.0 (Newtonsoft.Json v12.0.0.0)")]

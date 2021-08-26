@@ -6,9 +6,14 @@
     <h3 class="m-2">Match Results</h3>
     <select class="form-control mb-3" @onchange="OnMatchSelectAsync">
         <option value="f" selected>Select a match:</option>
-        @foreach (var match in this.matches)
+        @foreach (var matchStage in this.matches.GroupBy(x => x.Stage))
         {
-            <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
+            <optgroup label="@matchStage.FirstOrDefault().Stage">
+            @foreach (var match in matchStage)
+            {
+                <option value="@match.Id">@this.GetMatchText(match.HomeTeam, match.AwayTeam)</option>
+            }
+            </optgroup>
         }
     </select>
 

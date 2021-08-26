@@ -22,6 +22,11 @@ namespace GeoCubed.SquidLeague4.Application.Features.Matches.Queries.GetBasicMat
         {
             var matches = await this._matchRepository.GetAllMatchesAsync();
             var mappedMatches = this._mapper.Map<List<BasicMatchInfoVm>>(matches);
+            foreach (var match in mappedMatches)
+            {
+                match.Stage = await this._matchRepository.GetStage(match.Id);
+            }
+
             return mappedMatches;
         }
     }
