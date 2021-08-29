@@ -54,7 +54,14 @@
                                 @if (!string.IsNullOrEmpty(match.MatchVodLink))
                                 {
                                     <a href="@match.MatchVodLink" target="_blank">
-                                        <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
+                                        @if (VodTypes.GetVodLinkType(match.MatchVodLink) == "youtube")
+                                        {
+                                            <img src="Images/brandLogos/Youtube/social/1024px/red/youtube_social_icon_red.png" style="height:25px">
+                                        }
+                                        else
+                                        {
+                                            <img src="@string.Format("Images/brandLogos/{0}.svg", VodTypes.GetVodLinkType(match.MatchVodLink))" style="height:30px">
+                                        }
                                     </a>
                                 }
                             </div>
