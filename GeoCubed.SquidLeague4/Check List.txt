@@ -1,33 +1,19 @@
---Standard Pages--
-home - DONE
-404 - DONE
-teams - DONE
-casters - DONE
-matches - DONE
-map list - DONE
-bracket
-	> Swiss - DONE
-	> Upper Bracket
-	> Lower Bracket
-stats > DONE
-useful information - DONE
-helpful people - DONE
-loading bar - DONE?
-
---Admin Pages--
-login - DONE needs enter key adding
-casters - DONE
-game settings - DONE needs testing though - issues with adding modal (pre filling and combo box not filling)
-helpful people - DONE
-matches - DONE
-players - DONE
-results - DONE needs some more testing though.
-system switches - DONE
-teams - DONE
-user dashboard - DONE need to kick out unauthorized users
-
 TODO:
-remove un used api functions
-sort out namespaces and models for website
-go through the controllers and make sure the responses are ok (remove the response from delete) (add might need a bad request response)
-remove null checks on dependency injection things in core
+Restructure the GeoCubed.SquidLeague4.Application project to move the Dtos into seperate models stored somewhere else
+> Don't worry if I'm transfaring slightly more information in these models they should be general between everything so they can be esily edited.
+> Each feature should have a request and a response obj the response obj should have a data obj with the return data in.
+> The base response can be used for this. This way any further attributes can be added to specific cases
+
+Restructure the website models to be better.
+> Basically they're all over the place currently so...
+
+Implement a proper audit system.
+Implement a proper error message / reporting system.
+
+Add more roles to users to determine what they can do e.g Can record games
+Change the login system to use discord Oauth instead - and then I can validate all the users.
+
+
+Check theb github for the enhancements
+
+
